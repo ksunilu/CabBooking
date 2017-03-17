@@ -1,0 +1,28 @@
+{
+  "name": "cabbooking",
+  "version": "1.0.0",
+  "description": "cab booking project.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ksunilu/CabBooking.git"
+  },
+  "keywords": [
+    "Book",
+    "Cab"
+  ],
+  "author": "Sunil Kumar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ksunilu/CabBooking/issues"
+  },
+  "homepage": "https://github.com/ksunilu/CabBooking#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "mongoose": "^4.9.0"
+  }
+}
