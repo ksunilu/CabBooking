@@ -1,15 +1,24 @@
 // user model
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var passportLocalMongoose = require('passport-local-mongoose');
-
 
 var User = new Schema({
-  username: String,
-  password: String
+  role: { type: String, enum: ['admin', 'client', 'driver'] },
+  userID: String,
+  password: String,
+  name: String,
+  emailid: String,
+  phone: String,
+  address: String,
+  //driver details
+  drvLicNo: String,
+  drvLicExpDt: String,
+  drvExperiance: String,
+  //cab details for driver
+  cabNo: String,
+  cabOwner: String,
+  cabMake: String,
+  cabTariffID:String
 });
 
-User.plugin(passportLocalMongoose);
-
-
-module.exports = mongoose.model('users', User);
+module.exports = mongoose.model('user', User,'user');
