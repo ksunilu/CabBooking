@@ -52,7 +52,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 //server start
-require('./server/routes')(app);
+require('./server/routes')();
 
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, '/client', 'index.html'));

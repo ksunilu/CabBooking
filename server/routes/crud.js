@@ -1,5 +1,6 @@
 
-module.exports = function (app, routePath) {
+module.exports = function (routePath) {
+
   routePath = routePath.replace('/', '');
   var modelPath = '../models/' + routePath;
   console.log('modelPath=' + modelPath);
@@ -18,7 +19,7 @@ module.exports = function (app, routePath) {
 
   router.get('/:id', function (req, res) {
     console.log("REACHED GET ID ON SERVER");
-    console.log('id='+req.params.id);
+    console.log('id=' + req.params.id);
     model.find({ _id: req.params.id }, function (err, docs) {
       res.json(docs);
     });
@@ -50,9 +51,9 @@ module.exports = function (app, routePath) {
     });
   })
 
-  
   var rPath = '/' + routePath;
   console.log('set route path = ' + rPath);
-  app.use(rPath, router);
 
+  var app = require('express')();
+  app.use(rPath, router);
 };

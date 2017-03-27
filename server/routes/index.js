@@ -1,6 +1,6 @@
 
-module.exports = function (app) {
+module.exports = function () {
   var crudRoute = require('./crud');
-  crudRoute(app, 'tariffs');
-  crudRoute(app, 'user');
+  crudRoute( 'tariffs');
+  crudRoute( 'user');
 }
