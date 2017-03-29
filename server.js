@@ -1,3 +1,4 @@
+var logger = require('morgan');
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
@@ -20,7 +21,10 @@ db.on('error', function (err) {
     console.log(err);
 });
 
-require('./server/routes')();
+app.use(logger("dev"));
+
+var routes = require('./server/routes');
+routes(app);
 
 app.listen(8000, function (req, res) {
     console.log('Server is running on http://localhost:8000');

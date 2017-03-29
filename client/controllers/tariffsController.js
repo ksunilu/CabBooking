@@ -2,21 +2,24 @@ angular.module('myApp').controller('TariffsController',
   function ($scope, $http) {
 
     function initData() {
+      console.log('Trying get all data.');
       $scope.allData = {};
       $scope.Data = {};
-      $http.get('/tariffs/data').then(function (response) {
-        $scope.allData = response.data;
-        console.log('Sucess got data.');
-        console.log(response);
-      }, function (response) {
-        console.log('Error getting data.');
-        console.log(response);
-      });
+      $http.get('/tariffs')
+        .then(
+        function (response) {
+          $scope.allData = response.data;
+          console.log('Sucess got data.');
+          console.log(response);
+        }, function (response) {
+          console.log('Error getting data.');
+          console.log(response);
+        });
     };
     initData();
 
     $scope.SaveData = function () {
-      $http.post('/tariffs/data', $scope.Data)
+      $http.post('/tariffs', $scope.Data)
         .then(function (response) {
           console.log('Data addedd successfully.');
           console.log(response);
@@ -29,7 +32,7 @@ angular.module('myApp').controller('TariffsController',
     };
 
     $scope.DeleteData = function (Data) {
-      $http.delete('/tariffs/data' + Data._id)
+      $http.delete('/tariffs/' + $scope.Data._id)
         .then(function (response) {
           console.log('Data deleted successfully.');
           console.log(response);
@@ -41,7 +44,7 @@ angular.module('myApp').controller('TariffsController',
     };
 
     $scope.UpdateData = function () {
-      $http.put('/tariffs/data' + $scope.Data._id, $scope.Data)
+      $http.put('/tariffs/' + $scope.Data._id, $scope.Data)
         .then(function (response) {
           console.log('Data updated successfully.');
           console.log(response);
