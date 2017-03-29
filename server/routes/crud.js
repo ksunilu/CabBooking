@@ -53,7 +53,7 @@ module.exports = function (app, routePath) {
     });
   })
 
-  var rPath = '/' + routePath;
+  var rPath = '/' + routePath + '/data';
 
   // var express = require('express');
   // var app = express();

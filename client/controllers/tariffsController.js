@@ -5,7 +5,7 @@ angular.module('myApp').controller('TariffsController',
       console.log('Trying get all data.');
       $scope.allData = {};
       $scope.Data = {};
-      $http.get('/tariffs')
+      $http.get('/tariffs/data')
         .then(
         function (response) {
           $scope.allData = response.data;
