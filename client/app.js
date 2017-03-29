@@ -7,7 +7,7 @@ app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/tariffs', {
             templateUrl: 'views/tariffs.html',
-            controller: 'tariffs'
+            controller: 'TariffsController'
         })
         .when('/Login', {
             templateUrl: 'views/Login.html',
