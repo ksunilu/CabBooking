@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var User = new Schema({
+var UserSchema = new Schema({
   role: { type: String, enum: ['admin', 'client', 'driver'] },
   userID: String,
   password: String,
@@ -21,4 +21,4 @@ var User = new Schema({
   cabTariffID:String
 });
 
-module.exports = mongoose.model('user', User,'user');
+module.exports = mongoose.model('Users', UserSchema,'Users');

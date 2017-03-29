@@ -2,5 +2,6 @@
 module.exports = function () {
   var crudRoute = require('./crud');
   crudRoute( 'tariffs');
-  crudRoute( 'user');
+  crudRoute( 'users');
+  console.log('Routes Created');
 }

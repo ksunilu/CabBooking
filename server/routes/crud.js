@@ -3,6 +3,7 @@ module.exports = function (routePath) {
 
   routePath = routePath.replace('/', '');
   var modelPath = '../models/' + routePath;
+  //dedbug
   console.log('modelPath=' + modelPath);
 
   var model = require(modelPath);
@@ -51,8 +52,8 @@ module.exports = function (routePath) {
     });
   })
 
-  var rPath = '/' + routePath;
-  console.log('set route path = ' + rPath);
+  var rPath = '/' + routePath+ '/data';
+  console.log('Route Path = ' + rPath + ' set.');
 
   var app = require('express')();
   app.use(rPath, router);

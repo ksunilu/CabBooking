@@ -1,5 +1,5 @@
 var app = angular.module('myApp', ['ngRoute']);
-app.config(function($routeProvider, $locationProvider) {
+app.config(function ($routeProvider, $locationProvider) {
     $routeProvider.when('/', {
         templateUrl: 'views/Home.html',
         controller: 'HomeController'
@@ -17,9 +17,9 @@ app.config(function($routeProvider, $locationProvider) {
     });
 });
 
-var checkLoggedIn = function($q, $http, $location, $rootScope) {
+var checkLoggedIn = function ($q, $http, $location, $rootScope) {
     var deferred = $q.defer();
-    $http.get('/api/loggedin').then(function(user) {
+    $http.get('/api/loggedin').then(function (user) {
         if (user.data != '0') {
             $rootScope.currentUser = user.data;
             deferred.resolve();
