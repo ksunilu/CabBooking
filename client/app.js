@@ -1,20 +1,26 @@
 var app = angular.module('myApp', ['ngRoute']);
 app.config(function ($routeProvider, $locationProvider) {
-    $routeProvider.when('/', {
-        templateUrl: 'views/Home.html',
-        controller: 'HomeController'
-    }).when('/Login', {
-        templateUrl: 'views/Login.html',
-        controller: 'LoginController'
-    }).when('/Register', {
-        templateUrl: 'views/Register.html',
-        controller: 'RegisterController'
-    }).when('/Profile', {
-        templateUrl: 'views/Profile.html',
-        resolve: {
-            logincheck: checkLoggedIn
-        }
-    });
+    $routeProvider
+        .when('/', {
+            templateUrl: 'views/Home.html',
+            controller: 'HomeController'
+        })
+        .when('/tariffs', {
+            templateUrl: 'views/tariffs.html',
+            controller: 'tariffs'
+        })
+        .when('/Login', {
+            templateUrl: 'views/Login.html',
+            controller: 'LoginController'
+        }).when('/Register', {
+            templateUrl: 'views/Register.html',
+            controller: 'RegisterController'
+        }).when('/Profile', {
+            templateUrl: 'views/Profile.html',
+            resolve: {
+                logincheck: checkLoggedIn
+            }
+        });
 });
 
 var checkLoggedIn = function ($q, $http, $location, $rootScope) {
