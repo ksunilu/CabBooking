@@ -1,4 +1,7 @@
-angular.module('myApp').controller('TariffsController',
+
+var app = require('angular').module('myApp');
+app.controller('TariffsController',
+
   function ($scope, $http) {
 
     function initData() {
