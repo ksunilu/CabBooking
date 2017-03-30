@@ -18,7 +18,7 @@ app.config(function ($routeProvider, $locationProvider) {
         }).when('/register-driver', {
             templateUrl: 'views/RegisterDriver.html',
             controller: 'RegisterDriverController'
-        }).when('/Profile', {
+        }).when('/profile', {
             templateUrl: 'views/Profile.html',
             resolve: {
                 logincheck: checkLoggedIn

@@ -1,14 +1,35 @@
-<div id="Container" class="container">
+<div class="container">
     <div class="row">
         <div class="col-lg-2"></div>
         <div class="col-lg-8">
 
-            <input placeholder="Name" ng-model="User.FirstName" type="text" class="form-control" />
-            <input placeholder="Last Name" type="text" ng-model="User.LastName" class="form-control" />
-            <input placeholder="Email Address" ng-model="User.Email" type="text" class="form-control" />
-            <input placeholder="Mobile Number" ng-model="User.MobileNumber" type="text" class="form-control" />
-            <input placeholder="Password" ng-model="User.Password" type="password" class="form-control" />
-            <input placeholder="Confirm Password" type="password" class="form-control" />
+            <select ng-model="data.role" class="form-control">
+                <option value ="" >Select Role</option>
+                <option value ="Admin">Admin</option>
+                <option  value ="client">Client</option>
+                <option  value ="driver">Driver</option>
+            </select>
+
+            <input placeholder="Email Address" ng-model="data.email" type="text" class="form-control" />
+            <input placeholder="Password" ng-model="data.password" type="password" class="form-control" />
+            <input placeholder="Confirm Password" ng-model="data.cnfPassword" type="password" class="form-control" />
+
+            <input placeholder="Name" ng-model="data.name" type="text" class="form-control" />
+            <input placeholder="Address" type="text" ng-model="data.address" class="form-control" />
+            <input placeholder="Mobile Number" ng-model="data.phone" type="text" class="form-control" />
+            <!--cab driver  details-->
+            <div ng-show="data.role==='driver'">
+                <input placeholder="Driving Licence Number " ng-model="data.drvLicNo" type="text" class="form-control" />
+                <input placeholder="Driving Licence Expiring Date " ng-model="data.drvLicExpDt" type="text" class="form-control" />
+                <input placeholder="Driving Experiance " type="text" ng-model="data.drvExperiance" class="form-control" />
+
+                <input placeholder="Cab Number " ng-model="data.cabNo" type="text" class="form-control" />
+                <input placeholder="Cab Registered Owner " ng-model="data.cabOwner" type="text" class="form-control" />
+                <input placeholder="Cab Make & Model " ng-model="data.cabMake" type="text" class="form-control" />
+
+                <!--Select Item-->
+                <input placeholder="cabTariffID " ng-model="data.cabTariffID" type="text" class="form-control" />
+            </div>
             <a href="#/Login" class="btn btn-success" ng-click="RegisterUser()" style="margin-top: 20px">Submit</a>
             <a href="#/" type="button" class="btn btn-warning" style="margin-top: 20px">Cancel</a>
         </div>
