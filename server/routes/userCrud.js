@@ -1,5 +1,16 @@
 
 module.exports = function (app) {
+  function cleanDriver(usr) {
+    if (usr.role !== 'driver') {
+      delete usr.drvLicNo;
+      delete usr.drvLicExpDt;
+      delete usr.drvExperiance;
+      delete usr.cabNo;
+      delete usr.cabOwner;
+      delete usr.cabMake;
+      delete usr.cabTariffID;
+    }
+  }
 
   var routePath = 'users';
   routePath = routePath.replace('/', '');
@@ -13,12 +24,11 @@ module.exports = function (app) {
   router.use(require('body-parser').urlencoded({ extended: true }));
   var jwt = require('jsonwebtoken');
 
-
   router.post('/signup', function (req, res) {
     console.log(req.body);
     var newRecord = new model(req.body);
     newRecord.Password = newRecord.generateHash(newRecord.Password);
-
+    cleanDriver(newRecord);
     newRecord.save(function (err, docs) {
       if (err)
         res.json(err);
@@ -26,7 +36,7 @@ module.exports = function (app) {
         res.json({ success: true });
       console.log("REACHED POST(ADD USER) DATA ON SERVER");
     });
-  })
+  });
 
 
   router.post('/login', function (req, res) {
@@ -72,7 +82,7 @@ module.exports = function (app) {
     model.remove({ _id: req.params.id }, function (err, docs) {
       res.json(docs);
     });
-  })
+  });
 
   router.get('/:id', function (req, res) {
     console.log("REACHED GET ID ON SERVER");
@@ -88,7 +98,7 @@ module.exports = function (app) {
     model.findOneAndUpdate({ _id: req.params.id }, req.body, function (err, data) {
       res.json(data);
     });
-  })
+  });
 
   var rPath = '/' + routePath + '/data';
 
