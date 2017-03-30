@@ -16,7 +16,7 @@ function crudService($http) {
             throw error;
         });
     };
-
+ 
     _this.addData = function (record, routePath) {
         routePath = routePath.replace('/', '');
         //console.log($scope.theatre);

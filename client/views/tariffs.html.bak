@@ -1,0 +1,4 @@
+<h2 align="center">This is tariff page of my Website</h2>
+<p>
+    {{allData}}
+</p>
