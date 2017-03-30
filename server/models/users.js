@@ -3,13 +3,12 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 
 var Schema = mongoose.Schema;
- 
+
 var UserSchema = new Schema({
   role: { type: String, enum: ['admin', 'client', 'driver'] },
-  userID: String,
+  email: String,
   password: String,
   name: String,
-  email: String,
   phone: String,
   address: String,
   //driver details

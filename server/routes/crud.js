@@ -4,7 +4,6 @@ module.exports = function (app, routePath) {
   routePath = routePath.replace('/', '');
   var modelPath = '../models/' + routePath;
   //dedbug
-  console.log('app=' + app);
   console.log('modelPath=' + modelPath);
 
   var model = require(modelPath);

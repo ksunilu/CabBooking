@@ -9,12 +9,15 @@ app.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'views/tariffs.html',
             controller: 'TariffsController'
         })
-        .when('/Login', {
+        .when('/login', {
             templateUrl: 'views/Login.html',
             controller: 'LoginController'
-        }).when('/Register', {
+        }).when('/register', {
             templateUrl: 'views/Register.html',
             controller: 'RegisterController'
+        }).when('/register-driver', {
+            templateUrl: 'views/RegisterDriver.html',
+            controller: 'RegisterDriverController'
         }).when('/Profile', {
             templateUrl: 'views/Profile.html',
             resolve: {
