@@ -1,28 +1,20 @@
 angular.module('myApp').controller('TariffsController',
-  function ($scope, $http, crudService) {
+  function ($scope, $http) {
 
     function initData() {
       console.log('Trying get all data.');
       $scope.allData = {};
       $scope.Data = {};
-
-      var promise = crudService.getAllData('/tariffs');
-      promise.then(function (data) {
-        $scope.allData = data;
-      });
-
-      /*
-            $http.get('/tariffs/data')
-              .then(
-              function (response) {
-                $scope.allData = response.data;
-                console.log('Sucess got data.');
-                console.log(response);
-              }, function (response) {
-                console.log('Error getting data.');
-                console.log(response);
-              });
-      */
+      $http.get('/tariffs/data')
+        .then(
+        function (response) {
+          $scope.allData = response.data;
+          console.log('Sucess got data.');
+          console.log(response);
+        }, function (response) {
+          console.log('Error getting data.');
+          console.log(response);
+        });
     };
     initData();
 

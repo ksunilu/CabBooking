@@ -5,6 +5,7 @@ crudService.$inject = ['$http'];
 function crudService($http) {
     var _this = this;
     _this.getAllData = function (routePath) {
+        routePath = routePath.replace('/', '');
         return $http({
             method: 'GET',
             url: '/' + routePath + '/data',
@@ -17,6 +18,7 @@ function crudService($http) {
     };
 
     _this.addData = function (record, routePath) {
+        routePath = routePath.replace('/', '');
         //console.log($scope.theatre);
         return $http({
             method: 'POST',
@@ -31,6 +33,7 @@ function crudService($http) {
     };
 
     _this.deleteData = function (record, routePath) {
+        routePath = routePath.replace('/', '');
         //console.log($scope.theatre);
         return $http({
             method: 'DELETE',
@@ -43,6 +46,7 @@ function crudService($http) {
     };
 
     _this.getData = function (_id, routePath) {
+        routePath = routePath.replace('/', '');
         return $http({
             method: 'GET',
             url: '/' + routePath + '/data/' + _id
@@ -54,6 +58,7 @@ function crudService($http) {
     };
 
     _this.updateData = function (record, routePath) {
+        routePath = routePath.replace('/', '');
         return $http({
             method: 'PUT',
             url: '/' + routePath + '/data/' + record._id,
@@ -66,5 +71,6 @@ function crudService($http) {
     };
 }
 
-module.exports = crudService;
+app.service('crudService', crudService);
+
 
