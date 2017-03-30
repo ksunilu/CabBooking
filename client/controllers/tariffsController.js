@@ -29,12 +29,11 @@ angular.module('myApp').controller('TariffsController',
     }
 
     $scope.UpdateData = function (model) {
-      var promise = crudService.updateData(model,  '/tariffs');
+      var promise = crudService.updateData(model, '/tariffs');
       promise.then(function (data) {
         initData();
       })
     }
-
 
     $scope.EditData = function (c) {
       $scope.Data = c;
