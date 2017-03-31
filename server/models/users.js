@@ -5,7 +5,7 @@ var bcrypt = require('bcrypt-nodejs');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-  role: { type: String, enum: ['admin', 'client', 'driver'] },
+  role: { type: String, enum: ['admin', 'client', 'driver', 'Admin', 'Client', 'Driver', 'Customer', 'customer'] },
   email: String,
   password: String,
   name: String,

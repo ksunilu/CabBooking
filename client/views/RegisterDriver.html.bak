@@ -9,7 +9,7 @@
             <input placeholder="Password" ng-model="User.Password" type="password" class="form-control" />
             <input placeholder="Confirm Password" type="password" class="form-control" />
 
-            <a href="#/Login" class="btn btn-success" ng-click="RegisterUser()" style="margin-top: 20px">Submit</a>
+            <a href="#/login" class="btn btn-success" ng-click="RegisterUser()" style="margin-top: 20px">Submit</a>
             <a href="#/" type="button" class="btn btn-warning" style="margin-top: 20px">Cancel</a>
         </div>
         <div class="col-lg-2"></div>

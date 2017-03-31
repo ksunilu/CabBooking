@@ -35,7 +35,7 @@ var checkLoggedIn = function ($q, $http, $location, $rootScope) {
             console.log('User Logged in');
         } else {
             deferred.reject();
-            $location.url('/Login');
+            $location.url('/login');
             console.log('User is not logged in');
         }
     });

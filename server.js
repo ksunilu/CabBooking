@@ -1,6 +1,7 @@
 var logger = require('morgan');
 var express = require('express');
 var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
 var bodyParser = require('body-parser');
 var path = require('path');
 

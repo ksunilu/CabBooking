@@ -23,16 +23,15 @@ module.exports = function (app) {
   router.use(require('body-parser').urlencoded({ extended: true }));
   var jwt = require('jsonwebtoken');
 
-  router.post('/signup', function (req, res) {
-    console.log(req.body);
+  router.post('/', function (req, res) {
+
     var newRecord = new model(req.body);
-    newRecord.Password = newRecord.generateHash(newRecord.Password);
+    console.log('Data received in post =  ' + newRecord);
+    newRecord.Password = newRecord.generateHash(req.body.Password);
     cleanDriver(newRecord);
     newRecord.save(function (err, docs) {
-      if (err)
-        res.json(err);
-      else
-        res.json({ success: true });
+      if (err) res.json(err);
+      else res.json({ success: true, dataSaved: docs });
       console.log("REACHED POST(ADD USER) DATA ON SERVER");
     });
   });
