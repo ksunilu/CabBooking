@@ -15,9 +15,6 @@ app.config(function ($routeProvider, $locationProvider) {
         }).when('/register', {
             templateUrl: 'views/Register.html',
             controller: 'RegisterController'
-        }).when('/register-driver', {
-            templateUrl: 'views/RegisterDriver.html',
-            controller: 'RegisterDriverController'
         }).when('/profile', {
             templateUrl: 'views/Profile.html',
             resolve: {

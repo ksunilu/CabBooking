@@ -1,5 +1,6 @@
 
 module.exports = function (app) {
+
   function cleanDriver(usr) {
     if (usr.role !== 'driver') {
       delete usr.drvLicNo;
@@ -24,11 +25,12 @@ module.exports = function (app) {
   var jwt = require('jsonwebtoken');
 
   router.post('/', function (req, res) {
-
     var newRecord = new model(req.body);
-    console.log('Data received in post =  ' + newRecord);
-    newRecord.Password = newRecord.generateHash(req.body.Password);
     cleanDriver(newRecord);
+
+    newRecord.password = newRecord.generateHash(req.body.password);
+
+    console.log('Data AFTER HASH in post =  ' + newRecord);
     newRecord.save(function (err, docs) {
       if (err) res.json(err);
       else res.json({ success: true, dataSaved: docs });
@@ -42,6 +44,7 @@ module.exports = function (app) {
       function (err, user) {
         if (err) {
           res.json(err);
+          console.log('Error at /login : ' + err);
         }
         else if (!user) {
           res.json({

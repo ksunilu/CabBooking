@@ -19,17 +19,25 @@ var UserSchema = new Schema({
   cabNo: String,
   cabOwner: String,
   cabMake: String,
-  cabTariffID: String
+  cabTariffID: String,
+  // loginStatus & Location
+  status: { type: String, enum: ['login', 'Login', 'Logoff', 'logoff'] },
+  location: String
 });
 
 //Encrypting Password
 UserSchema.methods.generateHash = function (password) {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+  var rval = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+  console.log(rval);
+  return rval;
+
 }
 
 //Decrypting Password
 UserSchema.methods.validPassword = function (password) {
-  return bcrypt.compareSync(password, this.Password);
+  var rval = bcrypt.compareSync(password, this.Password);
+  console.log(rval);
+  return rval;
 }
 
 
