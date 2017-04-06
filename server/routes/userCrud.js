@@ -47,7 +47,7 @@ module.exports = function (app) {
       function (err, usrData) {
         console.log(err);
         console.log(usrData);
-        
+
         if (err) {
           res.json(err);
           console.log('Error at /login : ' + err);

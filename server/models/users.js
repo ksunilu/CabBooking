@@ -35,11 +35,10 @@ UserSchema.methods.generateHash = function (password) {
 
 //Decrypting Password
 UserSchema.methods.validPassword = function (password) {
-  var rval = bcrypt.compareSync(password, this.Password);
+  console.log('Decrypting Password');
+  var rval = bcrypt.compareSync(password, this.password);
   console.log(rval);
   return rval;
 }
-
-
 
 module.exports = mongoose.model('Users', UserSchema, 'Users');
