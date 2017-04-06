@@ -28,6 +28,28 @@ app.use(logger("dev"));
 
 var routes = require('./server/routes');
 routes(app);
+app.get('/public/js/*', function (req, res) {
+    var path = req.params[0];
+    // Don't let them peek at .. folder
+    if (path.indexOf('..') === -1) {
+        return res.sendFile(__dirname + '/client/public/js/' + path);
+    } else {
+        res.status = 404;
+        return res.send('Not Found');
+    }
+});
+
+app.get('/public/css/*', function (req, res) {
+    var path = req.params[0];
+    // Don't let them peek at .. folder
+    if (path.indexOf('..') === -1) {
+        return res.sendFile(__dirname + '/client/public/css/' + path);
+    } else {
+        res.status = 404;
+        return res.send('Not Found');
+    }
+});
+
 
 app.listen(8000, function (req, res) {
     console.log('Server is running on http://localhost:8000');

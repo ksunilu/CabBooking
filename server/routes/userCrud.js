@@ -45,6 +45,9 @@ module.exports = function (app) {
 
     model.findOne({ email: req.body.email },
       function (err, usrData) {
+        console.log(err);
+        console.log(usrData);
+        
         if (err) {
           res.json(err);
           console.log('Error at /login : ' + err);

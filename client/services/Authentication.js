@@ -19,15 +19,7 @@ function Service($http, $cookies, $sessionStorage) {
                     var obj = {
                         currentUser: {
                             isLoggedIn: true,
-                            userInfo: {
-                                id: response.data.userDetail._id,
-                                email: response.data.userDetail.Email,
-                                fname: response.data.userDetail.FirstName,
-                                lname: response.data.userDetail.LastName,
-                                mobile: response.data.userDetail.MobileNumber,
-                                usertype: response.data.userDetail.UserType
-                                //userType: response.userDetail.userType
-                            }
+                            userInfo: response.data
                         }
                     };
                     $cookies.putObject('authUser', obj);
