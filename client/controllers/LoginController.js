@@ -1,11 +1,11 @@
-angular.module('myApp').controller('LoginController', function ($scope, $http) {
-    $scope.LoginUser = function () {
-        //sunil  change
-        $http.put('/users/data/', $scope.user)
-            .then(function (response) {
-                console.log('Login Attempted');
-                console.log('Login Response :' + JSON.stringify(response));
+angular.module('myApp')
+    .controller('LoginController',
+    function ($scope, $http, AuthenticationService, $location) {
+        $scope.LoginUser = function () {
+            AuthenticationService.Login($scope.User, function (response) {
+                if (response.data.success === true) {
+                    $location.path('/profile');
+                }
             });
-
-    }
-})
+        };
+    })

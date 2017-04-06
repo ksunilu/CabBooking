@@ -17,25 +17,27 @@ app.config(function ($routeProvider, $locationProvider) {
             controller: 'RegisterController'
         }).when('/profile', {
             templateUrl: 'views/Profile.html',
-            resolve: {
-                logincheck: checkLoggedIn
-            }
         });
 });
 
-var checkLoggedIn = function ($q, $http, $location, $rootScope) {
-    var deferred = $q.defer();
-    $http.get('/users/data/')
-        .then(function (user) {
-            if (user.data != '0') {
-                $rootScope.currentUser = user.data;
-                deferred.resolve();
-                console.log('User Logged in');
-            } else {
-                deferred.reject();
-                $location.url('/login');
-                console.log('User is not logged in');
-            }
-        });
-    return deferred.promise;
-}
+app.run(function ($rootScope, $http, $location, $sessionStorage, $cookies) {
+    if ($sessionStorage.tokenDetails) {
+        $http.defaults.headers.common.Authorization = $sessionStorage.tokenDetails.token;
+    }
+
+    // redirect to login page if not logged in and trying to access a restricted page
+    $rootScope.$on('$locationChangeStart', function (event, next, current) {
+        var publicPages = ['/', '/login', '/register'];
+
+        var authUser = $cookies.getObject('authUser');
+        if (authUser != undefined) {
+            var loggedInUser = authUser.currentUser.userInfo;
+        }
+        var restrictedPage = publicPages.indexOf($location.path()) === -1;
+        if (restrictedPage && !$sessionStorage.tokenDetails && $location.path() != '') {
+            $location.path('/login');
+        }
+        // console.log(restrictedPage);
+        // console.log($sessionStorage.tokenDetails);
+    });
+});
