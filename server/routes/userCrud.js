@@ -40,33 +40,33 @@ module.exports = function (app) {
 
 
   router.put('/', function (req, res) {
-    User.findOne({ email: req.body.email },
-      function (err, user) {
+    model.findOne({ email: req.body.email },
+      function (err, usrData) {
         if (err) {
           res.json(err);
           console.log('Error at /login : ' + err);
         }
-        else if (!user) {
+        else if (!usrData) {
           res.json({
             success: false,
             message: 'Sorry!! email id not registered'
           });
           console.log('Sorry!! email id not registered');
         }
-        else if (!user.validPassword(req.body.password)) {
+        else if (!usrData.validPassword(req.body.password)) {
           res.json({
             success: false,
             message: 'Sorry!! wrong password'
           });
           console.log('Sorry!! Wrong Password');
         }
-        else if (user) {
-          var token = jwt.sign(user, 'thisismysecret', { expiresIn: 1400 });
+        else if (usrData) {
+          var token = jwt.sign(usrData, 'thisismysecret', { expiresIn: 1400 });
           res.json({
             success: true,
             token: token,
             isLoggedIn: true,
-            userDetail: user
+            userDetail: usrData
           });
           console.log(token);
           console.log('Login Successful. Token Created.');
