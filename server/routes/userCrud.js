@@ -40,6 +40,9 @@ module.exports = function (app) {
 
 
   router.put('/', function (req, res) {
+
+    console.log('Data at /login : ' + JSON.stringify(req.body));
+
     model.findOne({ email: req.body.email },
       function (err, usrData) {
         if (err) {
