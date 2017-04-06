@@ -39,7 +39,7 @@ module.exports = function (app) {
   });
 
 
-  router.post('/login', function (req, res) {
+  router.put('/', function (req, res) {
     User.findOne({ email: req.body.email },
       function (err, user) {
         if (err) {
