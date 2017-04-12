@@ -4,26 +4,31 @@ var bcrypt = require('bcrypt-nodejs');
 
 var Schema = mongoose.Schema;
 
-var UserSchema = new Schema({
-  role: { type: String, enum: ['admin', 'client', 'driver', 'Admin', 'Client', 'Driver', 'Customer', 'customer'] },
-  email: String,
-  password: String,
-  name: String,
-  phone: String,
-  address: String,
-  //driver details
-  drvLicNo: String,
-  drvLicExpDt: String,
-  drvExperiance: String,
-  //cab details for driver
-  cabNo: String,
-  cabOwner: String,
-  cabMake: String,
-  cabTariffID: String,
-  // loginStatus & Location
-  status: { type: String, enum: ['login', 'Login', 'Logoff', 'logoff'] },
-  location: String
-});
+var UserSchema = new Schema(
+  {
+    role: { type: String, enum: ['admin', 'client', 'driver', 'Admin', 'Client', 'Driver', 'Customer', 'customer'] },
+    email: String,
+    password: String,
+    name: String,
+    phone: String,
+    address: String,
+    //driver details
+    drvLicNo: String,
+    drvLicExpDt: String,
+    drvExperiance: String,
+    //cab details for driver
+    cabNo: String,
+    cabOwner: String,
+    cabMake: String,
+    cabTariffID: String,
+    // loginStatus & Location
+    status: { type: String, enum: ['login', 'Login', 'Logoff', 'logoff'] },
+    location: String
+  },
+  {
+    timestamps: true
+  }
+);
 
 //Encrypting Password
 UserSchema.methods.generateHash = function (password) {

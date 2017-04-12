@@ -10,7 +10,8 @@ var app = express();
 app.use(bodyParser.json());
 app.use('/', express.static(path.join(__dirname, './client')));
 
-var dbMac = 'DESKTOP-D0F91VF';
+// var dbMac = 'DESKTOP-D0F91VF';
+var dbMac = '127.0.0.1';
 var dbHost = 'mongodb://' + dbMac + ':27017/CabDB';
 
 mongoose.connect(dbHost);

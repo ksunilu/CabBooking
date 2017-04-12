@@ -39,43 +39,42 @@ module.exports = function (app) {
   });
 
 
+
   router.put('/', function (req, res) {
-
     console.log('Data at /login : ' + JSON.stringify(req.body));
+    model.findOne({ email: req.body.email }, function (err, usrData) {
+      if (err) {
+        res.json(err);
+        console.log('Error at /login : ' + err);
+      }
+      else if (!usrData) {
+        res.json({
+          success: false,
+          message: 'Sorry!! email id not registered'
+        });
+        console.log('Sorry!! email id not registered');
+      }
+      else if (!usrData.validPassword(req.body.password)) {
+        res.json({
+          success: false,
+          message: 'Sorry!! wrong password'
+        });
+        console.log('Sorry!! Wrong Password');
+      }
+      else if (usrData) { //if all is well then
 
-    model.findOne({ email: req.body.email },
-      function (err, usrData) {
-        if (err) {
-          res.json(err);
-          console.log('Error at /login : ' + err);
-        }
-        else if (!usrData) {
-          res.json({
-            success: false,
-            message: 'Sorry!! email id not registered'
-          });
-          console.log('Sorry!! email id not registered');
-        }
-        else if (!usrData.validPassword(req.body.password)) {
-          res.json({
-            success: false,
-            message: 'Sorry!! wrong password'
-          });
-          console.log('Sorry!! Wrong Password');
-        }
-        else if (usrData) {
+        model.findOneAndUpdate({ _id: usrData._id }, usrData, function (err, data) {
+          res.json(data);
           var token = jwt.sign(usrData, 'thisismysecret', { expiresIn: 1400 });
           res.json({
-            success: true,
-            token: token,
-            isLoggedIn: true,
-            userDetail: usrData
+            success: true, token: token, isLoggedIn: true, userDetail: usrData
           });
           console.log(token);
           console.log('Login Successful. Token Created.');
-        }
-      });
-  });
+        });
+      }
+    }); //END OF FIND ONE 
+  });// END PUT
 
 
 
