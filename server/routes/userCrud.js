@@ -13,6 +13,10 @@ module.exports = function (app) {
     }
   }
 
+  function markInactive() {
+    
+  }
+
   var routePath = 'users';
   routePath = routePath.replace('/', '');
   var modelPath = '../models/' + routePath;
@@ -40,7 +44,8 @@ module.exports = function (app) {
 
 
 
-  router.put('/', function (req, res) {
+  router.put('/login', function (req, res) {
+    markInactive();
     console.log('Data at /login : ' + JSON.stringify(req.body));
     model.findOne({ email: req.body.email }, function (err, usrData) {
       if (err) {
@@ -62,12 +67,40 @@ module.exports = function (app) {
         console.log('Sorry!! Wrong Password');
       }
       else if (usrData) { //if all is well then
-
         model.findOneAndUpdate({ _id: usrData._id }, usrData, function (err, data) {
-          res.json(data);
           var token = jwt.sign(usrData, 'thisismysecret', { expiresIn: 1400 });
           res.json({
-            success: true, token: token, isLoggedIn: true, userDetail: usrData
+            success: true, token: token, isLoggedIn: true, user: usrData
+          });
+          console.log(token);
+          console.log('Login Successful. Token Created.');
+        });
+      }
+    }); //END OF FIND ONE 
+  });// END PUT "/login"
+
+
+  router.put('/logoff', function (req, res) {
+    markInactive();
+    console.log('Data at /logoff : ' + JSON.stringify(req.body));
+    model.findOne({ email: req.body.email }, function (err, usrData) {
+      if (err) {
+        res.json(err);
+        console.log('Error at /logoff : ' + err);
+      }
+      else if (!usrData) {
+        res.json({
+          success: false,
+          message: 'Sorry!! Logoff user not found.'
+        });
+        console.log('Sorry!! Logoff user not found.');
+      }
+      else if (usrData) { //if all is well then
+        usrData.status = 'logoff';
+        model.findOneAndUpdate({ _id: usrData._id }, usrData, function (err, data) {
+          var token = jwt.sign(usrData, 'thisismysecret', { expiresIn: 1400 });
+          res.json({
+            success: true, token: token, isLoggedIn: true, user: usrData
           });
           console.log(token);
           console.log('Login Successful. Token Created.');
@@ -75,6 +108,8 @@ module.exports = function (app) {
       }
     }); //END OF FIND ONE 
   });// END PUT
+
+
 
 
 

@@ -5,12 +5,16 @@ function Service($http, $cookies, $sessionStorage) {
     var service = {};
     service.Login = Login;
     service.Logout = Logout;
-
     return service;
 
     function Login(user, callback) {
-        $http.put('/users/data', user)
+        user.statusTime = Date();
+        user.status= 'login';
+        $http.put('/users/data/login', user)
             .then(function (response) {
+                console.log(response.data);
+                service.user = response.data.user;
+
                 if (response.data.success && response.data.token) {
                     $sessionStorage.tokenDetails = {
                         token: response.data.token
