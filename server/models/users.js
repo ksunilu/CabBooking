@@ -22,7 +22,7 @@ var UserSchema = new Schema(
     cabMake: String,
     cabTariffID: String,
     // loginStatus & Location
-    status: { type: String, enum: ['login', 'Login', 'Logoff', 'logoff', 'inactive', 'Inactive'] },
+    status: { type: String, enum: ['login', 'Login', 'Logoff', 'logoff', 'inactive', 'Inactive', 'disconnected', 'Disconnected'] },
     statusTime: { type: Date, default: Date() },
     statuslocation: String
   },

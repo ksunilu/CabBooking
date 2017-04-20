@@ -1,3 +1,4 @@
+"use strict";
 
 module.exports = function (app) {
 
@@ -12,9 +13,29 @@ module.exports = function (app) {
       delete usr.cabTariffID;
     }
   }
-
+  //improvise markinactive with update
   function markInactive() {
-    
+    console.log('in  markInactive ');
+    model.$where('( ISODate() - this.updatedAt ) > 10 * 60000 && this.status == "login" ')
+      .exec(function (err, users) {
+        if (err) console.log('error at markInactive()' + err);
+        if (users === 'undefined') {
+          console.log('no logged on user at markInactive()'); return;
+        }
+        else {
+          users.forEach(function (usr) {
+            console.log('updating => ' + usr);
+            if ((new Date() - usr.updatedAt) > 20 * 60000)
+              model.findOneAndUpdate({ _id: usr._id }, { status: 'disconnected' }, function (err, data) {
+                console.log('updated => ' + data);
+              });
+            else
+              model.findOneAndUpdate({ _id: usr._id }, { status: 'inactive' }, function (err, data) {
+                console.log('updated => ' + data);
+              });
+          });
+        }
+      });
   }
 
   var routePath = 'users';
@@ -53,17 +74,11 @@ module.exports = function (app) {
         console.log('Error at /login : ' + err);
       }
       else if (!usrData) {
-        res.json({
-          success: false,
-          message: 'Sorry!! email id not registered'
-        });
+        res.json({ success: false, message: 'Sorry!! email id not registered' });
         console.log('Sorry!! email id not registered');
       }
       else if (!usrData.validPassword(req.body.password)) {
-        res.json({
-          success: false,
-          message: 'Sorry!! wrong password'
-        });
+        res.json({ success: false, message: 'Sorry!! wrong password' });
         console.log('Sorry!! Wrong Password');
       }
       else if (usrData) { //if all is well then
@@ -89,21 +104,16 @@ module.exports = function (app) {
         console.log('Error at /logoff : ' + err);
       }
       else if (!usrData) {
-        res.json({
-          success: false,
-          message: 'Sorry!! Logoff user not found.'
-        });
+        res.json({ success: false, message: 'Sorry!! Logoff user not found.' });
         console.log('Sorry!! Logoff user not found.');
       }
       else if (usrData) { //if all is well then
         usrData.status = 'logoff';
         model.findOneAndUpdate({ _id: usrData._id }, usrData, function (err, data) {
-          var token = jwt.sign(usrData, 'thisismysecret', { expiresIn: 1400 });
-          res.json({
-            success: true, token: token, isLoggedIn: true, user: usrData
-          });
+          var token = jwt.sign(usrData, 'thisismysecret', { expiresIn: 0 });
+          res.json({ success: true, token: token, isLoggedIn: false, user: usrData });
           console.log(token);
-          console.log('Login Successful. Token Created.');
+          console.log('Logoff Successful. Token Deleted.');
         });
       }
     }); //END OF FIND ONE 
@@ -114,30 +124,30 @@ module.exports = function (app) {
 
 
   /* ****************************OTHER CRUD OPERATIONS ON USERS**************************** */
-  router.delete('/:id', function (req, res) {
+  router.delete('/:email', function (req, res) {
     console.log("REACHED DELETE DATA ON SERVER");
-    console.log(req.params.id);
-    model.remove({ _id: req.params.id }, function (err, docs) {
-      res.json(docs);
+    console.log('deleting ' + req.params.email);
+    model.remove({ email: req.params.email }, function (err, docs) {
+      res.json({ success: true, userDeleted: true, user: docs });
     });
   });
-
-  router.get('/:id', function (req, res) {
-    console.log("REACHED GET ID ON SERVER");
-    console.log('id=' + req.params.id);
-    model.find({ _id: req.params.id }, function (err, docs) {
-      res.json(docs);
+  /*
+    router.get('/:id', function (req, res) {
+      console.log("REACHED GET ID ON SERVER");
+      console.log('id=' + req.params.id);
+      model.find({ _id: req.params.id }, function (err, docs) {
+        res.json(docs);
+      });
     });
-  });
-
-  router.put('/:id', function (req, res) {
-    console.log("REACHED PUT(UPDATE) DATA ON SERVER");
-    console.log(req.body);
-    model.findOneAndUpdate({ _id: req.params.id }, req.body, function (err, data) {
-      res.json(data);
+  
+    router.put('/:id', function (req, res) {
+      console.log("REACHED PUT(UPDATE) DATA ON SERVER");
+      console.log(req.body);
+      model.findOneAndUpdate({ _id: req.params.id }, req.body, function (err, data) {
+        res.json(data);
+      });
     });
-  });
-
+  */
   var rPath = '/' + routePath + '/data';
 
   // var express = require('express');

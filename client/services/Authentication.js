@@ -8,24 +8,15 @@ function Service($http, $cookies, $sessionStorage) {
     return service;
 
     function Login(user, callback) {
-        user.statusTime = Date();
-        user.status= 'login';
+        user.statusTime = new Date();
+        user.status = 'login';
         $http.put('/users/data/login', user)
             .then(function (response) {
                 console.log(response.data);
-                service.user = response.data.user;
-
                 if (response.data.success && response.data.token) {
-                    $sessionStorage.tokenDetails = {
-                        token: response.data.token
-                    };
+                    $sessionStorage.tokenDetails = { token: response.data.token };
                     $http.defaults.headers.common.Authorization = response.data.token;
-                    var obj = {
-                        currentUser: {
-                            isLoggedIn: true,
-                            userInfo: response.data
-                        }
-                    };
+                    var obj = { currentUser: { isLoggedIn: true, userInfo: response.data } };
                     $cookies.putObject('authUser', obj);
                     callback(response);
                 } else {
@@ -35,9 +26,14 @@ function Service($http, $cookies, $sessionStorage) {
     }
 
     function Logout() {
+        var obj = $cookies.getObject('authUser');
+        var usr = obj.currentUser.userInfo;
+        $http.put('/users/data/logoff', user)
+            .then(function (response) {
+                console.log('logout data ' + response.data);
+            });
         delete $sessionStorage.tokenDetails;
         $http.defaults.headers.common.Authorization = '';
         $cookies.remove('authUser');
-
     }
 }
