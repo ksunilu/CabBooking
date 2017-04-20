@@ -27,7 +27,9 @@ function Service($http, $cookies, $sessionStorage) {
 
     function Logout() {
         var obj = $cookies.getObject('authUser');
-        var usr = obj.currentUser.userInfo;
+        var user = obj.currentUser.userInfo.user;
+        console.log(user);
+        debugger;
         $http.put('/users/data/logoff', user)
             .then(function (response) {
                 console.log('logout data ' + response.data);

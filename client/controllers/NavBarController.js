@@ -1,6 +1,5 @@
 angular.module('myApp').controller('NavBarController',
-    function ($scope, $http, AuthenticationService) {
-
+    function ($scope, $location, AuthenticationService) {
         $scope.LogoffUser = function () {
             AuthenticationService.Logout();
             $location.path('/');

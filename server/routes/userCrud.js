@@ -66,7 +66,7 @@ module.exports = function (app) {
 
 
   router.put('/login', function (req, res) {
-    markInactive();
+    // markInactive();
     console.log('Data at /login : ' + JSON.stringify(req.body));
     model.findOne({ email: req.body.email }, function (err, usrData) {
       if (err) {
@@ -82,12 +82,12 @@ module.exports = function (app) {
         console.log('Sorry!! Wrong Password');
       }
       else if (usrData) { //if all is well then
-        model.findOneAndUpdate({ _id: usrData._id }, usrData, function (err, data) {
-          var token = jwt.sign(usrData, 'thisismysecret', { expiresIn: 1400 });
-          res.json({
-            success: true, token: token, isLoggedIn: true, user: usrData
-          });
-          console.log(token);
+        model.findOneAndUpdate({ _id: usrData._id }, { 'status': 'login' }, function (err, data) {
+          if (err) console.log(err);
+          console.log(data);
+          var token = jwt.sign(data, 'thisismysecret', { expiresIn: 1400 });
+          res.json({ success: true, token: token, isLoggedIn: true, user: data });
+          // console.log(token);
           console.log('Login Successful. Token Created.');
         });
       }
@@ -96,7 +96,7 @@ module.exports = function (app) {
 
 
   router.put('/logoff', function (req, res) {
-    markInactive();
+    // markInactive();
     console.log('Data at /logoff : ' + JSON.stringify(req.body));
     model.findOne({ email: req.body.email }, function (err, usrData) {
       if (err) {
@@ -109,12 +109,11 @@ module.exports = function (app) {
       }
       else if (usrData) { //if all is well then
         usrData.status = 'logoff';
-        model.findOneAndUpdate({ _id: usrData._id }, usrData, function (err, data) {
-          var token = jwt.sign(usrData, 'thisismysecret', { expiresIn: 0 });
-          res.json({ success: true, token: token, isLoggedIn: false, user: usrData });
-          console.log(token);
-          console.log('Logoff Successful. Token Deleted.');
-        });
+        model.findOneAndUpdate({ _id: usrData._id }, { 'status': 'logoff' },
+          function (err, data) {
+            res.json({ success: true, isLoggedIn: false, user: data });
+            console.log('Logoff Successful.');
+          });
       }
     }); //END OF FIND ONE 
   });// END PUT
