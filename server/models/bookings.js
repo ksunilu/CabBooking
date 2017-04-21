@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var bookSchema = mongoose.Schema({
   bookDateTime: { type: Date, default: Date() },
-  bookCustID: ObjectId,
+  bookCustID: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
   bookSource: String,
   bookDestination: String,
   bookTravelDateTime: Number,
@@ -9,7 +9,7 @@ var bookSchema = mongoose.Schema({
     type: String, enum: ['Booked', 'Riding', 'Waiting', 'Reached',
       'Cancelled', ' booked', 'riding', 'waiting', 'reached', 'cancelled']
   },
-  checkIncabdrvID: ObjectId,
+  checkIncabdrvID: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
   checkInMeter: Number,
   checkOutMeter: Number,
   checkInDateTime: Date,
