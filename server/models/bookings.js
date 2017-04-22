@@ -7,7 +7,7 @@ var bookSchema = mongoose.Schema({
   bookTravelDateTime: Number,
   bookStatus: {
     type: String, enum: ['Booked', 'Riding', 'Waiting', 'Reached',
-      'Cancelled', ' booked', 'riding', 'waiting', 'reached', 'cancelled']
+      'Cancelled', 'booked', 'riding', 'waiting', 'reached', 'cancelled'], default: 'booked'
   },
   checkIncabdrvID: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
   checkInMeter: Number,
