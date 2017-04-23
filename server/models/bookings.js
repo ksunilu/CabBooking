@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
 var bookSchema = mongoose.Schema({
-  bookDateTime: { type: Date, default: Date() },
+  bookDate: { type: Date, default: Date() },
   bookCustID: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
   bookSource: String,
   bookDestination: String,
-  bookTravelDateTime: Number,
+  bookTravelDate: Date,
   bookStatus: {
     type: String, enum: ['Booked', 'Riding', 'Waiting', 'Reached',
       'Cancelled', 'booked', 'riding', 'waiting', 'reached', 'cancelled'], default: 'booked'
@@ -12,10 +12,15 @@ var bookSchema = mongoose.Schema({
   checkIncabdrvID: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
   checkInMeter: Number,
   checkOutMeter: Number,
-  checkInDateTime: Date,
-  checkOutDateTime: Date,
+  checkInDate: Date,
+  checkOutDate: Date,
   billTariff: Number,
   billTotal: Number
-});
+}
+  ,
+  {
+    timestamps: true
+  }
+);
 
 module.exports = mongoose.model('Bookings', bookSchema, 'Bookings');
