@@ -69,7 +69,7 @@
                     map.fitBounds(place.geometry.viewport);
                 } else {
                     map.setCenter(place.geometry.location);
-                    map.setZoom(17);
+                    map.setZoom(10);
                 }
                 marker.setIcon(({
                     url: place.icon,
@@ -106,7 +106,7 @@
                 document.getElementById('location').innerHTML = place.formatted_address;
                 document.getElementById('lat').innerHTML = place.geometry.location.lat();
                 document.getElementById('lon').innerHTML = place.geometry.location.lng();
-                document.getElementById('all').innerHTML = JSON.stringify(place) ;
+                document.getElementById('all').innerHTML = JSON.stringify(place);
             });
         }
     </script>
