@@ -15,7 +15,12 @@ var bookSchema = mongoose.Schema({
   checkInDate: Date,
   checkOutDate: Date,
   billTariff: Number,
-  billTotal: Number
+  billTariffTotal: Number,
+  billChargesText: String,
+  billChargesValue: Number,
+  billTax: Number,
+  billTotal: Number,
+  pmtMode: { type: String, enum: ['Cash', 'cash', 'Credit Card', 'credit card', 'Cab Money', 'cab money'] }
 }
   ,
   {
