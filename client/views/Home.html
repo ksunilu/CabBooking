@@ -28,16 +28,22 @@
 							<option value="NOW">Now</option>
 							<option value="LATER">Later</option>
 						</select>-->
-						<label>
-							<input type="radio" ng-bind="book.selWhen" class="form-control" value="NOW" name="When" checked /> Now
+						<label class="radio-inline">
+							<input type="radio" ng-bind="book.NOW" value="NOW" name="When" checked /> Now
 						</label>
-						<label>
-							<input type="radio" ng-bind="book.selWhen" class="form-control" value="LATER" name="When" /> Later
+						<label class="radio-inline">
+							<input type="radio" ng-bind="book.LATER"  value="LATER" name="When" /> Later
 						</label>
+						<span>
+							test = {{book}}
+						</span>
+						<!--<label class="radio-inline"><input type="radio" name="optradio">Option 1</label>
+						<label class="radio-inline"><input type="radio" name="optradio">Option 2</label>
+						<label class="radio-inline"><input type="radio" name="optradio">Option 3</label>-->
 					</div>
 				</div>
 
-				<div ng-show="{{book.selWhen==='LATER'}}" class="form-group plain">
+				<div ng-show="book.LATER" class="form-group plain">
 					<label for="TravelDate" class="col-sm-2 control-label plain">
 							<small>DEPART</small>
 						</label>
