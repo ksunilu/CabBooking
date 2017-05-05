@@ -1,10 +1,25 @@
 angular.module('myApp')
-    .controller('HomeController', function ($scope, $http) {
+    .controller('HomeController', function ($scope, $http, crudService) {
 
         $scope.book = {};
         var source, destination;
         var directionsDisplay;
         var directionsService = new google.maps.DirectionsService();
+
+
+        function initData() {
+            console.log('Trying get all data.');
+            $scope.alltariff = {};
+            $scope.Data = {};
+
+            var promise = crudService.getAllData('/tariffs');
+            promise.then(function (data) {
+                $scope.alltariff = data;
+            });
+        };
+        initData();
+
+        ///////////////////////// // map code starts ////////////////////////////
 
         $scope.initMap = function () {
             new google.maps.places.SearchBox(document.getElementById('txtFrom'));
@@ -61,7 +76,7 @@ angular.module('myApp')
                     }
                 });
             });
-        ////////////////////////    
+        //////////////////////// // map code ends ////////////////////////////   
 
 
 

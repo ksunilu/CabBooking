@@ -7,7 +7,7 @@
 						<small>FROM</small>
 					</label>
 					<div class="col-sm-10 plain">
-						<input type="text" class="form-control plain" id="txtFrom" ng-modal="book.bookSource">
+						<input type="text" class="form-control plain" id="txtFrom" ng-model="book.bookSource">
 					</div>
 				</div>
 				<div class="form-group  plain">
@@ -15,7 +15,7 @@
 							<small>TO</small>
 						</label>
 					<div class="col-sm-10 plain">
-						<input type="text" class="form-control plain" id="txtTo" ng-modal="book.bookDestination">
+						<input type="text" class="form-control plain" id="txtTo" ng-model="book.bookDestination">
 					</div>
 				</div>
 
@@ -24,35 +24,37 @@
 							<small>WHEN</small>
 						</label>
 					<div class="col-sm-10 plain">
-						<!--<select id="selWhen" class="form-control" ng-modal="book.selWhen">
-							<option value="NOW">Now</option>
-							<option value="LATER">Later</option>
-						</select>-->
-						<!--<label class="radio-inline">
-							<input type="radio" ng-modal="book.NOW" value="NOW" name="When" checked /> Now
-						</label>
-						<label class="radio-inline">-->
-						<!--<input type="radio" ng-modal="book.LATER"  value="LATER" name="When" /> Later-->
-						<!--</label>-->
-						<select id="selWhen" class="form-control" ng-modal="book.selWhen">
+						<select id="selWhen" class="form-control" ng-model="book.selWhen">
 							<option value="NOW">Now</option>
 							<option value="LATER">Later</option>
 						</select>
 						<span>
-							test = {{book.selWhen}}
+							test = {{book}}
 						</span>
-						<!--<label class="radio-inline"><input type="radio" name="optradio">Option 1</label>
-						<label class="radio-inline"><input type="radio" name="optradio">Option 2</label>
-						<label class="radio-inline"><input type="radio" name="optradio">Option 3</label>-->
 					</div>
 				</div>
 
-				<div ng-show="book.LATER" class="form-group plain">
+				<div ng-show="book.selWhen==='LATER'" class="form-group plain">
 					<label for="TravelDate" class="col-sm-2 control-label plain">
 							<small>DEPART</small>
 						</label>
 					<div class="col-sm-10 plain">
 						<input type="datetime-local" class="form-control plain" id="TravelDate">
+					</div>
+				</div>
+
+				<div class="form-group plain">
+					<label for="VehicleTy" class="col-sm-2 control-label plain">
+							<small>Vehicle Type</small>
+						</label>
+					<div class="col-sm-10 plain">
+						<select ng-options="x as x.tariffVehicleType for x in alltariff" id="VehicleTy" class="form-control" ng-model="book.bookVehicleType">
+							<option value="">Select Vehicle Type</option>
+							
+						</select>
+						<span>
+							test = {{book}}
+						</span>
 					</div>
 				</div>
 

@@ -1,6 +1,7 @@
 var app = angular.module('myApp', ['ngRoute', 'ngCookies', 'ngStorage']);
 
 app.config(function ($routeProvider, $locationProvider) {
+    $locationProvider.hashPrefix('');
     $routeProvider
         .when('/', {
             templateUrl: 'views/Home.html',

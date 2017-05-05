@@ -4,6 +4,7 @@ var bookSchema = mongoose.Schema({
   bookCustID: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
   bookSource: String,
   bookDestination: String,
+  bookTariff: {},
   bookTravelDate: Date,
   bookStatus: {
     type: String, enum: ['Booked', 'Riding', 'Waiting', 'Reached',
