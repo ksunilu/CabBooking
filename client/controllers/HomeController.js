@@ -49,6 +49,7 @@ angular.module('myApp')
                     lat: place.geometry.location.lat(),
                     lng: place.geometry.location.lng()
                 };
+                $scope.startLocation = place.geometry.location;
             });
 
             autocompleteTo.addListener('place_changed', function () {
@@ -68,6 +69,7 @@ angular.module('myApp')
                     lat: place.geometry.location.lat(),
                     lng: place.geometry.location.lng()
                 };
+                $scope.endLocation = place.geometry.location;
             });
         }
 
@@ -85,7 +87,7 @@ angular.module('myApp')
                         directionsDisplay.setDirections(response);
                         var map = new google.maps.Map(document.getElementById('map'));
                         directionsDisplay.setMap(map);
-                        alert(calcDistance($scope.start, $scope.end));
+                        alert(calcDistance($scope.startLocation, $scope.endLocation) + 'Km');
                     } else {
                         alert("Directions Request from " + start.toUrlValue(6) + " to " + end.toUrlValue(6) + " failed: " + status);
                     }
