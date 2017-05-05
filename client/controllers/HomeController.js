@@ -85,12 +85,16 @@ angular.module('myApp')
                         directionsDisplay.setDirections(response);
                         var map = new google.maps.Map(document.getElementById('map'));
                         directionsDisplay.setMap(map);
+                        alert(calcDistance($scope.start, $scope.end));
                     } else {
                         alert("Directions Request from " + start.toUrlValue(6) + " to " + end.toUrlValue(6) + " failed: " + status);
                     }
                 });
             });
         ////////////////////////    
+        function calcDistance(p1, p2) {
+            return (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) / 1000).toFixed(2);
+        }
 
 
 
