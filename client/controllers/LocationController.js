@@ -1,5 +1,5 @@
 angular.module('myApp')
-    .controller('HomeController', function ($scope, $http, crudService) {
+    .controller('LocationController', function ($scope, $http, crudService) {
 
         // var source, destination;
         var directionsDisplay;

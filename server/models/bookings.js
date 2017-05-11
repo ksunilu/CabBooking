@@ -5,7 +5,8 @@ var bookSchema = mongoose.Schema({
   bookSource: String,
   bookDestination: String,
   bookTariff: {},
-  bookTravelDate: Date, 
+  bookTravelDate: Date,
+  bookDistance: Number,
   bookStatus: {
     type: String, enum: ['Booked', 'Riding', 'Waiting', 'Reached',
       'Cancelled', 'booked', 'riding', 'waiting', 'reached', 'cancelled'], default: 'booked'

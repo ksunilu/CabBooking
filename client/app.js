@@ -17,6 +17,9 @@ app.config(function ($routeProvider, $locationProvider) {
         }).when('/register', {
             templateUrl: 'views/Register.html',
             controller: 'RegisterController'
+        }).when('/location', {
+            templateUrl: 'views/Location.html',
+            controller: 'LocationController'
         }).when('/profile', {
             templateUrl: 'views/Profile.html',
         });
