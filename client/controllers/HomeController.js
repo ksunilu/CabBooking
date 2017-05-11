@@ -30,13 +30,6 @@ angular.module('myApp')
         google.maps.event.addDomListener(document.getElementById('routeClick'), 'click',
             function () {
 
-                var mapOptions = {
-                    zoom: 7,
-                    center: { lat: 28.61, lng: 77.23 }
-                };
-                map = new google.maps.Map(document.getElementById('dvMap'), mapOptions);
-                directionsDisplay.setMap(map);
-                directionsDisplay.setPanel(document.getElementById('dvPanel'));
 
                 //*********DIRECTIONS AND ROUTE**********************//
                 source = document.getElementById('txtFrom').value;
