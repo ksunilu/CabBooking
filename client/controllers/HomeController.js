@@ -11,7 +11,7 @@ angular.module('myApp')
             console.log('Trying get all data.');
             $scope.alltariff = {};
             $scope.rec = {};
-
+            $scope.rec.bookTravelDate = new Date();
             var promise = crudService.getAllData('/tariffs');
             promise.then(function (data) {
                 $scope.alltariff = data;
@@ -19,10 +19,15 @@ angular.module('myApp')
         };
         initData();
 
+
+
+        $scope.setTravelDate = function () {
+            if ($scope.selWhen === 'NOW')
+                $scope.rec.bookTravelDate = Date();
+        }
         ///////////////////////// // map code starts ////////////////////////////
 
         $scope.initMap = function () {
-
             var map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: 28.61, lng: 77.23 },
                 zoom: 10

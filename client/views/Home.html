@@ -24,7 +24,7 @@
 							<small>WHEN</small>
 						</label>
 					<div class="col-sm-10 plain">
-						<select id="selWhen" class="form-control" ng-model="rec.selWhen">
+						<select id="selWhen" class="form-control" ng-change="setTravelDate()" ng-model="rec.selWhen">
 							<option value="NOW">Now</option>
 							<option value="LATER">Later</option>
 						</select>
@@ -39,7 +39,7 @@
 							<small>DEPART</small>
 						</label>
 					<div class="col-sm-10 plain">
-						<input type="datetime-local" class="form-control plain" id="TravelDate">
+						<input type="datetime-local" class="form-control plain" ng-model="rec.bookTravelDate" id="TravelDate">
 					</div>
 				</div>
 
@@ -53,7 +53,7 @@
 							
 						</select>
 						<span>
-							test = {{book}}
+							test = {{rec}}
 						</span>
 					</div>
 				</div>
