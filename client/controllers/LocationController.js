@@ -4,98 +4,63 @@ angular.module('myApp')
         // var source, destination;
         var directionsDisplay;
         var directionsService = new google.maps.DirectionsService();
- 
+
         function initData() {
             console.log('Trying get all data.');
-            $scope.alltariff = {};
-            $scope.rec = {};
-            $scope.rec.bookTravelDate = new Date();
-            var promise = crudService.getAllData('/tariffs');
-            promise.then(function (data) {
-                $scope.alltariff = data;
-            });
+            // $scope.alltariff = {};
+            // $scope.rec = {};
+            // $scope.rec.bookTravelDate = new Date();
+            // var promise = crudService.getAllData('/tariffs');
+            // promise.then(function (data) {
+            //     $scope.alltariff = data;
+            // });
         };
         initData();
 
-
-        $scope.setTravelDate = function () {
-            if ($scope.selWhen === 'NOW')
-                $scope.rec.bookTravelDate = Date();
-        }
-
-
-        $scope.SaveData = function () {
-            console.log($scope.rec);
-            var promise = crudService.addData($scope.rec, '/bookings');
-            promise.then(function (data) {
-                console.log(data);
-                initData();
-            });
-        }
-
-
-
-
-
-        ///////////////////////// // map code starts ////////////////////////////
         $scope.initMap = function () {
             var map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: 28.61, lng: 77.23 },
                 zoom: 10
             });
 
-            new google.maps.places.SearchBox(document.getElementById('txtFrom'));
-            new google.maps.places.SearchBox(document.getElementById('txtTo'));
-            directionsDisplay = new google.maps.DirectionsRenderer({ 'draggable': true });
-            directionsDisplay.setMap(map);
+
+            var inputFrom = document.getElementById('txtFrom');
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputFrom);
+
+            var autocomplete = new google.maps.places.Autocomplete(inputFrom);
+            autocomplete.bindTo('bounds', map);
+
+            // var infowindow = new google.maps.InfoWindow();
+            var marker = new google.maps.Marker({
+                map: map,
+                anchorPoint: new google.maps.Point(0, -29)
+            });
+
+            autocomplete.addListener('place_changed', function () {
+                marker.setVisible(false);
+                var place = autocomplete.getPlace();
+                if (!place.geometry) {
+                    window.alert("Autocomplete's returned place contains no geometry");
+                    return;
+                }
+                if (place.geometry.viewport) {
+                    map.fitBounds(place.geometry.viewport);
+                } else {
+                    map.setCenter(place.geometry.location);
+                    map.setZoom(10);
+                }
+
+                marker.setIcon(({
+                    url: place.icon,
+                    size: new google.maps.Size(71, 71),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(35, 35)
+                }));
+
+                marker.setPosition(place.geometry.location);
+                marker.setVisible(true);
+            });
         }
-        //////////////////// end init map ////////////////////////
-        //start click event
-        google.maps.event.addDomListener(document.getElementById('routeClick'), 'click',
-            function () {
-                //*********DIRECTIONS AND ROUTE**********************//
-                $scope.rec.bookSource = document.getElementById('txtFrom').value;
-                $scope.rec.bookDestination = document.getElementById('txtTo').value;
-                var request = {
-                    origin: $scope.rec.bookSource,
-                    destination: $scope.rec.bookDestination,
-                    travelMode: google.maps.TravelMode.DRIVING
-                };
-                directionsService.route(request, function (response, status) {
-                    if (status == google.maps.DirectionsStatus.OK) {
-                        directionsDisplay.setDirections(response);
-                    }
-                    else
-                        throw 'unable to route';
-                });
-                //*********DISTANCE AND DURATION**********************//
-                var service = new google.maps.DistanceMatrixService();
-                service.getDistanceMatrix({
-                    origins: [$scope.rec.bookSource],
-                    destinations: [$scope.rec.bookDestination],
-                    travelMode: google.maps.TravelMode.DRIVING,
-                    unitSystem: google.maps.UnitSystem.METRIC,
-                    avoidHighways: false,
-                    avoidTolls: false
-                }, function (response, status) {
-                    if (status == google.maps.DistanceMatrixStatus.OK &&
-                        response.rows[0].elements[0].status != 'ZERO_RESULTS') {
-                        var distance = response.rows[0].elements[0].distance.text;
-                        var dist = distance.replace('km', '');
 
-                        $scope.rec.bookDistance = parseFloat(dist);
-                        duration = response.rows[0].elements[0].duration.text;
-
-                        var dvDistance = document.getElementById('dvDistance');
-                        dvDistance.innerHTML = '';
-                        dvDistance.innerHTML += 'Distance: ' + distance + '<br />';
-                        dvDistance.innerHTML += 'Duration:' + duration;
-
-                    } else {
-                        alert('Unable to find the distance via road.');
-                    }
-                    $scope.SaveData();
-                });
-            }); //end click event
-        //////////////////////// // map code ends ////////////////////////////   
     });
