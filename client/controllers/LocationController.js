@@ -4,7 +4,7 @@ angular.module('myApp')
         // var source, destination;
         var directionsDisplay;
         var directionsService = new google.maps.DirectionsService();
-
+ 
         function initData() {
             console.log('Trying get all data.');
             $scope.alltariff = {};

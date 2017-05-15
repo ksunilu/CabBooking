@@ -4,63 +4,15 @@
 			<form ng-init="initData()" class="form-horizontal white-well" role="form">
 				<div class="form-group  plain">
 					<label for="txtFrom" class="col-sm-2 control-label plain">
-						<small>FROM</small>
+						<small>LOCATION</small>
 					</label>
 					<div class="col-sm-10 plain">
 						<input type="text" class="form-control plain" id="txtFrom" ng-model="rec.bookSource">
 					</div>
 				</div>
-				<div class="form-group  plain">
-					<label for="txtTo" class="col-sm-2 control-label plain">
-							<small>TO</small>
-						</label>
-					<div class="col-sm-10 plain">
-						<input type="text" class="form-control plain" id="txtTo" ng-model="rec.bookDestination">
-					</div>
-				</div>
-
-				<div class="form-group plain">
-					<label for="selWhen" class="col-sm-2 control-label plain">
-							<small>WHEN</small>
-						</label>
-					<div class="col-sm-10 plain">
-						<select id="selWhen" class="form-control" ng-change="setTravelDate()" ng-model="rec.selWhen">
-							<option value="NOW">Now</option>
-							<option value="LATER">Later</option>
-						</select>
-						<span>
-							test = {{book}}
-						</span>
-					</div>
-				</div>
-
-				<div ng-show="rec.selWhen==='LATER'" class="form-group plain">
-					<label for="TravelDate" class="col-sm-2 control-label plain">
-							<small>DEPART</small>
-						</label>
-					<div class="col-sm-10 plain">
-						<input type="datetime-local" class="form-control plain" ng-model="rec.bookTravelDate" id="TravelDate">
-					</div>
-				</div>
-
-				<div class="form-group plain">
-					<label for="VehicleTy" class="col-sm-2 control-label plain">
-							<small>Vehicle Type</small>
-						</label>
-					<div class="col-sm-10 plain">
-						<select ng-options="x as x.tariffVehicleType for x in alltariff" id="VehicleTy" class="form-control" ng-model="rec.bookVehicleType">
-							<option value="">Select Vehicle Type</option>
-							
-						</select>
-						<span>
-							test = {{rec}}
-						</span>
-					</div>
-				</div>
-
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-8">
-						<a id="routeClick" class="btn btn-block confirm-btn" ng-click="drawRoute()">Book Now</a>
+						<a id="routeClick" class="btn btn-block confirm-btn" ng-click="drawRoute()">Update Location</a>
 					</div>
 				</div>
 			</form>
