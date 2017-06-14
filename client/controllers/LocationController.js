@@ -14,9 +14,14 @@ angular.module('myApp')
             // promise.then(function (data) {
             //     $scope.alltariff = data;
             // });
-        };
+        }
+
         initData();
 
+        $scope.updateLocation = function () {
+            $http.post()
+        }
+        //init map function starts ===========================
         $scope.initMap = function () {
             var map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: 28.61, lng: 77.23 },
@@ -60,7 +65,10 @@ angular.module('myApp')
 
                 marker.setPosition(place.geometry.location);
                 marker.setVisible(true);
+                $scope.location = place.geometry.location;
             });
         }
+        //init map function stop ===========================
+
 
     });
