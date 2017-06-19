@@ -99,3 +99,4 @@ angular.module('myApp')
             }); //end click event
         //////////////////////// // map code ends ////////////////////////////   
     });
+ 
