@@ -1,0 +1,483 @@
+<style>
+    .carousel-inner>.item>img,
+    .carousel-inner>.item>a>img {
+        width: 100%;
+        height: 100%;
+        margin: auto;
+    }
+</style>
+<style>
+    .banner-button {
+        text-transform: uppercase;
+        text-align: center;
+        padding-top: 30%;
+        font-size: 37px;
+        font-weight: 400;
+
+        font-family: "Tw Cen MT";
+    }
+
+    .banner-button {
+        border-radius: 40px;
+        background-color: #ff8000;
+        padding: 25px;
+        color: #fbfbfb;
+    }
+
+    a.banner-button {
+        text-decoration: none;
+    }
+
+    @-webkit-keyframes hvr-wobble-bottom {
+        16.65% {
+            -webkit-transform: skew(-12deg);
+            cursor: pointer;
+            transform: skew(-12deg);
+        }
+
+        33.3% {
+            -webkit-transform: skew(10deg);
+            transform: skew(10deg);
+        }
+
+        49.95% {
+            -webkit-transform: skew(-6deg);
+            transform: skew(-6deg);
+        }
+
+        66.6% {
+            -webkit-transform: skew(4deg);
+            transform: skew(4deg);
+        }
+
+        83.25% {
+            -webkit-transform: skew(-2deg);
+            transform: skew(-2deg);
+        }
+
+        100% {
+            -webkit-transform: skew(0);
+            transform: skew(0);
+        }
+    }
+
+    @keyframes hvr-wobble-bottom {
+        16.65% {
+            -webkit-transform: skew(-12deg);
+            cursor: pointer;
+            transform: skew(-12deg);
+        }
+
+        33.3% {
+            -webkit-transform: skew(10deg);
+            transform: skew(10deg);
+        }
+
+        49.95% {
+            -webkit-transform: skew(-6deg);
+            transform: skew(-6deg);
+        }
+
+        66.6% {
+            -webkit-transform: skew(4deg);
+            transform: skew(4deg);
+        }
+
+        83.25% {
+            -webkit-transform: skew(-2deg);
+            transform: skew(-2deg);
+        }
+
+        100% {
+            -webkit-transform: skew(0);
+            transform: skew(0);
+        }
+    }
+
+    .hvr-wobble-bottom {
+        display: inline-block;
+        vertical-align: middle;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-transform-origin: 100% 0;
+        transform-origin: 100% 0;
+    }
+
+    .hvr-wobble-bottom:hover,
+    .hvr-wobble-bottom:focus,
+    .hvr-wobble-bottom:active {
+        -webkit-animation-name: hvr-wobble-bottom;
+        animation-name: hvr-wobble-bottom;
+        -webkit-animation-duration: 1s;
+        animation-duration: 1s;
+        -webkit-animation-timing-function: ease-in-out;
+        animation-timing-function: ease-in-out;
+        -webkit-animation-iteration-count: 1;
+        animation-iteration-count: 1;
+    }
+</style>
+<style>
+    .gray {
+        width: 100%;
+        float: left;
+        background: lightgrey;
+        border-bottom: 1px solid #edeced;
+        border-top: 1px solid #dfdfde;
+    }
+
+    .cabs {
+        width: 100%;
+        float: left;
+        background: #f7f7f7;
+        border-bottom: 1px solid #edeced;
+        border-top: 1px solid #dfdfde;
+    }
+
+    .ftop {
+        width: 973px;
+        float: left;
+        padding: 15px 0 13px 0;
+        font-size: 14px;
+        color: #999;
+        line-height: 20px;
+    }
+
+    .main {
+        width: 973px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+    }
+
+    .homepage {
+        width: 973px;
+        float: left;
+        padding: 50px 0px;
+    }
+
+    .homepage .repeatdiv {
+        width: 300px;
+        float: left;
+        margin-right: 30px;
+        position: relative;
+    }
+
+    .homepage .repeatdiv.no {
+        margin-right: 0;
+    }
+
+    .homepage .repeatdiv.md {
+        width: 290px;
+    }
+
+    .homepage .repeatdiv img.icon1 {
+        position: absolute;
+        left: 0px;
+        top: -14px;
+    }
+
+    .homepage .repeatdiv img.icon2 {
+        position: absolute;
+        left: 0px;
+        top: -8px;
+    }
+
+    .homepage .repeatdiv img.icon3 {
+        position: absolute;
+        left: 0px;
+        top: -8px;
+    }
+
+    .homepage .repeatdiv h2 {
+        font-size: 22px;
+        color: #494949;
+        border-bottom: #edeced solid 1px;
+        display: block;
+    }
+
+    .homepage .repeatdiv h2.icon1 {
+        padding: 0 0 6px 75px;
+    }
+
+    .homepage .repeatdiv h2.icon2 {
+        padding: 0 0 6px 45px;
+    }
+
+    .homepage .repeatdiv h2.icon3 {
+        padding: 0 0 6px 55px;
+    }
+
+    .homepage .repeatdiv ul {
+        margin: 0;
+        padding: 25px 0 0 0px;
+        list-style: none;
+    }
+
+    .homepage .repeatdiv ul li {
+        background: url(../images/liicn.gif) no-repeat left 6px;
+        padding: 3px 0 3px 22px;
+        font-size: 15px;
+        display: block;
+        line-height: 20px;
+    }
+
+    .bannerbtm {
+        width: 100%;
+        float: left;
+        padding: 15px 0 15px 0;
+        font-family: Arial;
+        font-size: 19px;
+        color: #666;
+    }
+
+    .bannerbtm span {
+        font-size: 22px;
+        color: #333;
+    }
+
+    .ftop {
+        width: 973px;
+        float: left;
+        padding: 15px 0 13px 0;
+        font-size: 14px;
+        color: #999;
+        line-height: 20px;
+    }
+
+    .ftop span {
+        font-size: 21px;
+        color: #999;
+        font-family: Arial;
+    }
+
+    .ftop .wdcar {
+        width: 250px;
+        float: left;
+    }
+
+    .ftop .wdcar img {
+        padding: 2px 7px 0 0;
+        float: left;
+    }
+
+    .ftop .wdcar label {
+        float: left;
+        padding: 5px 0 0 0;
+    }
+
+    .ftop .wdten {
+        width: 237px;
+        float: left;
+    }
+
+    .ftop .wdten img {
+        padding: 0 7px 0 0;
+        float: left;
+    }
+
+    .ftop .wdten label {
+        float: left;
+        padding: 5px 0 0 0;
+    }
+
+    .ftop .wdtrips {
+        width: 248px;
+        float: left;
+    }
+
+    .ftop .wdtrips img {
+        padding: 0 7px 0 0;
+        float: left;
+    }
+
+    .ftop .wdtrips label {
+        float: left;
+        padding: 5px 0 0 0;
+    }
+
+    .fbtm {
+        width: 973px;
+        float: left;
+        padding: 30px 0 0 0;
+    }
+
+    .fbtm h3 {
+        font-size: 16px;
+        font-family: Arial;
+    }
+
+    .fbtm ul {
+        margin: 0;
+        padding: 5px 0 0 0;
+        list-style: none;
+    }
+
+    .fbtm li {
+        display: block;
+        margin: 0;
+        padding: 0;
+        line-height: 20px;
+    }
+
+    .fbtm li a {
+        color: #666;
+        text-decoration: none;
+    }
+
+    .fbtm li a:hover {
+        color: #000;
+    }
+
+    .fbtm .cm {
+        width: 135px;
+        float: left;
+    }
+
+    .fbtm .qu {
+        width: 170px;
+        float: left;
+    }
+
+    .fbtm .socil {
+        width: 205px;
+        float: left;
+    }
+
+    .soccd {
+        width: 235px;
+        float: left;
+        padding: 5px 0 25px 0;
+    }
+
+    .fbtm .socil p {
+        padding: 5px 0 0 0;
+    }
+
+    .copurit {
+        width: 973px;
+        float: left;
+        padding: 20px 0 20px 0;
+        font-size: 11px;
+        text-align: center;
+    }
+
+    .copurita {
+        text-decoration: none;
+        color: #666666;
+        font-size: 11px;
+    }
+
+    .copurita:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<!-- div main starts -->
+<div class="container">
+    <!-- Carousel starts -->
+    <div class="row">
+        <div class="col-md-12">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                    <li data-target="#myCarousel" data-slide-to="3"></li>
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <img src="../public/images/1.jpg" alt="Carousel">
+                    </div>
+
+                    <div class="item">
+                        <img src="../public/images/2.jpg" alt="Carousel">
+                    </div>
+
+                    <div class="item">
+                        <img src="../public/images/3.jpg" alt="Carousel">
+                    </div>
+
+                    <div class="item">
+                        <img src="../public/images/4.jpg" alt="Carousel">
+                    </div>
+                </div>
+                <div style="position:absolute; top:50px;">
+                    <div class="container">
+                        <div style="margin:auto; text-align:center;">
+                            <h1>
+                                <span class="label label-info">
+                                        Welcome to CAB Book
+                                </span>
+                                <br /><br />
+                            </h1>
+                            <a href="#/book" class="banner-button hvr-wobble-bottom ">
+                                Book Now  
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#myCarousel').carousel({
+                        interval: 2000, cycle: true
+                    });
+                });
+            </script>
+        </div>
+        <!-- Carousel ends -->
+    </div>
+    <div class="container">
+        <!--footer starts-->
+        <div class="row gray">
+            <div class="col-md-12  centre-block">
+                <h3>Why Choose CAB Book?</h3>
+                <ul>
+                    <li>Well trained chauffeurs</li>
+                    <li>Young, well-maintained car fleet</li>
+                    <li>Amenities for comfort </li>
+                </ul>
+            </div>
+
+            <div class="col-md-3"><img class="center-block img-responsive" src="../public/images/service.jpg"></div>
+            <div class="col-md-3"><img class="center-block img-responsive" src="../public/images/price.jpg"></div>
+            <div class="col-md-3"><img class="center-block img-responsive" src="../public/images/support.jpg"></div>
+            <div class="col-md-3"><img class="center-block img-responsive" src="../public/images/cars.jpg"></div>
+        </div>
+
+        <div class="row gray">
+            <div class="main">
+                <div class="ftop">
+                    <div class="wdcar">
+                        <img src="../public/images/car.png" alt="Cabs" title="Cabs" width="47" height="39"> <label><span>8000</span><br>Cabs</label>
+                    </div>
+                    <div class="wdtrips">
+                        <img src="../public/images/trips.png" alt="Trips Daily" title="Trips Daily" width="42" height="42">
+                        <label><span>20,000+</span><br>Trips Daily</label>
+                    </div>
+                    <div class="wdten">
+                        <img src="../public/images/lst.png" alt="Customers Annually" title="Customers Annually" width="44" height="40">                        <label><span>6,000,000+</span><br>Customers 
+
+Annually</label>
+                    </div>
+                    <div class="wdten">
+                        <img src="../public/images/ten.png" alt="Kilometers Daily" title="Kilometers Daily" width="40" height="47">                        <label><span>100,000+</span><br>Kilometers 
+
+Daily</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- div main ends -->

@@ -1,37 +1,77 @@
-<form>
-  Vehicle Type
-  <input type="text" ng-model="Data.tariffVehicleType" />
-  <br/> Booking Fee
-  <input type="text" ng-model="Data.bookingFee" />
-  <br/> Base Tariff
-  <input type="text" ng-model="Data.baseTariff" />
-  <br/> Peak Tariff
-  <input type="text" ng-model="Data.peakTariff" />
-  <br/> Cancellation Fee
-  <input type="text" ng-model="Data.cancellationFee" />
-  <br/>
-  <button ng-click="SaveData()">Save New Data</button>
-  <button ng-click="DeleteData(Data)">delete Data</button>
-  <button ng-click="UpdateData(Data)">Save Changes Data</button>
+<div class="container well">
+  <form class="form-horizontal well" role="form">
+    <table class="table ">
+      <caption>
+        <h3>
+          Tariff Details
+        </h3>
+      </caption>
+      <tr>
+        <td>
+          <strong>   Vehicle Type </strong>
+        </td>
+        <td>
+          <input id="txt1" class="form-control plain" type="text" ng-model="Data.tariffVehicleType" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>   Booking Fee</strong>
+        </td>
+        <td>
+          <input class="form-control plain" type="text" ng-model="Data.bookingFee" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>   Base Tariff</strong>
+        </td>
+        <td>
 
-</form>
-<table>
-  <tr>
-    <td>Vehicle Type</td>
-    <td>Booking Fee</td>
-    <td>Base Tariff</td>
-    <td>Peak Tariff</td>
-    <td>Cancellation Fee</td>
-    <td>Edit City</td>
-    <td>Delete City</td>
-  </tr>
-  <tr ng-repeat="c in allData">
-    <td>{{c.tariffVehicleType}}</td>
-    <td>{{c.bookingFee}}</td>
-    <td>{{c.baseTariff}}</td>
-    <td>{{c.peakTariff}}</td>
-    <td>{{c.cancellationFee}}</td>
-    <td><button ng-click="EditData(c)" class="btn btn-primary">Edit City</button></td>
-    <td><button ng-click="DeleteData(c)" class="btn btn-primary">Delete City</button></td>
-  </tr>
-</table>
+          <input class="form-control plain" type="text" ng-model="Data.baseTariff" />
+        </td>
+      </tr>
+      <tr>
+        <td> <strong>   Peak Tariff</strong>
+        </td>
+        <td>
+          <input class="form-control plain" type="text" ng-model="Data.peakTariff" />
+        </td>
+      </tr>
+      <tr>
+        <td> <strong>   Cancellation Fee</strong>
+        </td>
+        <td>
+          <input class="form-control plain" type="text" ng-model="Data.cancellationFee" />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button class="btn btn-danger" ng-click="SaveData()">Add</button>
+          <button class="btn btn-danger" ng-click="DeleteData(Data)">Delete</button>
+          <button class="btn btn-danger" ng-click="UpdateData(Data)">Update</button>
+        </td>
+        <tr>
+  </form>
+
+  <table class="table">
+    <tr>
+      <td>Vehicle Type</td>
+      <td>Booking Fee</td>
+      <td>Base Tariff</td>
+      <td>Peak Tariff</td>
+      <td>Cancellation Fee</td>
+      <td>Edit Tariff</td>
+      <td>Delete Tariff</td>
+    </tr>
+    <tr ng-repeat="c in allData">
+      <td>{{c.tariffVehicleType}}</td>
+      <td>{{c.bookingFee}}</td>
+      <td>{{c.baseTariff}}</td>
+      <td>{{c.peakTariff}}</td>
+      <td>{{c.cancellationFee}}</td>
+      <td><button ng-click="EditData(c)" class="btn btn-primary">Edit</button></td>
+      <td><button ng-click="DeleteData(c)" class="btn btn-primary">Delete </button></td>
+    </tr>
+  </table>
+</div>

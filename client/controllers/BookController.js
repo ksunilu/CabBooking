@@ -1,5 +1,5 @@
 angular.module('myApp')
-    .controller('HomeController', function ($scope, $http, crudService) {
+    .controller('BookController', function ($scope, $http, crudService) {
 
         // var source, destination;
         var directionsDisplay;
@@ -26,6 +26,7 @@ angular.module('myApp')
 
         $scope.SaveData = function () {
             console.log($scope.rec);
+            
             var promise = crudService.addData($scope.rec, '/bookings');
             promise.then(function (data) {
                 console.log(data);
@@ -99,4 +100,3 @@ angular.module('myApp')
             }); //end click event
         //////////////////////// // map code ends ////////////////////////////   
     });
- 

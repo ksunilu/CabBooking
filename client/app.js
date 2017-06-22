@@ -4,6 +4,13 @@ app.config(function ($routeProvider, $locationProvider) {
     $locationProvider.hashPrefix('');
     $routeProvider
         .when('/', {
+            templateUrl: 'views/main.html'
+        })
+        .when('/book', {
+            templateUrl: 'views/Book.html',
+            controller: 'BookController'
+        })
+        .when('/booking', {
             templateUrl: 'views/Home.html',
             controller: 'HomeController'
         })
