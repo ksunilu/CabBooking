@@ -27,8 +27,9 @@ app.config(function ($routeProvider, $locationProvider) {
         }).when('/location', {
             templateUrl: 'views/Location.html',
             controller: 'LocationController'
-        }).when('/profile', {
-            templateUrl: 'views/Profile.html',
+        }).when('/rides', {
+            templateUrl: 'views/rides.html',
+            controller: 'RidesController'
         });
 });
 

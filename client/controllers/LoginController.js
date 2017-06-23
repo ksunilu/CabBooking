@@ -5,7 +5,9 @@ angular.module('myApp')
             // $scope.user.status = login
             AuthenticationService.Login($scope.user, function (response) {
                 if (response.data.success === true) {
-                    $location.path('/profile');
+                    console.log(response.data);
+                    debugger;
+                    $location.path('/rides');
                 }
             });
         };

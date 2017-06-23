@@ -38,4 +38,11 @@ function Service($http, $cookies, $sessionStorage) {
         $http.defaults.headers.common.Authorization = '';
         $cookies.remove('authUser');
     }
+    function GetUser() {
+        var obj = $cookies.getObject('authUser');
+        if (obj)
+            return obj.currentUser.userInfo.user;
+        else
+            return null;
+    }
 }
