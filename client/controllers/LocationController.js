@@ -1,26 +1,27 @@
 angular.module('myApp')
-    .controller('LocationController', function ($scope, $http, crudService) {
+    .controller('LocationController', function ($scope, $http, AuthenticationService) {
 
         // var source, destination;
         var directionsDisplay;
         var directionsService = new google.maps.DirectionsService();
 
         function initData() {
-            console.log('Trying get all data.');
-            // $scope.alltariff = {};
-            // $scope.rec = {};
-            // $scope.rec.bookTravelDate = new Date();
-            // var promise = crudService.getAllData('/tariffs');
-            // promise.then(function (data) {
-            //     $scope.alltariff = data;
-            // });
+
         }
 
         initData();
 
         $scope.updateLocation = function () {
-            $http.post()
+            debugger;
+            var promise = AuthenticationService.UpdateLocation($scope.location);
+            promise.then(function (data) {
+                console.log('location updated');
+                console.log(data);
+                debugger;
+            });
         }
+
+
         //init map function starts ===========================
         $scope.initMap = function () {
             var map = new google.maps.Map(document.getElementById('map'), {
@@ -36,9 +37,22 @@ angular.module('myApp')
             autocomplete.bindTo('bounds', map);
 
             // var infowindow = new google.maps.InfoWindow();
-            var marker = new google.maps.Marker({
+
+            // var marker = new google.maps.Marker({
+            //     map: map,
+            //     anchorPoint: new google.maps.Point(0, -29)
+            // });
+            var marker = new Marker({
                 map: map,
-                anchorPoint: new google.maps.Point(0, -29)
+                position: new google.maps.LatLng(-27.46577, 153.02303),
+                icon: {
+                    path: SQUARE_PIN,
+                    fillColor: '#00CCBB',
+                    fillOpacity: 1,
+                    strokeColor: '',
+                    strokeWeight: 0
+                },
+                map_icon_label: '<span class="map-icon map-icon-point-of-interest"></span>'
             });
 
             autocomplete.addListener('place_changed', function () {

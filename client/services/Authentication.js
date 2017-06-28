@@ -3,8 +3,13 @@ angular.module('myApp').factory('AuthenticationService', Service);
 
 function Service($http, $cookies, $sessionStorage) {
     var service = {};
+    this.currentUser = undefined;
+
     service.Login = Login;
     service.Logout = Logout;
+    service.GetUser = GetUser;
+    service.UpdateLocation = UpdateLocation;
+
     return service;
 
     function Login(user, callback) {
@@ -17,6 +22,8 @@ function Service($http, $cookies, $sessionStorage) {
                     $sessionStorage.tokenDetails = { token: response.data.token };
                     $http.defaults.headers.common.Authorization = response.data.token;
                     var obj = { currentUser: { isLoggedIn: true, userInfo: response.data } };
+                    //this.currentUser = obj.currentUser;
+
                     $cookies.putObject('authUser', obj);
                     callback(response);
                 } else {
@@ -27,16 +34,20 @@ function Service($http, $cookies, $sessionStorage) {
 
     function Logout() {
         var obj = $cookies.getObject('authUser');
-        var user = obj.currentUser.userInfo.user;
-        console.log(user);
-        debugger;
-        $http.put('/users/data/logoff', user)
-            .then(function (response) {
-                console.log('logout data ' + response.data);
-            });
-        delete $sessionStorage.tokenDetails;
-        $http.defaults.headers.common.Authorization = '';
-        $cookies.remove('authUser');
+        if (obj) {
+            var user = obj.currentUser.userInfo.user;
+            console.log(user);
+            // debugger;
+            $http.put('/users/data/logoff', user)
+                .then(function (response) {
+                    console.log('logout data ' + response.data);
+                });
+            delete $sessionStorage.tokenDetails;
+            $http.defaults.headers.common.Authorization = '';
+            $cookies.remove('authUser');
+        }
+
+        //delete this.currentUser;
     }
     function GetUser() {
         var obj = $cookies.getObject('authUser');
@@ -44,5 +55,20 @@ function Service($http, $cookies, $sessionStorage) {
             return obj.currentUser.userInfo.user;
         else
             return null;
+        //return this.currentUser;
+    }
+    function UpdateLocation(Location) {
+        var record = GetUser();
+        console.log(record);
+        record.Location = Location;
+        return $http({
+            method: 'PUT',
+            url: '/users/data/' + record._id,
+            data: record
+        }).then(function (response) {
+            return response.data;
+        }).catch(function (error) {
+            throw error;
+        });
     }
 }

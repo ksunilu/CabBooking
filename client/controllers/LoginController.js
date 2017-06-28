@@ -6,8 +6,15 @@ angular.module('myApp')
             AuthenticationService.Login($scope.user, function (response) {
                 if (response.data.success === true) {
                     console.log(response.data);
-                    debugger;
-                    $location.path('/rides');
+                    // debugger;
+                    if (response.data.user.role === 'driver')
+                        $location.path('/location');
+                    else if (response.data.user.role === 'client')
+                        $location.path('/book');
+                    else if (response.data.user.role === 'admin')
+                        $location.path('/tariffs');
+                    else
+                        $location.path('/');
                 }
             });
         };

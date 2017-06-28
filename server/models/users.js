@@ -24,7 +24,11 @@ var UserSchema = new Schema(
     // loginStatus & Location
     status: { type: String, enum: ['login', 'Login', 'Logoff', 'logoff', 'inactive', 'Inactive', 'disconnected', 'Disconnected'] },
     statusTime: { type: Date, default: Date() },
-    statuslocation: String
+    statuslocation: String,
+    Location: {
+      lat: { type: Number, default: 0 },
+      lng: { type: Number, default: 0 }
+    }
   },
   {
     timestamps: true

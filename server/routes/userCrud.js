@@ -82,7 +82,7 @@ module.exports = function (app) {
         console.log('Sorry!! Wrong Password');
       }
       else if (usrData) { //if all is well then
-        model.findOneAndUpdate({ _id: usrData._id }, { 'status': 'login' }, function (err, data) {
+        model.findOneAndUpdate({ email: req.body.email }, { 'status': 'login' }, function (err, data) {
           if (err) console.log(err);
           console.log(data);
           var token = jwt.sign(data, 'thisismysecret', { expiresIn: 1400 });
@@ -108,12 +108,13 @@ module.exports = function (app) {
         console.log('Sorry!! Logoff user not found.');
       }
       else if (usrData) { //if all is well then
-        usrData.status = 'logoff';
-        model.findOneAndUpdate({ _id: usrData._id }, { 'status': 'logoff' },
-          function (err, data) {
-            res.json({ success: true, isLoggedIn: false, user: data });
-            console.log('Logoff Successful.');
-          });
+        req.body.status = 'logoff';
+        req.body.Location = { lat: 0.0, lng: 0.0 };
+
+        model.findOneAndUpdate({ _id: usrData._id }, req.body, function (err, data) {
+          res.json({ success: true, isLoggedIn: false, user: data });
+          console.log('Logoff Successful.');
+        });
       }
     }); //END OF FIND ONE 
   });// END PUT
@@ -138,15 +139,15 @@ module.exports = function (app) {
         res.json(docs);
       });
     });
-  
-    router.put('/:id', function (req, res) {
-      console.log("REACHED PUT(UPDATE) DATA ON SERVER");
-      console.log(req.body);
-      model.findOneAndUpdate({ _id: req.params.id }, req.body, function (err, data) {
-        res.json(data);
-      });
-    });
   */
+  router.put('/:id', function (req, res) {
+    console.log("REACHED PUT(UPDATE) DATA ON SERVER");
+    console.log(req.body);
+    model.findOneAndUpdate({ _id: req.params.id }, req.body, function (err, data) {
+      res.json(data);
+    });
+  });
+
   var rPath = '/' + routePath + '/data';
 
   // var express = require('express');
