@@ -1,20 +1,34 @@
 'use strict';
 angular.module('myApp').factory('AuthenticationService', Service);
 
-function Service($http, $cookies, $sessionStorage) {
+function Service($http, $cookies, $sessionStorage, $window) {
     var service = {};
     this.currentUser = undefined;
 
     service.Login = Login;
     service.Logout = Logout;
     service.GetUser = GetUser;
+    service.getLocation = getLocation;
     service.UpdateLocation = UpdateLocation;
 
     return service;
+    function getLocation() {
+        // var location = new google.maps.LatLng(28.61, 77.23);
+        var location = new google.maps.LatLng(0, 0);
 
+        if ($window.navigator.geolocation) {
+            $window.navigator.geolocation.getCurrentPosition(function (position) {
+                location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            });
+        }
+        return location;
+    }
     function Login(user, callback) {
+
+        user.location = getLocation();
         user.statusTime = new Date();
         user.status = 'login';
+
         $http.put('/users/data/login', user)
             .then(function (response) {
                 console.log(response.data);
@@ -58,13 +72,13 @@ function Service($http, $cookies, $sessionStorage) {
         //return this.currentUser;
     }
     function UpdateLocation(Location) {
-        var record = GetUser();
-        console.log(record);
-        record.Location = Location;
+        var currentUser = GetUser();
+        console.log(currentUser);
+        currentUser.Location = Location;
         return $http({
             method: 'PUT',
-            url: '/users/data/' + record._id,
-            data: record
+            url: '/users/data/' + currentUser._id,
+            data: currentUser
         }).then(function (response) {
             return response.data;
         }).catch(function (error) {

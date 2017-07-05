@@ -55,19 +55,44 @@ app.get('/public/css/*', function (req, res) {
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
-io.on('connection', function (socket) {
-    console.log('a user connected');
+var loggedUsers = [];
 
-    socket.on('chat message', function (msg) {
-        console.log('message: ' + msg);
-        io.emit('chat message', msg);
+io.sockets.on('connection', function (socket) {
+    socket.on('logon', function (data) {
+        console.log('logon')
+        console.log(data);
+        var iddata = {
+            id: socket.id,
+            data: data
+        };
+        loggedUsers.push(iddata);
+        io.emit('current users', loggedUsers);
+    });
+
+    socket.on('logoff', function (data) {
+        console.log('logoff', data);
+        console.log(socket.id);
+        for (var j = 0; j < loggedUsers.length; j++) {
+            if (loggedUsers[j].id === socket.id) {
+                loggedUsers.splice(j, 1);
+                break;
+            }
+        }
+        io.emit('current users', loggedUsers);
     });
 
     socket.on('disconnect', function () {
-        console.log('A user disconnected');
+        console.log('a user diconnected');
+        console.log(socket.id);
+        for (var j = 0; j < loggedUsers.length; j++) {
+            if (loggedUsers[j].id === socket.id) {
+                loggedUsers.splice(j, 1);
+                break;
+            }
+        }
+        io.emit('current users', loggedUsers);
     });
 });
-
 
 server.listen(8000, function (req, res) {
     console.log('Server is running on http://localhost:8000');
