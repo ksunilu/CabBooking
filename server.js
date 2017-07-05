@@ -63,9 +63,11 @@ io.on('connection', function (socket) {
         io.emit('chat message', msg);
     });
 
-        console.log('user disconnected');
+    socket.on('disconnect', function () {
+        console.log('A user disconnected');
     });
 });
+
 
 server.listen(8000, function (req, res) {
     console.log('Server is running on http://localhost:8000');
