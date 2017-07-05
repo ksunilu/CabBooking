@@ -26,7 +26,7 @@ angular.module('myApp')
 
         $scope.SaveData = function () {
             console.log($scope.rec);
-            
+
             var promise = crudService.addData($scope.rec, '/bookings');
             promise.then(function (data) {
                 console.log(data);
@@ -39,9 +39,20 @@ angular.module('myApp')
 
 
         ///////////////////////// // map code starts ////////////////////////////
+        $scope.userLocation = function () {
+            var location = new google.maps.LatLng(28.61, 77.23);
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                });
+            }
+            return location;
+        }
+
         $scope.initMap = function () {
+            var location = $scope.userLocation();
             var map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: 28.61, lng: 77.23 },
+                center: location,
                 zoom: 10
             });
 

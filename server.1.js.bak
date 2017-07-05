@@ -55,17 +55,28 @@ app.get('/public/css/*', function (req, res) {
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
-io.on('connection', function (socket) {
-    console.log('a user connected');
+io.sockets.on('connection', function (socket) {
+    socket.on('join', function (room) {
+        socket.join(room);
 
-    socket.on('chat message', function (msg) {
-        console.log('message: ' + msg);
-        io.emit('chat message', msg);
     });
+    
+    socket.broadcast.to(room).emit('logon', );
 
-        console.log('user disconnected');
+
+    client.on('disconnect', function () {
+
     });
 });
+
+
+
+// io.on('connection', function (client) {
+//     client.on('driver-login', function (data) {
+
+//     });
+//     client.on('disconnect', function () { });
+// });
 
 server.listen(8000, function (req, res) {
     console.log('Server is running on http://localhost:8000');

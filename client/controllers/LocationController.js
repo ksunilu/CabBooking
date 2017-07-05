@@ -6,6 +6,13 @@ angular.module('myApp')
         var directionsService = new google.maps.DirectionsService();
 
         function initData() {
+            var socket = io();
+            socket.emit('chat message', 'sucess ram Ji Ram RAM');
+            socket.on('chat message', function (msg) {
+                console.log(msg);
+            });
+        }
+        $scope.message = function () {
 
         }
 
@@ -23,10 +30,20 @@ angular.module('myApp')
 
 
         //init map function starts ===========================
+        $scope.userLocation = function () {
+            var location = new google.maps.LatLng(28.61, 77.23);
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                });
+            }
+            return location;
+        }
         $scope.initMap = function () {
+            var location = $scope.userLocation();
             var map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: 28.61, lng: 77.23 },
-                zoom: 10
+                center: location,
+                zoom: 15
             });
 
 
@@ -36,24 +53,26 @@ angular.module('myApp')
             var autocomplete = new google.maps.places.Autocomplete(inputFrom);
             autocomplete.bindTo('bounds', map);
 
-            // var infowindow = new google.maps.InfoWindow();
+            var infowindow = new google.maps.InfoWindow();
 
-            // var marker = new google.maps.Marker({
-            //     map: map,
-            //     anchorPoint: new google.maps.Point(0, -29)
-            // });
-            var marker = new Marker({
+            var marker = new google.maps.Marker({
                 map: map,
-                position: new google.maps.LatLng(-27.46577, 153.02303),
-                icon: {
-                    path: SQUARE_PIN,
-                    fillColor: '#00CCBB',
-                    fillOpacity: 1,
-                    strokeColor: '',
-                    strokeWeight: 0
-                },
-                map_icon_label: '<span class="map-icon map-icon-point-of-interest"></span>'
+                position: location
+                // ,
+                // anchorPoint: new google.maps.Point(0, -29)
             });
+            // var marker = new new google.maps.Marker({
+            //     map: map,
+            //     position: new google.maps.LatLng(-27.46577, 153.02303),
+            //     icon: {
+            //         path: SQUARE_PIN,
+            //         fillColor: '#00CCBB',
+            //         fillOpacity: 1,
+            //         strokeColor: '',
+            //         strokeWeight: 0
+            //     },
+            //     map_icon_label: '<span class="map-icon map-icon-point-of-interest"></span>'
+            // });
 
             autocomplete.addListener('place_changed', function () {
                 marker.setVisible(false);
