@@ -5,7 +5,7 @@ var TariffsSchema = mongoose.Schema({
   baseTariff: Number,
   peakTariff: Number,
   peakStartHR: Number,
-  peakStopHR: Number,
+  peakEndHR: Number,
   cancellationFee: Number
 });
 module.exports = mongoose.model('Tariffs', TariffsSchema, 'Tariffs');

@@ -39,6 +39,20 @@
         </td>
       </tr>
       <tr>
+        <td> <strong>   Peak Hr Start </strong>
+        </td>
+        <td>
+          <input class="form-control plain" type="text" ng-model="Data.peakStartHR" />
+        </td>
+      </tr>
+      <tr>
+        <td> <strong>   Peak Hr End </strong>
+        </td>
+        <td>
+          <input class="form-control plain" type="text" ng-model="Data.peakEndHR" />
+        </td>
+      </tr>
+      <tr>
         <td> <strong>   Cancellation Fee</strong>
         </td>
         <td>
@@ -60,6 +74,8 @@
       <td>Booking Fee</td>
       <td>Base Tariff</td>
       <td>Peak Tariff</td>
+      <td>Peak Hr Start </td>
+      <td>Peak Hr End </td>
       <td>Cancellation Fee</td>
       <td>Edit Tariff</td>
       <td>Delete Tariff</td>
@@ -69,9 +85,12 @@
       <td>{{c.bookingFee}}</td>
       <td>{{c.baseTariff}}</td>
       <td>{{c.peakTariff}}</td>
+      <td>{{c.peakStartHR}}</td>
+      <td>{{c.peakEndHR}}</td>
       <td>{{c.cancellationFee}}</td>
-      <td><button ng-click="EditData(c)" class="btn btn-primary">Edit</button></td>
-      <td><button ng-click="DeleteData(c)" class="btn btn-primary">Delete </button></td>
+
+      <td><button ng-click="EditData(c)" class="btn btn-primary"><span class="glyphicons glyphicons-pen"></span>Edit</button></td>
+      <td><button ng-click="DeleteData(c)" class="btn btn-primary"><span class="glyphicons glyphicons-bin"></span>Delete </button></td>
     </tr>
   </table>
 </div>
