@@ -10,18 +10,25 @@ function Service($http, $cookies, $sessionStorage, $window) {
     service.GetUser = GetUser;
     service.getLocation = getLocation;
     service.UpdateLocation = UpdateLocation;
+    service.getLocation = getLocation;
+    service.myLocation = myLocation;
+    service.getLatLng = getLatLng;
 
     return service;
+    function myLocation() {
+        return $sessionStorage.location;
+    }
+    function getLatLng() {
+        return { lat: $sessionStorage.lat, lng: $sessionStorage.lng };
+    }
     function getLocation() {
-        // var location = new google.maps.LatLng(28.61, 77.23);
-        var location = new google.maps.LatLng(0, 0);
-
+        var loc = { lat: 28, lng: 77 };
         if ($window.navigator.geolocation) {
             $window.navigator.geolocation.getCurrentPosition(function (position) {
-                location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                loc = { lat: position.coords.latitude, lng: position.coords.longitude };
+                return loc;
             });
         }
-        return location;
     }
     function Login(user, callback) {
 

@@ -14,7 +14,6 @@
     <script src="/bootstrap/dist/js/bootstrap.js"></script>
 
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYDfG-C4NuOEBj1aRBIHNi-ApfLmaQae0&libraries=places,drawing,geometry"></script>
     <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYDfG-C4NuOEBj1aRBIHNi-ApfLmaQae0&libraries=places,drawing,geometry"
         async defer></script>-->
     <!--<script src="./public/js/jquery-3.2.0.min.js"></script>-->
@@ -44,7 +43,25 @@
     <script src="./controllers/RidesController.js"></script>
     <script src="./controllers/TariffsController.js"></script>
 
+    <script>
+        function storeLocation() {
+            var loc = { lat: 28, lng: 77 };
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    loc = { lat: position.coords.latitude, lng: position.coords.longitude };
+                    sessionStorage.location = loc;
+                    sessionStorage.lat = loc.lat;
+                    sessionStorage.lng = loc.lng;
 
+                    console.log('inside');
+                    console.log(loc);
+                });
+            }
+            // console.log('outside');
+            // console.log(loc);
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYDfG-C4NuOEBj1aRBIHNi-ApfLmaQae0&libraries=places,drawing,geometry&callback=storeLocation"></script>
     <style>
         body {
             background-image: url("./public/images/bg.jpg");
