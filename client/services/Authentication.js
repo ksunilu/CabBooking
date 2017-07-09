@@ -8,31 +8,45 @@ function Service($http, $cookies, $sessionStorage, $window) {
     service.Login = Login;
     service.Logout = Logout;
     service.GetUser = GetUser;
-    service.getLocation = getLocation;
     service.UpdateLocation = UpdateLocation;
-    service.getLocation = getLocation;
-    service.myLocation = myLocation;
-    service.getLatLng = getLatLng;
-
     return service;
-    function myLocation() {
-        return $sessionStorage.location;
-    }
-    function getLatLng() {
-        return { lat: $sessionStorage.lat, lng: $sessionStorage.lng };
-    }
-    function getLocation() {
+
+    /*
+        service.getLocation = getLocation;
+        service.myLocation = myLocation;
+        service.getLatLng = getLatLng;
+    
+        return service;
+        function myLocation() {
+            return $sessionStorage.location;
+        }
+        function getLatLng() {
+            return { lat: $sessionStorage.lat, lng: $sessionStorage.lng };
+        }
+        function getLocation() {
+            var loc = { lat: 28, lng: 77 };
+            if ($window.navigator.geolocation) {
+                $window.navigator.geolocation.getCurrentPosition(function (position) {
+                    loc = { lat: position.coords.latitude, lng: position.coords.longitude };
+                    return loc;
+                });
+            }
+        }
+    */
+
+    function addLocation2User(user) {
         var loc = { lat: 28, lng: 77 };
         if ($window.navigator.geolocation) {
             $window.navigator.geolocation.getCurrentPosition(function (position) {
                 loc = { lat: position.coords.latitude, lng: position.coords.longitude };
-                return loc;
+                user.Location = loc;
             });
         }
     }
+
     function Login(user, callback) {
 
-        user.location = getLocation();
+        addLocation2User(user);
         user.statusTime = new Date();
         user.status = 'login';
 
@@ -44,7 +58,6 @@ function Service($http, $cookies, $sessionStorage, $window) {
                     $http.defaults.headers.common.Authorization = response.data.token;
                     var obj = { currentUser: { isLoggedIn: true, userInfo: response.data } };
                     //this.currentUser = obj.currentUser;
-
                     $cookies.putObject('authUser', obj);
                     callback(response);
                 } else {
