@@ -9,7 +9,7 @@
     <!--<link rel="stylesheet" href="./public/css/bootstrap.min.css">-->
     <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="./public/css/styles.css">
-    
+
     <script src="/jquery/dist/jquery.js"></script>
     <script src="/bootstrap/dist/js/bootstrap.js"></script>
 
@@ -40,6 +40,7 @@
     <script src="./controllers/LoginController.js"></script>
     <script src="./controllers/NavBarController.js"></script>
     <script src="./controllers/RegisterController.js"></script>
+    <script src="./controllers/RegisterDriver.js"></script>
     <script src="./controllers/RidesController.js"></script>
     <script src="./controllers/TariffsController.js"></script>
 
@@ -53,8 +54,8 @@
                     sessionStorage.lat = loc.lat;
                     sessionStorage.lng = loc.lng;
 
-                    console.log('inside');
-                    console.log(loc);
+                    // console.log('inside index.html after load googleapi');
+                    // console.log(loc);
                 });
             }
             // console.log('outside');
@@ -64,9 +65,13 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYDfG-C4NuOEBj1aRBIHNi-ApfLmaQae0&libraries=places,drawing,geometry&callback=storeLocation"></script>
     <style>
         body {
+            padding-top: 70px;
             background-image: url("./public/images/bg.jpg");
-            background-size: 100%;
+            min-height: 100%;
             background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
         }
     </style>
 </head>
