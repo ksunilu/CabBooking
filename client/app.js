@@ -12,7 +12,7 @@ app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/booking', {
             templateUrl: 'views/Home.html',
-            controller: 'HomeController'
+            controller: 'BookController'
         })
         .when('/tariffs', {
             templateUrl: 'views/tariffs.html',

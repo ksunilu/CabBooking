@@ -7,6 +7,7 @@ var path = require('path');
 
 var app = express();
 app.use(express.static(path.join(__dirname + '/node_modules')));
+
 app.use(bodyParser.json());
 app.use('/', express.static(path.join(__dirname, '/client')));
 
@@ -29,6 +30,7 @@ app.use(logger("dev"));
 
 var routes = require('./server/routes');
 routes(app);
+
 app.get('/public/js/*', function (req, res) {
     var path = req.params[0];
     // Don't let them peek at .. folder

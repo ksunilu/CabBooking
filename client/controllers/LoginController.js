@@ -1,6 +1,6 @@
 angular.module('myApp')
     .controller('LoginController',
-    function ($scope, $http, AuthenticationService, $location, $rootScope) {
+    function ($scope, $http, AuthenticationService, $location, $rootScope, $window) {
         $scope.LoginUser = function () {
             // $scope.user.status = login
             AuthenticationService.Login($scope.user, function (response) {
@@ -10,14 +10,16 @@ angular.module('myApp')
                     var socket = io();
 
                     //add location to user data  IMP edit
+                    $window.navigator.geolocation.getCurrentPosition(function (position) {
+                        loc = { lat: position.coords.latitude, lng: position.coords.longitude };
+                        response.data.user.location = loc;
+                        socket.emit('logon', response.data.user);
+                    });
 
-                    socket.emit('logon', response.data.user);
                     socket.on('current users', function (loggedUsers) {
-                        // console.log(loggedUsers);
-                        // console.log(response.data.user);
-
                         $rootScope.loggedUsers = loggedUsers;
                         $rootScope.currentUser = response.data.user;
+                        console.log(loggedUsers);
                         debugger;
                     });
 

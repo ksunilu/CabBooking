@@ -1,5 +1,5 @@
 angular.module('myApp')
-    .controller('BookController', function ($scope, $http, crudService) {
+    .controller('BookController', function ($scope, $http, $window, crudService) {
 
         // var source, destination;
         var directionsDisplay;
@@ -39,23 +39,30 @@ angular.module('myApp')
 
 
         ///////////////////////// // map code starts ////////////////////////////
-        $scope.userLocation = function () {
-            var location = new google.maps.LatLng(28.61, 77.23);
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                });
-            }
-            return location;
+        $scope.initMap = function () {
+            $window.navigator.geolocation.getCurrentPosition(function (position) {
+                loc = { lat: position.coords.latitude, lng: position.coords.longitude };
+                $scope.drawInitMap(loc);
+                $scope.location = loc;
+                //broad cast location
+            });
         }
 
-        $scope.initMap = function () {
-            var location = $scope.userLocation();
+        $scope.drawInitMap = function (location) {
             var map = new google.maps.Map(document.getElementById('map'), {
                 center: location,
                 zoom: 10
             });
-
+            marker = new google.maps.Marker({
+                map: map,
+                position: location,
+                icon: '../public/images/wait.png',
+                size: new google.maps.Size(6, 6)
+            });
+            infoWindow = new google.maps.InfoWindow({
+                content: 'Your Location.'
+            });
+            infoWindow.open(map, marker);
             new google.maps.places.SearchBox(document.getElementById('txtFrom'));
             new google.maps.places.SearchBox(document.getElementById('txtTo'));
             directionsDisplay = new google.maps.DirectionsRenderer({ 'draggable': true });
