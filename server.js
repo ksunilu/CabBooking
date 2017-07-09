@@ -60,16 +60,30 @@ var io = require('socket.io')(server);
 var loggedUsers = [];
 
 io.sockets.on('connection', function (socket) {
-    socket.on('logon', function (data) {
-        console.log('logon')
-        console.log(data);
+    socket.on('land', function (data) {
+
         var iddata = {
             id: socket.id,
             data: data
         };
         loggedUsers.push(iddata);
-        io.emit('current users', loggedUsers);
+
+        console.log('logged in Users@land');
+        console.log(loggedUsers);
+        // io.emit('current users', loggedUsers);
+        io.emit('draw map', loggedUsers);
     });
+
+    // socket.on('logon', function (data) {
+    //     console.log('logon');
+    //     console.log(data);
+    //     var iddata = {
+    //         id: socket.id,
+    //         data: data
+    //     };
+    //     loggedUsers.push(iddata);
+    //     io.emit('current users', loggedUsers);
+    // });
 
     socket.on('logoff', function (data) {
         console.log('logoff', data);

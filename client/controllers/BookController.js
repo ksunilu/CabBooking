@@ -1,7 +1,46 @@
 "use strict";
 
 angular.module('myApp')
-    .controller('BookController', function ($scope, $http, $window, crudService) {
+    .controller('BookController', function (AuthenticationService, $rootScope, $scope, $http, $window, crudService) {
+        var socket = io();
+        function distance(latLngA, latLngB) {
+            return google.maps.geometry.spherical.computeDistanceBetween(latLngA, latLngB);
+        }
+        function initSocket(map, Location) {
+            debugger;
+            var user = AuthenticationService.GetUser();
+            user.Location = Location;
+            socket.emit('land', user);
+
+            socket.on('draw map', function (loggedUsers) {
+                debugger;
+                $rootScope.loggedUsers = loggedUsers;
+                console.log('all users@book');
+                console.log(loggedUsers);
+                drawCabs(map, loggedUsers);
+                // draw cab at all driver location
+                // $rootScope.currentUser = response.data.user;
+            });
+        }
+
+        function drawCabs(map, loggedUsers) {
+
+            for (var i = 0; i < loggedUsers.length; i++) {
+                if (loggedUsers[i].data.role === 'driver') {
+                    var location = loggedUsers[i].data.Location;
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: location,
+                        icon: '../public/images/cab.png',
+                        size: new google.maps.Size(6, 6)
+                    });
+                    // var infoWindow = new google.maps.InfoWindow({
+                    //     content: 'Your Location.'
+                    // });
+                    // infoWindow.open(map, marker);
+                }
+            }
+        }
 
         // var source, destination;
         var directionsDisplay;
@@ -9,6 +48,8 @@ angular.module('myApp')
 
         function initData() {
             console.log('Trying get all data.');
+            // debugger;
+
             $scope.alltariff = {};
             $scope.rec = {};
             $scope.rec.bookTravelDate = new Date();
@@ -41,6 +82,7 @@ angular.module('myApp')
             $window.navigator.geolocation.getCurrentPosition(function (position) {
                 var loc = { lat: position.coords.latitude, lng: position.coords.longitude };
                 $scope.drawInitMap(loc);
+
                 $scope.location = loc;
                 //broad cast location
             });
@@ -60,15 +102,15 @@ angular.module('myApp')
             var infoWindow = new google.maps.InfoWindow({
                 content: 'Your Location.'
             });
-            var geocoder = new google.maps.Geocoder;
-
             infoWindow.open(map, marker);
-            geocodeLatLng(geocoder, location);
 
+            var geocoder = new google.maps.Geocoder;
+            geocodeLatLng(geocoder, location);
             new google.maps.places.SearchBox(document.getElementById('txtFrom'));
             new google.maps.places.SearchBox(document.getElementById('txtTo'));
             directionsDisplay = new google.maps.DirectionsRenderer({ 'draggable': true });
             directionsDisplay.setMap(map);
+            initSocket(map, location);
         }
 
         function geocodeLatLng(geocoder, latlng) {

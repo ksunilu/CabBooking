@@ -1,11 +1,30 @@
 angular.module('myApp')
     .controller('LocationController',
-    function ($window, $scope, $http, AuthenticationService) {
+    function ($window, $scope, $http, AuthenticationService, $rootScope) {
+
+        var socket = io();
+        function initSocket(Location) {
+            debugger;
+            var user = AuthenticationService.GetUser();
+            user.Location = Location;
+            socket.emit('land', user);
+            socket.on('draw map', function (loggedUsers) {
+                debugger;
+                $rootScope.loggedUsers = loggedUsers;
+                console.log('all users@location');
+                console.log(loggedUsers);
+                // alert('draw map for driver');
+                // $rootScope.currentUser = response.data.user;
+            });
+        }
+
+
         $scope.init = function () {
             $window.navigator.geolocation.getCurrentPosition(function (position) {
                 loc = { lat: position.coords.latitude, lng: position.coords.longitude };
                 drawInitMap(loc);
-                $scope.location = loc;
+                initSocket(loc);
+                $scope.Location = loc;
                 //broad cast location
             });
             return;
@@ -60,7 +79,7 @@ angular.module('myApp')
                     marker.setVisible(true);
                     infoWindow.setContent('Your typed Location.');
                     infoWindow.open(map, marker);
-                    $scope.location = place.geometry.location;
+                    $scope.Location = place.geometry.location;
                 });
             }
 

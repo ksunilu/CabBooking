@@ -35,6 +35,7 @@ function Service($http, $cookies, $sessionStorage, $window) {
     */
 
     function addLocation2User(user) {
+        
         var loc = { lat: 28, lng: 77 };
         if ($window.navigator.geolocation) {
             $window.navigator.geolocation.getCurrentPosition(function (position) {

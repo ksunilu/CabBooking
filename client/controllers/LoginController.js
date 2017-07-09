@@ -7,21 +7,16 @@ angular.module('myApp')
                 if (response.data.success === true) {
                     console.log(response.data);
                     // debugger;
-                    var socket = io();
+                    // var socket = io();
+                    // socket.emit('logon', response.data.user);
 
-                    //add location to user data  IMP edit
-                    $window.navigator.geolocation.getCurrentPosition(function (position) {
-                        loc = { lat: position.coords.latitude, lng: position.coords.longitude };
-                        response.data.user.location = loc;
-                        socket.emit('logon', response.data.user);
-                    });
-
-                    socket.on('current users', function (loggedUsers) {
-                        $rootScope.loggedUsers = loggedUsers;
-                        $rootScope.currentUser = response.data.user;
-                        console.log(loggedUsers);
-                        debugger;
-                    });
+                    // socket.on('current users', function (loggedUsers) {
+                    //     $rootScope.loggedUsers = loggedUsers;
+                    //     $rootScope.currentUser = response.data.user;
+                    //     console.log('all users');
+                    //     console.log(loggedUsers);
+                    //     // debugger;
+                    // });
 
                     if (response.data.user.role === 'driver')
                         $location.path('/location');

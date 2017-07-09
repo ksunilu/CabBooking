@@ -84,7 +84,7 @@ module.exports = function (app) {
       else if (usrData) { //if all is well then
         model.findOneAndUpdate({ email: req.body.email }, { 'status': 'login' }, function (err, data) {
           if (err) console.log(err);
-          console.log(data);
+          // console.log(data);
           var token = jwt.sign(data, 'thisismysecret', { expiresIn: 1400 });
           res.json({ success: true, token: token, isLoggedIn: true, user: data });
           // console.log(token);
