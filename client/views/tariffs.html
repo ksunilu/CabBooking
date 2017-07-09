@@ -1,96 +1,112 @@
-<div class="container well">
-  <form class="form-horizontal well" role="form">
-    <table class="table ">
-      <caption>
-        <h3>
-          Tariff Details
-        </h3>
-      </caption>
-      <tr>
-        <td>
-          <strong>   Vehicle Type </strong>
-        </td>
-        <td>
-          <input id="txt1" class="form-control plain" type="text" ng-model="Data.tariffVehicleType" />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <strong>   Booking Fee</strong>
-        </td>
-        <td>
-          <input class="form-control plain" type="text" ng-model="Data.bookingFee" />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <strong>   Base Tariff</strong>
-        </td>
-        <td>
+<div class="container-fluid jumbotron">
+  <div class="row">
+    <div class="col-sm-6">
+      <form class="form-horizontal well" role="form">
+        <table class="table ">
+          <caption>
+            <h3>
+              Tariff Details
+            </h3>
+          </caption>
+          <tr>
+            <td>
+              <strong>   Vehicle Type </strong>
+            </td>
+            <td>
+              <input id="txt1" class="form-control plain" type="text" ng-model="Data.tariffVehicleType" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong>   Booking Fee</strong>
+            </td>
+            <td>
+              <input class="form-control plain" type="text" ng-model="Data.bookingFee" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong>   Base Tariff</strong>
+            </td>
+            <td>
 
-          <input class="form-control plain" type="text" ng-model="Data.baseTariff" />
-        </td>
-      </tr>
-      <tr>
-        <td> <strong>   Peak Tariff</strong>
-        </td>
-        <td>
-          <input class="form-control plain" type="text" ng-model="Data.peakTariff" />
-        </td>
-      </tr>
-      <tr>
-        <td> <strong>   Peak Hr Start </strong>
-        </td>
-        <td>
-          <input class="form-control plain" type="text" ng-model="Data.peakStartHR" />
-        </td>
-      </tr>
-      <tr>
-        <td> <strong>   Peak Hr End </strong>
-        </td>
-        <td>
-          <input class="form-control plain" type="text" ng-model="Data.peakEndHR" />
-        </td>
-      </tr>
-      <tr>
-        <td> <strong>   Cancellation Fee</strong>
-        </td>
-        <td>
-          <input class="form-control plain" type="text" ng-model="Data.cancellationFee" />
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <button class="btn btn-danger" ng-click="SaveData()">Add</button>
-          <button class="btn btn-danger" ng-click="DeleteData(Data)">Delete</button>
-          <button class="btn btn-danger" ng-click="UpdateData(Data)">Update</button>
-        </td>
-        <tr>
-  </form>
+              <input class="form-control plain" type="text" ng-model="Data.baseTariff" />
+            </td>
+          </tr>
+          <tr>
+            <td> <strong>   Peak Tariff</strong>
+            </td>
+            <td>
+              <input class="form-control plain" type="text" ng-model="Data.peakTariff" />
+            </td>
+          </tr>
+          <tr>
+            <td> <strong>   Peak Hr Start </strong>
+            </td>
+            <td>
+              <input class="form-control plain" type="text" ng-model="Data.peakStartHR" />
+            </td>
+          </tr>
+          <tr>
+            <td> <strong>   Peak Hr End </strong>
+            </td>
+            <td>
+              <input class="form-control plain" type="text" ng-model="Data.peakEndHR" />
+            </td>
+          </tr>
+          <tr>
+            <td> <strong>   Cancellation Fee</strong>
+            </td>
+            <td>
+              <input class="form-control plain" type="text" ng-model="Data.cancellationFee" />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <button class="btn btn-danger btn-lg" ng-click="SaveData()"><span class="glyphicon glyphicon-plus"></span></button>
+              <button class="btn btn-danger btn-lg" ng-click="DeleteData(Data)"><span class="glyphicon glyphicon-trash"></span></button>
+              <button class="btn btn-danger btn-lg" ng-click="UpdateData(Data)"> <span class="glyphicon glyphicon-floppy-saved"></span> </button>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+    <div class="col-sm-6 well">
+      <table class="table table-condensed">
+        <tr class="btn-primary">
+          <td>Vehicle Type</td>
+          <td>Booking Fee</td>
+          <td>Base Tariff</td>
+          <td>Peak Tariff</td>
+          <td>Peak Hr Start </td>
+          <td>Peak Hr End </td>
+          <td>Cancellation Fee</td>
+          <td>Edit Tariff</td>
+          <td>Delete Tariff</td>
+        </tr>
+        <tr class=" btn-info " ng-repeat="c in allData ">
+          <td>{{c.tariffVehicleType}}</td>
+          <td>{{c.bookingFee}}</td>
+          <td>{{c.baseTariff}}</td>
+          <td>{{c.peakTariff}}</td>
+          <td>{{c.peakStartHR}}</td>
+          <td>{{c.peakEndHR}}</td>
+          <td>{{c.cancellationFee}}</td>
 
-  <table class="table">
-    <tr>
-      <td>Vehicle Type</td>
-      <td>Booking Fee</td>
-      <td>Base Tariff</td>
-      <td>Peak Tariff</td>
-      <td>Peak Hr Start </td>
-      <td>Peak Hr End </td>
-      <td>Cancellation Fee</td>
-      <td>Edit Tariff</td>
-      <td>Delete Tariff</td>
-    </tr>
-    <tr ng-repeat="c in allData">
-      <td>{{c.tariffVehicleType}}</td>
-      <td>{{c.bookingFee}}</td>
-      <td>{{c.baseTariff}}</td>
-      <td>{{c.peakTariff}}</td>
-      <td>{{c.peakStartHR}}</td>
-      <td>{{c.peakEndHR}}</td>
-      <td>{{c.cancellationFee}}</td>
-
-      <td><button ng-click="EditData(c)" class="btn btn-primary"><span class="glyphicons glyphicons-pen"></span>Edit</button></td>
-      <td><button ng-click="DeleteData(c)" class="btn btn-primary"><span class="glyphicons glyphicons-bin"></span>Delete </button></td>
-    </tr>
-  </table>
+          <td>
+            <button ng-click="EditData(c) " class="btn btn-primary btn-lg ">
+            <span class="glyphicon glyphicon-pencil"></span>
+            
+            </button>
+          </td>
+          <td>
+            <button ng-click="DeleteData(c) " class="btn btn-primary btn-lg ">
+             <span class="glyphicon glyphicon-trash"></span>
+           
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </div>
