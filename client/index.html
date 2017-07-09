@@ -44,24 +44,27 @@
     <script src="./controllers/TariffsController.js"></script>
 
     <script>
-        function storeLocation() {
-            var loc = { lat: 28, lng: 77 };
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    loc = { lat: position.coords.latitude, lng: position.coords.longitude };
-                    sessionStorage.location = loc;
-                    sessionStorage.lat = loc.lat;
-                    sessionStorage.lng = loc.lng;
+        // function storeLocation() {
+        //     var loc = { lat: 28, lng: 77 };
+        //     if (navigator.geolocation) {
+        //         navigator.geolocation.getCurrentPosition(function (position) {
+        //             loc = { lat: position.coords.latitude, lng: position.coords.longitude };
+        //             sessionStorage.location = loc;
+        //             sessionStorage.lat = loc.lat;
+        //             sessionStorage.lng = loc.lng;
 
-                    // console.log('inside index.html after load googleapi');
-                    // console.log(loc);
-                });
-            }
-            // console.log('outside');
-            // console.log(loc);
-        }
+        //             // console.log('inside index.html after load googleapi');
+        //             // console.log(loc);
+        //         });
+        //     }
+        //     // console.log('outside');
+        //     // console.log(loc);
+        // }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYDfG-C4NuOEBj1aRBIHNi-ApfLmaQae0&libraries=places,drawing,geometry&callback=storeLocation"></script>
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYDfG-C4NuOEBj1aRBIHNi-ApfLmaQae0&libraries=places,drawing,geometry&callback=storeLocation"></script>-->
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYDfG-C4NuOEBj1aRBIHNi-ApfLmaQae0&libraries=places,drawing,geometry"></script>
+
     <style>
         body {
             padding-top: 70px;
