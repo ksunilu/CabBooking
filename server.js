@@ -70,10 +70,25 @@ io.sockets.on('connection', function (socket) {
 
         console.log('logged in Users@land');
         console.log(loggedUsers);
-        // io.emit('current users', loggedUsers);
+
         io.emit('draw map', loggedUsers);
     });
 
+    socket.on('location', function (data) {
+        console.log('changed location@socket');
+        console.log(data);
+        console.log(socket.id);
+
+        for (var j = 0; j < loggedUsers.length; j++) {
+            if (loggedUsers[j].id === socket.id) {
+                // loggedUsers.splice(j, 1);
+                loggedUsers[j].data = data;
+                break;
+            }
+        }
+
+        io.emit('draw map', loggedUsers);
+    });
     // socket.on('logon', function (data) {
     //     console.log('logon');
     //     console.log(data);
@@ -106,7 +121,7 @@ io.sockets.on('connection', function (socket) {
                 break;
             }
         }
-        io.emit('current users', loggedUsers);
+        io.emit('draw map', loggedUsers);
     });
 });
 

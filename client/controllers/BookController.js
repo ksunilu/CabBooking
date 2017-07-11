@@ -3,9 +3,20 @@
 angular.module('myApp')
     .controller('BookController', function (AuthenticationService, $rootScope, $scope, $http, $window, crudService) {
         var socket = io();
+        var markersArray = [];
+        var map, userMarker, userWindow;
+
         function distance(latLngA, latLngB) {
             return google.maps.geometry.spherical.computeDistanceBetween(latLngA, latLngB);
         }
+
+        function changeLocation(Location) {
+            $scope.rec.origins = Location;
+            var user = AuthenticationService.GetUser();
+            user.Location = Location;
+            socket.emit('location', user);
+        }
+
         function initSocket(map, Location) {
             debugger;
             var user = AuthenticationService.GetUser();
@@ -17,29 +28,41 @@ angular.module('myApp')
                 $rootScope.loggedUsers = loggedUsers;
                 console.log('all users@book');
                 console.log(loggedUsers);
-                drawCabs(map, loggedUsers);
+                eraseMarkers();
+                drawMarkers(map, loggedUsers);
                 // draw cab at all driver location
                 // $rootScope.currentUser = response.data.user;
             });
         }
 
-        function drawCabs(map, loggedUsers) {
-
+        function drawMarkers(map, loggedUsers) {
             for (var i = 0; i < loggedUsers.length; i++) {
-                if (loggedUsers[i].data.role === 'driver') {
+                var user = AuthenticationService.GetUser();
+
+                if (loggedUsers[i].data.role === 'driver' ||
+                    (loggedUsers[i].data.role === 'client' &&
+                        loggedUsers[i].data.email === user.email)) {
+
                     var location = loggedUsers[i].data.Location;
+                    var iconPath = '../public/images/cab.png';
+                    if (loggedUsers[i].data.role === 'client') {
+                        iconPath = '../public/images/wait.png';
+                    }
                     var marker = new google.maps.Marker({
                         map: map,
                         position: location,
-                        icon: '../public/images/cab.png',
+                        icon: iconPath,
                         size: new google.maps.Size(6, 6)
                     });
-                    // var infoWindow = new google.maps.InfoWindow({
-                    //     content: 'Your Location.'
-                    // });
-                    // infoWindow.open(map, marker);
+                    alert(' in drawMarkers ');
+                    markersArray.push(marker);
                 }
             }
+        }
+
+        function eraseMarkers() {
+
+            while (markersArray.length) { markersArray.pop().setMap(null); }
         }
 
         // var source, destination;
@@ -58,6 +81,7 @@ angular.module('myApp')
                 $scope.alltariff = data;
             });
         };
+
         initData();
 
 
@@ -88,31 +112,47 @@ angular.module('myApp')
             });
         }
 
+
         $scope.drawInitMap = function (location) {
-            var map = new google.maps.Map(document.getElementById('map'), {
+            map = new google.maps.Map(document.getElementById('map'), {
                 center: location,
                 zoom: 14
             });
-            var marker = new google.maps.Marker({
-                map: map,
-                position: location,
-                icon: '../public/images/wait.png',
-                size: new google.maps.Size(6, 6)
-            });
-            var infoWindow = new google.maps.InfoWindow({
-                content: 'Your Location.'
-            });
-            infoWindow.open(map, marker);
+            initSocket(map, location);
 
             var geocoder = new google.maps.Geocoder;
             geocodeLatLng(geocoder, location);
-            new google.maps.places.SearchBox(document.getElementById('txtFrom'));
-            new google.maps.places.SearchBox(document.getElementById('txtTo'));
-            directionsDisplay = new google.maps.DirectionsRenderer({ 'draggable': true });
-            directionsDisplay.setMap(map);
-            initSocket(map, location);
-        }
 
+            var searchBox = new google.maps.places.SearchBox(document.getElementById('txtFrom'));
+            map.addListener('bounds_changed', function () {
+                searchBox.setBounds(map.getBounds());
+            });
+            createListener(searchBox);
+
+            new google.maps.places.SearchBox(document.getElementById('txtTo'));
+            directionsDisplay = new google.maps.DirectionsRenderer({ 'draggable': false });
+            directionsDisplay.setMap(map);
+        }
+        function createListener(searchBox) {
+            searchBox.addListener('places_changed', function () {
+                var places = searchBox.getPlaces();
+                if (places.length == 0) return;
+
+                var place = places[0];
+
+                if (!place.geometry) {
+                    window.alert("Autocomplete's returned place contains no geometry");
+                    return;
+                }
+                if (place.geometry.viewport) {
+                    map.fitBounds(place.geometry.viewport);
+                } else {
+                    map.setCenter(place.geometry.location);
+                    map.setZoom(10);
+                }
+                changeLocation(place.geometry.location);
+            });
+        }
         function geocodeLatLng(geocoder, latlng) {
             geocoder.geocode({ 'location': latlng }, function (results, status) {
                 if (status === 'OK') {
@@ -203,6 +243,8 @@ angular.module('myApp')
                                     $scope.rec.origins = origins;
                                     $scope.rec.destinations = destinations;
 
+                                    changeLocation(origins);
+                                    // EMIT CHANGE OF LOCATION
                                     calcDistTime();
                                     drawRoute();
 

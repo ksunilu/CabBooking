@@ -3,6 +3,8 @@ angular.module('myApp')
     function ($window, $scope, $http, AuthenticationService, $rootScope) {
 
         var socket = io();
+        var map, infoWindow, marker;
+
         function initSocket(Location) {
             debugger;
             var user = AuthenticationService.GetUser();
@@ -31,12 +33,18 @@ angular.module('myApp')
             //code end
             //definition of local functions 
             function drawInitMap(location) {
-                var map, infoWindow, marker;
+
 
                 map = new google.maps.Map(document.getElementById('map'), {
                     center: location,
                     zoom: 14
                 });
+
+                paintMap(map, location);
+                initTextbox(map, location, marker, infoWindow);
+            }
+
+            function paintMap(map, location) {
                 marker = new google.maps.Marker({
                     map: map,
                     position: location,
@@ -48,7 +56,6 @@ angular.module('myApp')
                 });
                 infoWindow.open(map, marker);
                 map.setCenter(location);
-                initTextbox(map, location, marker, infoWindow);
             }
             function initTextbox(map, location, marker, infoWindow) {
                 // var directionsDisplay;
@@ -75,12 +82,22 @@ angular.module('myApp')
                         map.setZoom(10);
                     }
 
+                    changeLocation(place.geometry.location);
+
                     marker.setPosition(place.geometry.location);
                     marker.setVisible(true);
                     infoWindow.setContent('Your typed Location.');
                     infoWindow.open(map, marker);
                     $scope.Location = place.geometry.location;
                 });
+            }
+
+            function changeLocation(Location) {
+                debugger;
+                alert('location change');
+                var user = AuthenticationService.GetUser();
+                user.Location = Location;
+                socket.emit('location', user);
             }
 
         }
