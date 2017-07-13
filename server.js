@@ -122,6 +122,7 @@ io.sockets.on('connection', function (socket) {
             }
         }
         io.emit('draw map', loggedUsers);
+        
     });
 });
 

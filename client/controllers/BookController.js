@@ -6,8 +6,31 @@ angular.module('myApp')
         var markersArray = [];
         var map, userMarker, userWindow;
 
-        function distance(latLngA, latLngB) {
-            return google.maps.geometry.spherical.computeDistanceBetween(latLngA, latLngB);
+        function distance(p1, p2) {
+            var a = new google.maps.LatLng(p1.lat, p1.lng);
+            var b = new google.maps.LatLng(p2.lat, p2.lng);
+            return google.maps.geometry.spherical.computeDistanceBetween(a, b);
+        }
+
+        function nearestCab(Location, loggedUsers) {
+            var minDist, nearCab;
+            for (var i = 0; i < loggedUsers.length; i++) {
+                if (loggedUsers[i].data.role !== 'driver') continue;
+                //skip all non cab drivers i.e. self also
+
+                if (typeof nearCab === 'undefined') {//pick the first driver
+                    minDist = distance(Location, loggedUsers[i].data.Location);
+                    nearCab = loggedUsers[i].data;
+                }
+                else {
+                    var dist = distance(Location, loggedUsers[i].data.Location);
+                    if (dist < minDist) {
+                        minDist = dist;
+                        nearCab = loggedUsers[i].data;
+                    }
+                }
+            }
+            return nearCab;
         }
 
         function changeLocation(Location) {
@@ -18,35 +41,51 @@ angular.module('myApp')
         }
 
         function initSocket(map, Location) {
-            debugger;
+            // debugger;
             var user = AuthenticationService.GetUser();
             user.Location = Location;
             socket.emit('land', user);
 
+
             socket.on('draw map', function (loggedUsers) {
-                debugger;
                 $rootScope.loggedUsers = loggedUsers;
-                console.log('all users@book');
-                console.log(loggedUsers);
-                eraseMarkers();
+                // console.log('all users@book');
+                // console.log(loggedUsers);
+                eraseMapObjects();
                 drawMarkers(map, loggedUsers);
+
+                $scope.pickedCab = nearestCab(Location, loggedUsers);
+                if ($scope.pickedCab === undefined) {
+                    delete $scope.showBookNow;
+                }
+                debugger;
+
+                // alert(JSON.stringify(cab));
+
+
                 // draw cab at all driver location
                 // $rootScope.currentUser = response.data.user;
             });
         }
 
         function drawMarkers(map, loggedUsers) {
+
+            var user = AuthenticationService.GetUser();
             for (var i = 0; i < loggedUsers.length; i++) {
-                var user = AuthenticationService.GetUser();
 
                 if (loggedUsers[i].data.role === 'driver' ||
                     (loggedUsers[i].data.role === 'client' &&
                         loggedUsers[i].data.email === user.email)) {
 
                     var location = loggedUsers[i].data.Location;
-                    var iconPath = '../public/images/cab.png';
+                    var iconPath;
+                    console.log(loggedUsers[i]);
+
                     if (loggedUsers[i].data.role === 'client') {
                         iconPath = '../public/images/wait.png';
+                    }
+                    else {
+                        iconPath = '../public/images/cab.png';
                     }
                     var marker = new google.maps.Marker({
                         map: map,
@@ -54,15 +93,21 @@ angular.module('myApp')
                         icon: iconPath,
                         size: new google.maps.Size(6, 6)
                     });
-                    alert(' in drawMarkers ');
+                    // alert(' in drawMarkers ');
                     markersArray.push(marker);
                 }
             }
         }
 
-        function eraseMarkers() {
+        function eraseMapObjects() {
+            delete $scope.showBookNow;
+            delete $scope.pickedCab;
+            // $scope.pickedCab = {};
+            // $scope.pickedCab = undefined;
+            // alert($scope.showBookNow);
 
             while (markersArray.length) { markersArray.pop().setMap(null); }
+
         }
 
         // var source, destination;
@@ -72,10 +117,18 @@ angular.module('myApp')
         function initData() {
             console.log('Trying get all data.');
             // debugger;
+            var day1 = new Date();
+            var day2 = new Date(day1 + 1) ;
+            var day3 = new Date(day1 + 2);
 
             $scope.alltariff = {};
             $scope.rec = {};
             $scope.rec.bookTravelDate = new Date();
+
+            $scope.rec.bookTravelDateA = day1.toLocaleDateString();
+            $scope.rec.bookTravelDateB = day2.toLocaleDateString();
+            $scope.rec.bookTravelDateC = day3.toLocaleDateString();
+
             var promise = crudService.getAllData('/tariffs');
             promise.then(function (data) {
                 $scope.alltariff = data;
@@ -124,12 +177,14 @@ angular.module('myApp')
             geocodeLatLng(geocoder, location);
 
             var searchBox = new google.maps.places.SearchBox(document.getElementById('txtFrom'));
+            var searchBox2 = new google.maps.places.SearchBox(document.getElementById('txtTo'));
+
             map.addListener('bounds_changed', function () {
                 searchBox.setBounds(map.getBounds());
+                searchBox2.setBounds(map.getBounds());
             });
             createListener(searchBox);
 
-            new google.maps.places.SearchBox(document.getElementById('txtTo'));
             directionsDisplay = new google.maps.DirectionsRenderer({ 'draggable': false });
             directionsDisplay.setMap(map);
         }
@@ -153,6 +208,7 @@ angular.module('myApp')
                 changeLocation(place.geometry.location);
             });
         }
+
         function geocodeLatLng(geocoder, latlng) {
             geocoder.geocode({ 'location': latlng }, function (results, status) {
                 if (status === 'OK') {
@@ -160,10 +216,10 @@ angular.module('myApp')
                         document.getElementById('txtFrom').value = results[1].formatted_address;
                         $scope.rec.origins = results[1].geometry.location;
                     } else {
-                        window.alert('No results found');
+                        alert('No results found');
                     }
                 } else {
-                    window.alert('Geocoder failed due to: ' + status);
+                    alert('Geocoder failed due to: ' + status);
                 }
             });
         }
@@ -220,7 +276,7 @@ angular.module('myApp')
                 var address1 = document.getElementById('txtFrom').value;
                 var address2 = document.getElementById('txtTo').value;
                 var geocoder = new google.maps.Geocoder;
-                debugger;
+                // debugger;
                 if ($scope.rec.origins) {
                     getLatLngPromise(geocoder, address2).then(
                         function (destinations) {
@@ -258,6 +314,15 @@ angular.module('myApp')
                         }
                     );
                 }
+                //show book cab
+                if (typeof $scope.pickedCab !== 'undefined') {
+                    $scope.showBookNow = true;
+                }
+                else {
+                    $scope.showBookNow = false;
+                }
+
+
             }); //end click event
 
         function calcDistTime() {
