@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module('myApp')
-    .controller('BookController', function (AuthenticationService, $location, $rootScope, $scope, $http, $window, crudService) {
+    .controller('BookController', function (AuthenticationService, $rootScope, $scope, $http, $window, crudService) {
         var socket = io();
         var markersArray = [];
         var map, userMarker, userWindow;
@@ -12,21 +12,21 @@ angular.module('myApp')
             return google.maps.geometry.spherical.computeDistanceBetween(a, b);
         }
 
-        function nearestCab(Location, allLoginUsers) {
+        function nearestCab(Location, loggedUsers) {
             var minDist, nearCab;
-            for (var i = 0; i < allLoginUsers.length; i++) {
-                if (allLoginUsers[i].data.role !== 'driver') continue;
+            for (var i = 0; i < loggedUsers.length; i++) {
+                if (loggedUsers[i].data.role !== 'driver') continue;
                 //skip all non cab drivers i.e. self also
 
                 if (typeof nearCab === 'undefined') {//pick the first driver
-                    minDist = distance(Location, allLoginUsers[i].data.Location);
-                    nearCab = allLoginUsers[i].data;
+                    minDist = distance(Location, loggedUsers[i].data.Location);
+                    nearCab = loggedUsers[i].data;
                 }
                 else {
-                    var dist = distance(Location, allLoginUsers[i].data.Location);
+                    var dist = distance(Location, loggedUsers[i].data.Location);
                     if (dist < minDist) {
                         minDist = dist;
-                        nearCab = allLoginUsers[i].data;
+                        nearCab = loggedUsers[i].data;
                     }
                 }
             }
@@ -34,40 +34,54 @@ angular.module('myApp')
         }
 
         function changeLocation(Location) {
-            $scope.show.origins = Location;
-            // var user = AuthenticationService.GetUser();
-            $scope.rec.bookUser.Location = Location;
-            socket.emit('location', $scope.rec.bookUser);
+            $scope.rec.origins = Location;
+            var user = AuthenticationService.GetUser();
+            user.Location = Location;
+            socket.emit('location', user);
         }
 
         function initSocket(map, Location) {
+            // debugger;
+            var user = AuthenticationService.GetUser();
+            user.Location = Location;
+            socket.emit('land', user);
 
-            // var user = AuthenticationService.GetUser();
-            $scope.rec.bookUser.Location = Location;
-            socket.emit('land', $scope.rec.bookUser);
-            socket.on('draw map', function (allLoginUsers) {
-                $rootScope.allLoginUsers = allLoginUsers;
+
+            socket.on('draw map', function (loggedUsers) {
+                $rootScope.loggedUsers = loggedUsers;
                 // console.log('all users@book');
-                // console.log(allLoginUsers);
+                // console.log(loggedUsers);
                 eraseMapObjects();
-                drawMarkers(map, allLoginUsers);
-                $scope.pickedCab = nearestCab(Location, allLoginUsers);
+                drawMarkers(map, loggedUsers);
+
+                $scope.pickedCab = nearestCab(Location, loggedUsers);
+                if ($scope.pickedCab === undefined) {
+                    delete $scope.showBookNow;
+                }
+                // debugger;
+
+                // alert(JSON.stringify(cab));
+
+
+                // draw cab at all driver location
+                // $rootScope.currentUser = response.data.user;
             });
         }
 
-        function drawMarkers(map, allLoginUsers) {
-            // var user = AuthenticationService.GetUser();
-            for (var i = 0; i < allLoginUsers.length; i++) {
+        function drawMarkers(map, loggedUsers) {
 
-                if (allLoginUsers[i].data.role === 'driver' ||
-                    (allLoginUsers[i].data.role === 'client' &&
-                        allLoginUsers[i].data.email === $scope.rec.bookUser.email)) {
+            var user = AuthenticationService.GetUser();
+            for (var i = 0; i < loggedUsers.length; i++) {
 
-                    var location = allLoginUsers[i].data.Location;
+                if (loggedUsers[i].data.role === 'driver' ||
+                    (loggedUsers[i].data.role === 'client' &&
+                        loggedUsers[i].data.email === user.email)) {
+
+                    var location = loggedUsers[i].data.Location;
                     var iconPath;
-                    console.log(allLoginUsers[i]);
+                    console.log(loggedUsers[i]);
 
-                    if (allLoginUsers[i].data.role === 'client') {
+                    if (loggedUsers[i].data.role === 'client') {
                         iconPath = '../public/images/wait.png';
                     }
                     else {
@@ -86,7 +100,7 @@ angular.module('myApp')
         }
 
         function eraseMapObjects() {
-            // delete $scope.showBookNow;
+            delete $scope.showBookNow;
             delete $scope.pickedCab;
             // $scope.pickedCab = {};
             // $scope.pickedCab = undefined;
@@ -102,30 +116,25 @@ angular.module('myApp')
 
         function initData() {
             $scope.rec = {};
-            $scope.show = {};
-            $scope.rec.selWhen = 'NOW';
-            $scope.rec.bookUser = AuthenticationService.GetUser();
-            $scope.rec.bookTravelDate = new Date();
-
-
+            console.log('Trying get all data.');
+            // debugger;
             var day1 = new Date();
             var day2 = new Date();
             var day3 = new Date();
-            $scope.show.bookTravelTimeTxt = new Date();
-            $scope.show.bookTravelTimeTxt.setHours(day1.getHours() + 12);
+            $scope.rec.bookTravelTimeTxt = new Date();
+            $scope.rec.bookTravelTimeTxt.setHours(day1.getHours() + 12);
 
             day2.setDate(day1.getDate() + 1);
             day3.setDate(day1.getDate() + 2);
             $scope.alltariff = {};
-            $scope.show.bookTravelDateTxt = day1.toLocaleDateString();
+            $scope.rec.bookTravelDateTxt = day1.toLocaleDateString();
 
-            $scope.show.bookTravelDateA = day1.toLocaleDateString();
-            $scope.show.bookTravelDateB = day2.toLocaleDateString();
-            $scope.show.bookTravelDateC = day3.toLocaleDateString();
+            $scope.rec.bookTravelDateA = day1.toLocaleDateString();
+            $scope.rec.bookTravelDateB = day2.toLocaleDateString();
+            $scope.rec.bookTravelDateC = day3.toLocaleDateString();
 
             // debugger;
 
-            console.log('Trying get all data.');
             var promise = crudService.getAllData('/tariffs');
             promise.then(function (data) {
                 $scope.alltariff = data;
@@ -137,23 +146,19 @@ angular.module('myApp')
 
         $scope.setTravelDate = function () {
             if ($scope.selWhen === 'NOW')
-                $scope.rec.bookTravelDate = new Date();
+                $scope.rec.bookTravelDate = Date();
         }
         $scope.validateTime = function () {
-            // debugger;
-            if ($scope.selWhen === 'NOW') {
-                $scope.rec.bookTravelDate = Date();
-                return;
-            }
-            var dtStr = $scope.show.bookTravelDateTxt.toString();
+            debugger;
+            var dtStr = $scope.rec.bookTravelDateTxt.toString();
             var parts = dtStr.split("/");
             var dt = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
-            var tm = $scope.show.bookTravelTimeTxt;
+            var tm = $scope.rec.bookTravelTimeTxt;
 
             dt.setHours(tm.getHours());
             dt.setMinutes(tm.getMinutes());
             dt.setSeconds(tm.getSeconds());
-
+ 
             $scope.rec.bookTravelDate = dt;
             var lowDt, highDt, now = new Date();
             lowDt = new Date();
@@ -161,7 +166,7 @@ angular.module('myApp')
 
             lowDt.setHours(now.getHours() + 12);
             highDt.setHours(now.getHours() + 48);
-            // debugger;
+            debugger;
 
             if (!(dt >= lowDt && dt <= highDt)) {
                 alert('Advance Booking should be between' + lowDt.toLocaleString() +
@@ -175,10 +180,8 @@ angular.module('myApp')
 
             var promise = crudService.addData($scope.rec, '/bookings');
             promise.then(function (data) {
-                alert('Booking Done');
-                console.log('Booking Data Saved');
                 console.log(data);
-                $location.path('/');
+                initData();
             });
         }
 
@@ -202,18 +205,16 @@ angular.module('myApp')
             initSocket(map, location);
 
             var geocoder = new google.maps.Geocoder;
-            parseLatLng2Address(geocoder, location);
+            geocodeLatLng(geocoder, location);
 
-            var searchBoxFrm = new google.maps.places.SearchBox(document.getElementById('txtFrom'));
-            var searchBoxTo = new google.maps.places.SearchBox(document.getElementById('txtTo'));
-            searchBoxFrm.setBounds(map.getBounds());
-            searchBoxTo.setBounds(map.getBounds());
+            var searchBox = new google.maps.places.SearchBox(document.getElementById('txtFrom'));
+            var searchBox2 = new google.maps.places.SearchBox(document.getElementById('txtTo'));
 
             map.addListener('bounds_changed', function () {
-                searchBoxFrm.setBounds(map.getBounds());
-                searchBoxTo.setBounds(map.getBounds());
+                searchBox.setBounds(map.getBounds());
+                searchBox2.setBounds(map.getBounds());
             });
-            createListener(searchBoxFrm);
+            createListener(searchBox);
 
             directionsDisplay = new google.maps.DirectionsRenderer({ 'draggable': false });
             directionsDisplay.setMap(map);
@@ -239,13 +240,12 @@ angular.module('myApp')
             });
         }
 
-        function parseLatLng2Address(geocoder, latlng) {
+        function geocodeLatLng(geocoder, latlng) {
             geocoder.geocode({ 'location': latlng }, function (results, status) {
                 if (status === 'OK') {
                     if (results[1]) {
                         document.getElementById('txtFrom').value = results[1].formatted_address;
-                        $scope.rec.bookSource = document.getElementById('txtFrom').value;
-                        $scope.show.origins = results[1].geometry.location;
+                        $scope.rec.origins = results[1].geometry.location;
                     } else {
                         alert('No results found');
                     }
@@ -301,78 +301,66 @@ angular.module('myApp')
 
         //////////////////// end init map ////////////////////////
         //start click event
-        $scope.showModal = function () {
-            if ($scope.pickedCab) {
-                angular.element('#myModal').modal('show');
-            }
-            else {
-                alert('Unable to locate any cab.');
-            }
-        }
-        $scope.getEstimate = function () {
-            //*********DIRECTIONS AND ROUTE**********************//
-            $scope.rec.bookSource = document.getElementById('txtFrom').value;
-            $scope.rec.bookDestination = document.getElementById('txtTo').value;
+        google.maps.event.addDomListener(document.getElementById('routeClick'), 'click',
+            function () {
+                //*********DIRECTIONS AND ROUTE**********************//
+                var address1 = document.getElementById('txtFrom').value;
+                var address2 = document.getElementById('txtTo').value;
+                var geocoder = new google.maps.Geocoder;
+                // debugger;
+                if ($scope.rec.origins) {
+                    getLatLngPromise(geocoder, address2).then(
+                        function (destinations) {
+                            //we have $scope.rec.origins so found destinations 
+                            //and routing .....
+                            $scope.rec.destinations = destinations;
+                            calcDistTime();
+                            drawRoute();
+                        }, function (error) {
+                            alert("Failed!-inner", error);
+                        }
+                    );
+                }
+
+                else {
+                    getLatLngPromise(geocoder, address1).then(
+                        function (origins) {
+                            getLatLngPromise(geocoder, address2).then(
+                                function (destinations) {
+                                    $scope.rec.origins = origins;
+                                    $scope.rec.destinations = destinations;
+
+                                    changeLocation(origins);
+                                    // EMIT CHANGE OF LOCATION
+                                    calcDistTime();
+                                    drawRoute();
+
+                                }, function (error) {
+                                    alert("Failed!-inner", error);
+                                }
+                            );
+
+                        }, function (error) {
+                            alert("Failed!-outer", error);
+                        }
+                    );
+                }
+                //show book cab
+                if (typeof $scope.pickedCab !== 'undefined') {
+                    $scope.showBookNow = true;
+                }
+                else {
+                    $scope.showBookNow = false;
+                }
 
 
-
-            var geocoder = new google.maps.Geocoder;
-
-            if ($scope.show.origins) {
-                getLatLngPromise(geocoder, $scope.rec.bookDestination).then(
-                    function (destinations) {
-                        //we have $scope.show.origins so found destinations 
-                        //and routing .....
-                        $scope.show.destinations = destinations;
-                        calcDistTime();
-                        drawRoute();
-                    }, function (error) {
-                        alert("Failed!- geting destination type again", error);
-                    }
-                );
-            }
-
-            else {
-                getLatLngPromise(geocoder, $scope.rec.bookSource).then(
-                    function (origins) {
-                        getLatLngPromise(geocoder, $scope.rec.bookDestination).then(
-                            function (destinations) {
-                                $scope.show.origins = origins;
-                                $scope.show.destinations = destinations;
-
-                                changeLocation(origins);
-                                // EMIT CHANGE OF LOCATION
-                                calcDistTime();
-                                drawRoute();
-
-                            }, function (error) {
-                                alert("Failed!- geting destination type again", error);
-                            }
-                        );
-
-                    }, function (error) {
-                        alert("Failed!- geting origin type again", error);
-                    }
-                );
-            }
-            //show book cab
-            // document.getElementById('showBookNow').style.display = 'block';
-            // debugger;
-
-
-            // if (typeof $scope.pickedCab !== 'undefined') {
-            //     $scope.showBookNow = true;
-            // }
-            // else {
-            //     $scope.showBookNow = false;
-            // }
-        }; //end click event
+            }); //end click event
 
         function calcDistTime() {
             var service = new google.maps.DistanceMatrixService();
             service.getDistanceMatrix({
-                origins: [$scope.show.origins],
-                destinations: [$scope.show.destinations],
+                origins: [$scope.rec.origins],
+                destinations: [$scope.rec.destinations],
                 travelMode: google.maps.TravelMode.DRIVING,
                 unitSystem: google.maps.UnitSystem.METRIC,
                 avoidHighways: false,
@@ -385,36 +373,21 @@ angular.module('myApp')
                     var dist = distance.replace('km', '');
 
                     $scope.rec.bookDistance = parseFloat(dist);
-                    $scope.rec.duration = response.rows[0].elements[0].duration.text;
+                    var duration = response.rows[0].elements[0].duration.text;
+                    var dvDistance = document.getElementById('dvDistance');
+                    dvDistance.innerHTML = 'Distance: ' + distance + '<br />' +
+                        'Tentative Duration:' + duration;
 
-                    angular.element('#showBookDiv').show();
-                    var dvDistance = document.getElementById('ansPara');
-                    var totalFare, tariff;
-                    if ($scope.rec.bookTravelDate === undefined)
-                        $scope.rec.bookTravelDate = new Date();
-
-                    var hrmin = $scope.rec.bookTravelDate.getHours() * 100 + $scope.rec.bookTravelDate.getMinutes();
-                    if (hrmin >= $scope.rec.bookVehicleType.peakStartHR && hrmin <= $scope.rec.bookVehicleType.peakEndHR)
-                        tariff = $scope.rec.bookVehicleType.baseTariff;
-                    else
-                        tariff = $scope.rec.bookVehicleType.peakTariff;
-                    totalFare = parseFloat(tariff) * parseFloat(dist)
-                    totalFare = totalFare.toFixed(2);
-                    $scope.rec.totalFare = totalFare;
-                    $scope.rec.tariff = tariff;
-
-                    dvDistance.innerHTML = '<small> Distance: ' + distance + ' <br /> Duration : ' +
-                        $scope.rec.duration + ' <br /> Fare@' + tariff + ' : Rs.' + totalFare + '</small>';
                 } else {
                     alert('Unable to find the distance via road.');
                 }
-
+                $scope.SaveData();
             });
         }
         function drawRoute() {
             directionsService.route({
-                origin: $scope.show.origins,
-                destination: $scope.show.destinations,
+                origin: $scope.rec.origins,
+                destination: $scope.rec.destinations,
                 travelMode: google.maps.TravelMode.DRIVING
             }, function (response, status) {
                 if (status == google.maps.DirectionsStatus.OK) {

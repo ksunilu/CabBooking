@@ -1,149 +1,122 @@
 <div class="container-fluid jumbotron">
 	<div class="row">
 		<div class="col-sm-6 white-well" style="height: 440px;">
-			<form ng-init="initData()" class="form-horizontal " role="form">
-				<div class="form-group  plain">
-					<label for="txtFrom" class="col-sm-2 control-label plain">
+			<div class="container-fluid">
+				<form ng-init="initData()" class="form-horizontal " role="form">
+					<div class="form-group row  ">
+						<label for="txtFrom" class="col-sm-2 col-form-label ">
 						<small>FROM</small>
 					</label>
-					<div class="col-sm-10 plain">
-						<input type="text" class="form-control plain" id="txtFrom" ng-model="rec.bookSource">
+						<div class="col-sm-10 ">
+							<input type="text" class="form-control " id="txtFrom" ng-model="rec.bookSource">
+						</div>
 					</div>
-				</div>
-				<div class="form-group  plain">
-					<label for="txtTo" class="col-sm-2 control-label plain">
+					<div class="form-group row  ">
+						<label for="txtTo" class="col-sm-2 col-form-label ">
 							<small>TO</small>
 						</label>
-					<div class="col-sm-10 plain">
-						<input type="text" class="form-control plain" id="txtTo" ng-model="rec.bookDestination">
+						<div class="col-sm-10 ">
+							<input type="text" class="form-control " id="txtTo" ng-model="rec.bookDestination">
+						</div>
 					</div>
-				</div>
 
-				<div class="form-group plain">
-					<label for="selWhen" class="col-sm-2 control-label plain">
+					<div class="form-group row ">
+						<label for="selWhen" class="col-sm-2 col-form-label ">
 							<small>WHEN</small>
 						</label>
-					<div class="col-sm-10 plain">
-						<select id="selWhen" class="form-control" ng-change="setTravelDate()" ng-model="rec.selWhen">
+						<div class="col-sm-10 ">
+							<select id="selWhen" class="form-control" ng-change="setTravelDate()" ng-model="rec.selWhen">
 							<option value="NOW">Now</option>
 							<option value="LATER">Later</option>
 						</select>
-						<!--<span>
-							test = {{book}}
-						</span>-->
+						</div>
 					</div>
-				</div>
 
-				<div ng-show="rec.selWhen==='LATER'" class="form-group plain">
-					<label for="TravelDate" class="col-sm-2 control-label plain">
+					<div ng-show="rec.selWhen==='LATER'" class="form-group row ">
+						<label for="TravelDate" class="col-sm-2 col-form-label ">	
 							<small>DEPART</small>
 						</label>
-					<div class="col-sm-10 plain">
-						<!--<input type="datetime-local" class="form-control plain" ng-model="rec.bookTravelDate" id="TravelDate" list="thesedates">-->
-
-						<input type="text" class="form-control plain" ng-model="rec.bookTravelDate" id="TravelDate" list="thesedates">
-
-						<!--<input type="date" id="date" name="date" list="thesedates">-->
-
-						<datalist id="thesedates">
-							<option>{{rec.bookTravelDateA}}</option>
-							<option>{{rec.bookTravelDateB}}</option>
-							<option>{{rec.bookTravelDateC}}</option>
-						</datalist>
-					</div>
-				</div>
-
-				<div class="form-group plain">
-					<label for="VehicleTy" class="col-sm-2 control-label plain">
-							<small>Vehicle Type</small>
-						</label>
-					<div class="col-sm-10 plain">
-						<select ng-options="x as x.tariffVehicleType for x in alltariff" id="VehicleTy" class="form-control" ng-model="rec.bookVehicleType">
-							<option value="">Select Vehicle Type</option>
-							
-						</select>
-						<!--<span>
-							test = {{rec}}
-						</span>-->
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-4">
-						<a id="routeClick" class="btn btn-block btn-warning btn-lg">Get Estimate </a>
-					</div>
-					<div class=" col-sm-4">
-						<style>
-							.modal-header,
-							h4,
-							.close {
-								background-color: #5cb85c;
-								color: white !important;
-								text-align: center;
-								font-size: 30px;
-							}
-
-							.modal-footer {
-								background-color: #f9f9f9;
-							}
-						</style>
-
-						<button ng-show="showBookNow" type="button" class="btn  btn-block btn-success btn-lg" data-toggle="modal" data-target="#myModal">Book Now</button>
-
-
-						<div class="container">
-
-							<!-- Modal -->
-							<div class="modal fade" id="myModal" role="dialog">
-								<div class="modal-dialog">
-									<!--<pre>
-										{{pickedCab}}
-									</pre>-->
-									<!-- Modal content-->
-									<div class="modal-content">
-										<div class="modal-header" style="padding:35px 50px;">
-											<button type="button" class="close" data-dismiss="modal">&times;</button>
-											<h4> <img src="../public/images/car.png" /> Nearest Cab Details </h4>
-										</div>
-										<div class="modal-body" style="padding:40px 50px;">
-											<form role="form">
-												<div class="form-group">
-													<label for="usrname"><span class="glyphicon glyphicon-user"></span> Cab Driver Name</label>
-													<input ng-model="pickedCab.name" name type="text" class="form-control" id="usrname" readonly>
-												</div>
-												<div class="form-group">
-													<label for="psw"><span class="glyphicon glyphicon-earphone"></span> Phone Number</label>
-													<input ng-model="pickedCab.phone" type="text" class="form-control" id="psw" placeholder="Enter password">
-												</div>
-												<!--<div class="checkbox">
-													<label><input type="checkbox" value="" checked>Remember me</label>
-												</div>
-												<button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>-->
-											</form>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-											<button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Confirm</button>
-
-											<!--<p>Not a member? <a href="#">Sign Up</a></p>
-											<p>Forgot <a href="#">Password?</a></p>-->
-										</div>
-									</div>
-
+						<div class="col-sm-10 ">
+							<div class="row">
+								<div class="col-sm-6 ">
+									<select class="form-control " id="TravelDate" ng-model="show.bookTravelDateTxt">
+									<option value="{{show.bookTravelDateA}}" > {{show.bookTravelDateA}} </option>
+									<option value="{{show.bookTravelDateB}}" > {{show.bookTravelDateB}} </option>
+									<option value="{{show.bookTravelDateC}}" > {{show.bookTravelDateC}} </option>
+								</select>
+								</div>
+								<div class="col-sm-6 ">
+									<input type="time" class="form-control" ng-model="show.bookTravelTimeTxt" ng-blur="validateTime()">
 								</div>
 							</div>
 						</div>
-
 					</div>
 
-				</div>
-			</form>
-			<span id="dvDistance"> </span>
-			<span id="dvPanel" style="width:90%; height: 300px;"></span>
+					<div class="form-group row ">
+						<label for="VehicleTy" class="col-sm-2 col-form-label ">
+							<small>Vehicle Type</small>
+						</label>
+						<div class="col-sm-10 ">
+							<select ng-options="x as x.tariffVehicleType for x in alltariff" id="VehicleTy" class="form-control" ng-model="rec.bookVehicleType">							
+						</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-offset-2 col-sm-8">
+							<a ng-click="getEstimate()" class="btn btn-block btn-warning ">Get Estimate </a>
+						</div>
+					</div>
+
+
+					<div id="showBookDiv" class=" form-group row" style="display: none; ">
+						<div class="col-sm-offset-2 col-sm-8">
+							<a ng-click="showModal()" class="btn btn-block btn-warning ">Book Now</a>
+
+							<p id="ansPara" class="form-control-static">
+							</p>
+
+						</div>
+					</div>
+
+				</form>
+			</div>
 		</div>
 
 		<div class="col-sm-6 well">
-			<div id="map" ng-init="initMap()" style="width: 100%; height: 400px;"></div>
+			<div id="map" ng-init="initMap()" style="width: 100%; height: 400px;"> </div>
+		</div>
+
+		<div class="container">
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" role="dialog">
+				<div class="modal-dialog">
+
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header" style="padding:35px 50px;">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4> <img src="../public/images/car.png" /> Nearest Cab Details </h4>
+						</div>
+						<div class="modal-body" style="padding:40px 50px;">
+							<form role="form">
+								<div class="form-group">
+									<label for="usrname"><span class="glyphicon glyphicon-user"></span> Cab Driver Name</label>
+									<input ng-model="pickedCab.name" name type="text" class="form-control" id="usrname" readonly>
+								</div>
+								<div class="form-group">
+									<label for="psw"><span class="glyphicon glyphicon-earphone"></span> Phone Number</label>
+									<input ng-model="pickedCab.phone" type="text" class="form-control" id="psw" placeholder="Enter password">
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+							<button ng-click="SaveData()" type="button" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span>Confirm</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

@@ -1,10 +1,16 @@
 var mongoose = require('mongoose');
+
+// var tariffSchema = require('./tariffs.js');
+// var userSchema = require('./users.js');
+
 var bookSchema = mongoose.Schema({
   bookDate: { type: Date, default: Date() },
   bookCustID: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
   bookSource: String,
   bookDestination: String,
-  bookTariff: {},
+  bookUser: {},
+  bookVehicleType: {},
+  
   bookTravelDate: Date,
   bookDistance: Number,
   bookStatus: {
@@ -17,7 +23,7 @@ var bookSchema = mongoose.Schema({
   checkInDate: Date,
   checkOutDate: Date,
   billTariff: Number,
-  billTariffTotal: Number,
+  totalFare: Number,
   billChargesText: String,
   billChargesValue: Number,
   billTax: Number,
