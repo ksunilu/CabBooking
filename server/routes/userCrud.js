@@ -101,7 +101,7 @@ module.exports = function (app) {
             if (err) console.log(err);
             else {
               // console.log(data);
-              var message = 'Password sucessfully changed. Token Created.';
+              var message = 'Password sucessfully changed.';
               res.json({ success: true, message: message, isLoggedIn: false, user: data });
               // console.log(token);
               console.log(message);

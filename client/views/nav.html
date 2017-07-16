@@ -14,17 +14,24 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#/">Home</a></li>
-                <li><a href="#/tariffs">Tariffs</a></li>
-                <li><a href="#/rides">Rides</a></li>
+                <li><a href="#/"><i class="fa fa-taxi"></i>Home</a></li>
+                <li ng-show="currentUser.role==='admin'"><a href="#/tariffs">Tariffs</a></li>
+                <li ng-show="currentUser.role==='admin'"><a href="#/register-driver">Add Cab</a></li>
+
+                <!--<li  ><a href="#/tariffs">Tariffs</a></li>-->
+                <li ng-show="currentUser.role==='client'"><a href="#/rides">Rides</a></li>
+
+
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                
-                <li><a href="#/login">Login</a></li>
-                <li><a ng-click="LogoffUser()">Logoff</a></li>
 
-                <li><a href="#/register">Register</a></li>
+                <li ng-hide="currentUser.name"><a> Welcome <span class="glyphicon glyphicon-user"></span> Guest</a> </li>
+                <li ng-show="currentUser.name"><a> Welcome <span class="glyphicon glyphicon-user"></span> {{currentUser.name}} </a> </li>
+                <li ng-hide="currentUser.name"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span>  Login</a></li>
+                <li ng-show="currentUser.name"><a href="#/password"> <span class="glyphicon glyphicon-cog"></span>Change Password</a></li>
+                <li ng-show="currentUser.name"><a ng-click="LogoffUser()"> <span class="glyphicon glyphicon-log-out"></span> Logoff</a></li>
+                <li ng-hide="currentUser.name"><a href="#/register"><span class="glyphicon glyphicon-user"></span>Register</a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->

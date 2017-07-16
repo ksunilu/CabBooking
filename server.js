@@ -68,8 +68,8 @@ io.sockets.on('connection', function (socket) {
         };
         loggedUsers.push(iddata);
 
-        console.log('logged in Users@land');
-        console.log(loggedUsers);
+        //console.log('logged in Users@land');
+        //console.log(loggedUsers);
 
         io.emit('draw map', loggedUsers);
     });

@@ -33,13 +33,20 @@ app.config(function ($routeProvider, $locationProvider) {
         ;
 });
 
-app.run(function ($rootScope, $http, $location, $sessionStorage, $cookies) {
+app.run(function ($rootScope, $http, $location, $sessionStorage, $cookies, AuthenticationService) {
+    $rootScope.currentUser = {};
+    delete $rootScope.currentUser;
+
     if ($sessionStorage.tokenDetails) {
         $http.defaults.headers.common.Authorization = $sessionStorage.tokenDetails.token;
+
+
     }
 
     // redirect to login page if not logged in and trying to access a restricted page
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
+        $rootScope.currentUser = AuthenticationService.GetUser();
+
         var publicPages = ['/', '/login', '/register'];
 
         var authUser = $cookies.getObject('authUser');

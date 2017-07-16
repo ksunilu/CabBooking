@@ -14,6 +14,8 @@ angular.module('myApp')
                     console.log(data);
                 });
             }
-            $location.path('/login');
+            // AuthenticationService.Logout();
+
+            $location.path('/');
         }
     });

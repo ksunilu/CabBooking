@@ -15,7 +15,7 @@ angular.module('myApp')
 
                     // socket.on('current users', function (loggedUsers) {
                     //     $rootScope.loggedUsers = loggedUsers;
-                    //     $rootScope.currentUser = response.data.user;
+                    $rootScope.currentUser = response.data.user;
                     //     console.log('all users');
                     //     console.log(loggedUsers);
                     //     // debugger;
