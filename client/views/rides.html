@@ -1,26 +1,27 @@
-<div class="container-fluid jumbotron">
+<div class=" container-fluid jumbotron">
     <div class="row">
-        <div class="col-sm-12">
-            <div class="card card-inverse card-warning mb-3 ">
-                <div class="card-header text-center">
-                    <h2>Welcome to rides page</h2>
-                    <div class="progress" style="height: 5px;">
-                        <div class="progress-bar  progress-bar-striped  progress-bar-warning" role="progressbar" style="width:100%; height: 5px;">
-                        </div>
-                    </div>
-
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2>Welcome to Rides Page</h2>
+            </div>
+            <div class="progress" style="height: 10px;">
+                <div class="progress-bar  progress-bar-striped  progress-bar-warning" role="progressbar" style="width:100%; height: 10px;">
                 </div>
-                <div class="card-block">
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
                     <!--{{alldata}}-->
-                    <table class="table table-sm table-inverse">
+                    <table class="table table-md ">
                         <thead class="btn-danger">
                             <tr>
                                 <tr>
                                     <td> Travel Date </td>
                                     <td> Source </td>
                                     <td> Destination </td>
+
                                     <td> Distance </td>
                                     <td> Total Fare </td>
+
                                     <td> Vehicle Type </td>
                                     <td> Driver's e-mail </td>
                                     <td> Driver Name </td>
@@ -28,13 +29,16 @@
                                 </tr>
                             </tr>
                         </thead>
+
                         <tbody class="btn-warning">
                             <tr ng-repeat="rec in allData">
                                 <td> {{rec.bookTravelDate}} </td>
                                 <td> {{rec.bookSource}} </td>
                                 <td> {{rec.bookDestination}} </td>
+
                                 <td> {{rec.bookDistance}} </td>
                                 <td> {{rec.totalFare}} </td>
+
                                 <td> {{rec.bookVehicleType.tariffVehicleType}} </td>
                                 <td> {{rec.bookedCab.email}} </td>
                                 <td> {{rec.bookedCab.name}} </td>
