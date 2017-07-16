@@ -34,8 +34,9 @@ function Service($http, $cookies, $sessionStorage, $window) {
         }
     */
 
+
     function addLocation2User(user) {
-        
+
         var loc = { lat: 28, lng: 77 };
         if ($window.navigator.geolocation) {
             $window.navigator.geolocation.getCurrentPosition(function (position) {
@@ -84,6 +85,7 @@ function Service($http, $cookies, $sessionStorage, $window) {
 
         //delete this.currentUser;
     }
+
     function GetUser() {
         var obj = $cookies.getObject('authUser');
         if (obj)
@@ -96,6 +98,20 @@ function Service($http, $cookies, $sessionStorage, $window) {
         var currentUser = GetUser();
         console.log(currentUser);
         currentUser.Location = Location;
+        return $http({
+            method: 'PUT',
+            url: '/users/data/' + currentUser._id,
+            data: currentUser
+        }).then(function (response) {
+            return response.data;
+        }).catch(function (error) {
+            throw error;
+        });
+    }
+    function UpdatePassword(newPassword) {
+        var currentUser = GetUser();
+        // console.log(currentUser);
+        currentUser.Location = newPassword;
         return $http({
             method: 'PUT',
             url: '/users/data/' + currentUser._id,

@@ -4,6 +4,9 @@ angular.module('myApp')
         $scope.LoginUser = function () {
             // $scope.user.status = login
             AuthenticationService.Login($scope.user, function (response) {
+                if (response.data.success === false) {
+                    alert('Sorry!! \n wrong user name / password');
+                }
                 if (response.data.success === true) {
                     console.log(response.data);
                     // debugger;

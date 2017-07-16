@@ -33,7 +33,12 @@ app.config(function ($routeProvider, $locationProvider) {
         }).when('/rides', {
             templateUrl: 'views/rides.html',
             controller: 'RidesController'
-        });
+        })
+        .when('/password', {
+            templateUrl: 'views/ChangePassword.html',
+            controller: 'ChangePassword'
+        })
+        ;
 });
 
 app.run(function ($rootScope, $http, $location, $sessionStorage, $cookies) {
