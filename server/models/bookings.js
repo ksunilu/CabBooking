@@ -10,7 +10,7 @@ var bookSchema = mongoose.Schema({
   bookDestination: String,
   bookUser: {},
   bookVehicleType: {},
-  
+  bookedCab: {},
   bookTravelDate: Date,
   bookDistance: Number,
   bookStatus: {

@@ -1,14 +1,14 @@
 angular.module('myApp').controller('RidesController',
   function ($scope, $http, crudService) {
-    
+
     function initData() {
       console.log('Trying get all data.');
       $scope.allData = {};
-      $scope.Data = {};
 
-      var promise = crudService.getAllData('/tariffs');
-      promise.then(function (data) {
-        $scope.allData = data;
+      var promise = crudService.getAllData('/bookings');
+      promise.then(function (res) {
+        $scope.allData = res;
+
       });
 
     };

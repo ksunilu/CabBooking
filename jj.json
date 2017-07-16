@@ -1,0 +1,42 @@
+{
+    "_id": ObjectId("5968d7cd2536da2e14084fd4"),
+    "updatedAt": ISODate("2017-07-14T08:10:13.113-06:30"),
+    "createdAt": ISODate("2017-07-14T08:10:13.113-06:30"),
+    "bookUser": {
+        "statusTime": "2017-04-20T14:50:59.000Z",
+        "Location": {
+            "lng": 77.0441219,
+            "lat": 28.4757
+        },
+        "status": "login",
+        "__v": 0,
+        "phone": "c",
+        "address": "c",
+        "name": "c",
+        "password": "$2a$08$DNUPKQHwdjlcKuJjYvOGbe7Z0cRQ5tHUbF2ovxOdBxD8OvyZmIpii",
+        "email": "c",
+        "role": "client",
+        "createdAt": "2017-04-20T14:56:54.581Z",
+        "updatedAt": "2017-07-14T14:30:39.365Z",
+        "_id": "58f8cc365d8dab1d1c329d8d"
+    },
+    "bookTravelDate": ISODate("2017-07-14T08:09:58.629-06:30"),
+    "bookSource": "ELORA International Ltd, Shop No. 23, C & T Center, Opp. Sec-14, Delhi Rd, Rajiv Nagar, Sector 13, Gurugram, Haryana 122001, India",
+    "bookDestination": "Delhi, India",
+    "bookVehicleType": {
+        "__v": 0,
+        "cancellationFee": 40,
+        "peakEndHR": 2200,
+        "peakStartHR": 1800,
+        "peakTariff": 10,
+        "baseTariff": 6,
+        "bookingFee": 40,
+        "tariffVehicleType": "Micro",
+        "_id": "58f8cbbe5d8dab1d1c329d8b"
+    },
+    "bookDistance": 39.2,
+    "totalFare": 235.2,
+    "bookStatus": "booked",
+    "bookDate": ISODate("2017-07-14T07:11:44.000-06:30"),
+    "__v": 0
+}

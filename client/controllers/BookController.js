@@ -171,6 +171,7 @@ angular.module('myApp')
         }
 
         $scope.SaveData = function () {
+
             console.log($scope.rec);
             angular.element('#myModal').on('hidden.bs.modal', function (e) {
                 $location.path('/');
@@ -305,6 +306,7 @@ angular.module('myApp')
         //start click event
         $scope.showModal = function () {
             if ($scope.pickedCab) {
+                $scope.rec.bookedCab = $scope.pickedCab;
                 angular.element('#myModal').modal('show');
             }
             else {

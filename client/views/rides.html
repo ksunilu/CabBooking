@@ -1,4 +1,50 @@
 <div class="container-fluid jumbotron">
-    <h1 align="center">Welcome to rides page.</h1>
-    
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card card-inverse card-warning mb-3 ">
+                <div class="card-header text-center">
+                    <h2>Welcome to rides page</h2>
+                    <div class="progress" style="height: 5px;">
+                        <div class="progress-bar  progress-bar-striped  progress-bar-warning" role="progressbar" style="width:100%; height: 5px;">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-block">
+                    <!--{{alldata}}-->
+                    <table class="table table-sm table-inverse">
+                        <thead class="btn-danger">
+                            <tr>
+                                <tr>
+                                    <td> Travel Date </td>
+                                    <td> Source </td>
+                                    <td> Destination </td>
+                                    <td> Distance </td>
+                                    <td> Total Fare </td>
+                                    <td> Vehicle Type </td>
+                                    <td> Driver's e-mail </td>
+                                    <td> Driver Name </td>
+                                    <td> Phone </td>
+                                </tr>
+                            </tr>
+                        </thead>
+                        <tbody class="btn-warning">
+                            <tr ng-repeat="rec in allData">
+                                <td> {{rec.bookTravelDate}} </td>
+                                <td> {{rec.bookSource}} </td>
+                                <td> {{rec.bookDestination}} </td>
+                                <td> {{rec.bookDistance}} </td>
+                                <td> {{rec.totalFare}} </td>
+                                <td> {{rec.bookVehicleType.tariffVehicleType}} </td>
+                                <td> {{rec.bookedCab.email}} </td>
+                                <td> {{rec.bookedCab.name}} </td>
+                                <td> {{rec.bookedCab.phone}} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
