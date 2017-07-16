@@ -37,18 +37,28 @@ var UserSchema = new Schema(
 
 //Encrypting Password
 UserSchema.methods.generateHash = function (password) {
-  var rval = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-  console.log(rval);
-  return rval;
-
+  try {
+    var rval = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+    console.log(rval);
+    return rval;
+  }//end try
+  catch (err) {
+    console.log(err);
+  }
 }
 
 //Decrypting Password
 UserSchema.methods.validPassword = function (password) {
-  console.log('Decrypting Password');
-  var rval = bcrypt.compareSync(password, this.password);
-  console.log(rval);
-  return rval;
+  try {
+    console.log('Decrypting Password');
+    var rval = bcrypt.compareSync(password, this.password);
+    console.log(rval);
+    return rval;
+
+  }//end try
+  catch (err) {
+    console.log(err);
+  }
 }
 
 module.exports = mongoose.model('Users', UserSchema, 'Users');

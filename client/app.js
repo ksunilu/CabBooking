@@ -5,20 +5,13 @@ app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', {
             templateUrl: 'views/main.html'
-        })
-        .when('/book', {
+        }).when('/book', {
             templateUrl: 'views/Book.html',
             controller: 'BookController'
-        })
-        .when('/booking', {
-            templateUrl: 'views/Home.html',
-            controller: 'BookController'
-        })
-        .when('/tariffs', {
+        }).when('/tariffs', {
             templateUrl: 'views/tariffs.html',
             controller: 'TariffsController'
-        })
-        .when('/login', {
+        }).when('/login', {
             templateUrl: 'views/Login.html',
             controller: 'LoginController'
         }).when('/register', {
@@ -33,8 +26,7 @@ app.config(function ($routeProvider, $locationProvider) {
         }).when('/rides', {
             templateUrl: 'views/rides.html',
             controller: 'RidesController'
-        })
-        .when('/password', {
+        }).when('/password', {
             templateUrl: 'views/ChangePassword.html',
             controller: 'ChangePassword'
         })

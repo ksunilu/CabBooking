@@ -1,6 +1,6 @@
 angular.module('myApp').controller('RidesController',
   function ($scope, $http, crudService) {
-
+    
     function initData() {
       console.log('Trying get all data.');
       $scope.allData = {};

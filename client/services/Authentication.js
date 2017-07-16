@@ -8,6 +8,7 @@ function Service($http, $cookies, $sessionStorage, $window) {
     service.Login = Login;
     service.Logout = Logout;
     service.GetUser = GetUser;
+    service.UpdatePassword = UpdatePassword;
     service.UpdateLocation = UpdateLocation;
     return service;
 
@@ -108,14 +109,16 @@ function Service($http, $cookies, $sessionStorage, $window) {
             throw error;
         });
     }
-    function UpdatePassword(newPassword) {
-        var currentUser = GetUser();
-        // console.log(currentUser);
-        currentUser.Location = newPassword;
+    function UpdatePassword(data) {
+        var user = GetUser();
+        user.oldpassword = data.oldpassword;
+        user.newpassword = data.newpassword;
+        // user.cnfpassword = data.cnfpassword;
+
         return $http({
             method: 'PUT',
-            url: '/users/data/' + currentUser._id,
-            data: currentUser
+            url: '/users/data/password',
+            data: user
         }).then(function (response) {
             return response.data;
         }).catch(function (error) {

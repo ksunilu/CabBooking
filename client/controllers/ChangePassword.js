@@ -1,22 +1,19 @@
 angular.module('myApp')
-    .controller('ChangePassword', function ($scope, $http, AuthenticationService) {
-        function initData() {
-            $scope.user = AuthenticationService.GetUser();
-
-        };
-        initData();
-
+    .controller('ChangePassword', function ($scope, $location, $http, AuthenticationService) {
         $scope.SavePassword = function () {
-            if ($scope.data.password === $scope.data.password)
-                $scope.user
-            //send data for change
-            // if sucess show sucess
-            // else pop error 
+            if ($scope.data.newpassword !== $scope.data.cnfpassword) {
+                alert("New password and Confirm password don't match\nTry Again!!");
 
+            }
+            else {
 
-            //EVERY THING ENDS
+                var promise = AuthenticationService.UpdatePassword($scope.data);
+                promise.then(function (data) {
+                    if (data.sucess) alert('password changed');
+                    else alert(data.message);
+                    console.log(data);
+                });
+            }
             $location.path('/login');
-
-            console.log($scope.user);
         }
     });
