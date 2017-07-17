@@ -20,12 +20,9 @@
 
                 <!--<li  ><a href="#/tariffs">Tariffs</a></li>-->
                 <li ng-show="currentUser.role==='client'"><a href="#/rides">Rides</a></li>
-
-
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-
                 <li ng-hide="currentUser.name"><a> Welcome <span class="glyphicon glyphicon-user"></span> Guest</a> </li>
                 <li ng-show="currentUser.name"><a> Welcome <span class="glyphicon glyphicon-user"></span> {{currentUser.name}} </a> </li>
                 <li ng-hide="currentUser.name"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span>  Login</a></li>
