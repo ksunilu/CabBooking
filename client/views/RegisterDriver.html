@@ -1,14 +1,8 @@
 <div class="container-fluid jumbotron">
     <div class="row">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-8">
-            <select ng-init="data.role='driver'" ng-model="data.role" class="form-control">
-                <option value ="" >Select Role</option>
-                <!--<option value ="admin">Admin</option>-->
-                <!--<option  value ="client">User Client</option>-->
-                <option  value ="driver">Driver</option>
-            </select>
-            <p></p>
+        <div class="col-sm-2"></div>
+        <div class="col-sm-5">
+
             <input placeholder="Email Address" ng-model="data.email" type="text" class="form-control" />
             <input placeholder="Password" ng-model="data.password" type="password" class="form-control" />
             <input placeholder="Confirm Password" ng-model="data.cnfPassword" type="password" class="form-control" />
@@ -16,22 +10,57 @@
             <input placeholder="Address" type="text" ng-model="data.address" class="form-control" />
             <input placeholder="Mobile Number" ng-model="data.phone" type="text" class="form-control" />
             <!--cab driver  details-->
-            <div ng-show="data.role==='driver'">
-                <input placeholder="Driving Licence Number " ng-model="data.drvLicNo" type="text" class="form-control" />
-                <input placeholder="Driving Licence Expiring Date " ng-model="data.drvLicExpDt" type="text" class="form-control" />
-                <input placeholder="Driving Experiance " type="text" ng-model="data.drvExperiance" class="form-control" />
-                <input placeholder="Cab Number " ng-model="data.cabNo" type="text" class="form-control" />
-                <input placeholder="Cab Registered Owner " ng-model="data.cabOwner" type="text" class="form-control" />
-                <input placeholder="Cab Make & Model " ng-model="data.cabMake" type="text" class="form-control" />
-                <!--select as label for value in array-->
-                <select class="form-control" ng-model="data.cabTariffID" ng-options="  item._id as item.tariffVehicleType for item in allData">
+
+            <input placeholder="Driving Licence Number " ng-model="data.drvLicNo" type="text" class="form-control" />
+            <input placeholder="Driving Licence Expiring Date " ng-model="data.drvLicExpDt" type="text" class="form-control" />
+            <input placeholder="Driving Experiance " type="text" ng-model="data.drvExperiance" class="form-control" />
+            <input placeholder="Cab Number " ng-model="data.cabNo" type="text" class="form-control" />
+            <input placeholder="Cab Registered Owner " ng-model="data.cabOwner" type="text" class="form-control" />
+            <input placeholder="Cab Make & Model " ng-model="data.cabMake" type="text" class="form-control" />
+            <!--select as label for value in array-->
+            <select class="form-control" ng-model="data.cabTariffID" ng-options="  item._id as item.tariffVehicleType for item in allData">
                     <option value ="" >Select Vehicle Type</option>
-                </select>
-                <!--<input placeholder="cabTariffID " ng-model="data.cabTariffID" type="text" class="form-control" />-->
-            </div>
+            </select>
             <a href="#/login" class="btn btn-success" ng-click="RegisterUser()" style="margin-top: 20px">Submit</a>
             <a href="#/" type="button" class="btn btn-warning" style="margin-top: 20px">Cancel</a>
         </div>
-        <div class="col-lg-2"></div>
+
+        <div class="col-sm-5 well">
+            <table class="table table-condensed">
+                <tr class="btn-primary">
+                    <td>Vehicle Type</td>
+                    <td>Booking Fee</td>
+                    <td>Base Tariff</td>
+                    <td>Peak Tariff</td>
+                    <td>Peak Hr Start </td>
+                    <td>Peak Hr End </td>
+                    <td>Cancellation Fee</td>
+                    <td>Edit Tariff</td>
+                    <td>Delete Tariff</td>
+                </tr>
+                <tr class=" btn-info " ng-repeat="c in allData ">
+                    <td>{{c.tariffVehicleType}}</td>
+                    <td>{{c.bookingFee}}</td>
+                    <td>{{c.baseTariff}}</td>
+                    <td>{{c.peakTariff}}</td>
+                    <td>{{c.peakStartHR}}</td>
+                    <td>{{c.peakEndHR}}</td>
+                    <td>{{c.cancellationFee}}</td>
+
+                    <td>
+                        <button ng-click="EditData(c) " class="btn btn-primary btn-lg ">
+            <span class="glyphicon glyphicon-pencil"></span>
+            
+            </button>
+                    </td>
+                    <td>
+                        <button ng-click="DeleteData(c) " class="btn btn-primary btn-lg ">
+             <span class="glyphicon glyphicon-trash"></span>
+           
+            </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>

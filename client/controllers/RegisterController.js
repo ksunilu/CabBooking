@@ -11,6 +11,7 @@ angular.module('myApp')
         // };
         // initData();
         $scope.RegisterUser = function () {
+            $scope.data.role = 'client';
             var promise = crudService.addData($scope.data, '/users');
             promise.then(function (data) {
                 if (data.sucess)
