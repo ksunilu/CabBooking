@@ -1,7 +1,6 @@
 <div class="container-fluid jumbotron">
     <div class="row">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-5">
+        <div class="col-sm-offset-1 col-sm-5">
 
             <input placeholder="Email Address" ng-model="data.email" type="text" class="form-control" />
             <input placeholder="Password" ng-model="data.password" type="password" class="form-control" />
@@ -18,7 +17,7 @@
             <input placeholder="Cab Registered Owner " ng-model="data.cabOwner" type="text" class="form-control" />
             <input placeholder="Cab Make & Model " ng-model="data.cabMake" type="text" class="form-control" />
             <!--select as label for value in array-->
-            <select class="form-control" ng-model="data.cabTariffID" ng-options="  item._id as item.tariffVehicleType for item in allData">
+            <select class="form-control" ng-model="data.cabTariffID" ng-options="  item._id as item.tariffVehicleType for item in allTariffs">
                     <option value ="" >Select Vehicle Type</option>
             </select>
             <a href="#/login" class="btn btn-success" ng-click="RegisterUser()" style="margin-top: 20px">Submit</a>

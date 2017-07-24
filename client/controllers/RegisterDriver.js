@@ -1,12 +1,20 @@
 angular.module('myApp')
     .controller('RegisterDriverController', function ($scope, $http, crudService) {
+
         function initData() {
             console.log('Trying get all data.');
-            $scope.allData = {};
+            $scope.allData = [];
             $scope.Data = {};
+            $scope.allTariffs = [];
+
             var promise = crudService.getAllData('/users');
             promise.then(function (data) {
                 $scope.allData = data;
+            });
+
+            var promiseT = crudService.getAllData('/tariffs');
+            promiseT.then(function (data) {
+                $scope.allTariffs = data;
             });
         };
         initData();
