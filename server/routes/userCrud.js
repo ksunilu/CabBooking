@@ -198,6 +198,7 @@ module.exports = function (app) {
       console.log(err);
     }
   });
+
   /*
     router.get('/:id', function (req, res) {
       console.log("REACHED GET ID ON SERVER");
@@ -207,6 +208,14 @@ module.exports = function (app) {
       });
     });
   */
+
+  router.get('/', function (req, res) {
+    console.log("REACHED GET DATA ON SERVER");
+    model.find({}, function (err, docs) {
+      if (err) console.log('Error at get ' + err);
+      else res.json(docs);
+    });
+  });
 
   router.put('/:id', function (req, res) {
     try {

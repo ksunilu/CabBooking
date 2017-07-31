@@ -18,7 +18,7 @@ module.exports = function (app, routePath) {
       else res.json(docs);
     });
   });
-
+ 
   router.get('/:id', function (req, res) {
     console.log("REACHED GET ID ON SERVER");
     console.log('id=' + req.params.id);
