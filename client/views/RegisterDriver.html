@@ -1,72 +1,81 @@
 <div class="container-fluid jumbotron">
     <div class="row">
         <div class="col-sm-offset-1 col-sm-3">
+            <form>
+                <input placeholder="Email Address" ng-model="data.email" type="text" class="form-control" />
+                <input placeholder="Password" ng-model="data.password" type="password" class="form-control" />
+                <input placeholder="Confirm Password" ng-model="data.cnfPassword" type="password" class="form-control" />
+                <input placeholder="Name" ng-model="data.name" type="text" class="form-control" />
+                <input placeholder="Address" type="text" ng-model="data.address" class="form-control" />
+                <input placeholder="Mobile Number" ng-model="data.phone" type="text" class="form-control" />
+                <!--cab driver  details-->
 
-            <input placeholder="Email Address" ng-model="data.email" type="text" class="form-control" />
-            <input placeholder="Password" ng-model="data.password" type="password" class="form-control" />
-            <input placeholder="Confirm Password" ng-model="data.cnfPassword" type="password" class="form-control" />
-            <input placeholder="Name" ng-model="data.name" type="text" class="form-control" />
-            <input placeholder="Address" type="text" ng-model="data.address" class="form-control" />
-            <input placeholder="Mobile Number" ng-model="data.phone" type="text" class="form-control" />
-            <!--cab driver  details-->
-
-            <input placeholder="Driving Licence Number " ng-model="data.drvLicNo" type="text" class="form-control" />
-            <input placeholder="Driving Licence Expiring Date " ng-model="data.drvLicExpDt" type="text" class="form-control" />
-            <input placeholder="Driving Experiance " type="text" ng-model="data.drvExperiance" class="form-control" />
-            <input placeholder="Cab Number " ng-model="data.cabNo" type="text" class="form-control" />
-            <input placeholder="Cab Registered Owner " ng-model="data.cabOwner" type="text" class="form-control" />
-            <input placeholder="Cab Make & Model " ng-model="data.cabMake" type="text" class="form-control" />
-            <!--select as label for value in array-->
-            <select class="form-control" ng-model="data.cabTariffID" ng-options="  item._id as item.tariffVehicleType for item in allTariffs">
+                <input placeholder="Driving Licence Number " ng-model="data.drvLicNo" type="text" class="form-control" />
+                <input placeholder="Driving Licence Expiring Date " ng-model="data.drvLicExpDt" type="text" class="form-control" />
+                <input placeholder="Driving Experiance " type="text" ng-model="data.drvExperiance" class="form-control" />
+                <input placeholder="Cab Number " ng-model="data.cabNo" type="text" class="form-control" />
+                <input placeholder="Cab Registered Owner " ng-model="data.cabOwner" type="text" class="form-control" />
+                <input placeholder="Cab Make & Model " ng-model="data.cabMake" type="text" class="form-control" />
+                <!--select as label for value in array-->
+                <select class="form-control" ng-model="data.cabTariffID" ng-options="  item._id as item.tariffVehicleType for item in allTariffs">
                     <option value ="" >Select Vehicle Type</option>
             </select>
-            <a href="#/login" class="btn btn-success" ng-click="RegisterUser()" style="margin-top: 20px">Submit</a>
-            <a href="#/" type="button" class="btn btn-warning" style="margin-top: 20px">Cancel</a>
+                <a class="btn btn-success" ng-click="RegisterUser()" style="margin-top: 20px">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
 
+                <a class="btn btn-danger" style="margin-top: 20px" ng-click="UpdateData(data)"> <span class="glyphicon glyphicon-floppy-saved"></span>  <span class="glyphicon glyphicon-pencil"></span> </a>
+                <button class="btn btn-danger " style="margin-top: 20px" ng-click="ClearData()"><span class="glyphicon glyphicon-trash"></span></button>
+
+            </form>
         </div>
 
-        <div class="col-sm-7 well">
-            <table class="table table-condensed">
-                <tr class="btn-primary">
-                    <td>email</td>
-                    <td>name</td>
-                    <td>address</td>
-                    <td>phone</td>
-                    <td>drvLicNo </td>
-                    <td>drvLicExpDt </td>
-                    <td>drvExperiance</td>
+        <div class="col-sm-7 ">
+            <div class="container-fluid well">
+                <table class="table table-condensed">
+                    <thead>
+                        <tr class="btn-primary">
+                            <td>email</td>
+                            <td>name</td>
+                            <td>address</td>
+                            <td>phone</td>
+                            <td>drvLicNo </td>
+                            <td>drvLicExpDt </td>
+                        </tr>
+                        <tr class="btn-primary">
+                            <td>drvExperiance</td>
+                            <td>cabNo </td>
+                            <td>cabOwner </td>
+                            <td>cabMake</td>
+                            <td>Edit Tariff</td>
+                            <td>Delete Tariff</td>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="c in allData | filter:{ role : 'driver' }">
+                        <tr class=" btn-info ">
+                            <td>{{c.email}}</td>
+                            <td>{{c.name}}</td>
+                            <td>{{c.address}}</td>
+                            <td>{{c.phone}}</td>
+                            <td>{{c.drvLicNo}}</td>
+                            <td>{{c.drvLicExpDt}}</td>
+                        </tr>
+                        <tr class=" btn-info ">
+                            <td>{{c.drvExperiance}}</td>
+                            <td>{{c.cabNo}}</td>
+                            <td>{{c.cabOwner}}</td>
+                            <td>{{c.cabMake}}</td>
+                            <td>
+                                <button ng-click="EditData(c) " class="btn btn-primary "><span class="glyphicon glyphicon-pencil"></span></button>
+                            </td>
+                            <td>
+                                <button ng-click="DeleteData(c) " class="btn btn-primary "><span class="glyphicon glyphicon-trash"></span></button>
+                            </td>
+                        </tr>
+                    </tbody>
 
-
-                    <td>cabNo </td>
-                    <td>cabOwner </td>
-                    <td>cabMake</td>
-
-                    <td>Edit Tariff</td>
-                    <td>Delete Tariff</td>
-                </tr>
-                <tbody ng-repeat="c in allData | filter:{ role : 'driver' }">
-                    <tr class=" btn-info ">
-                        <td>{{c.email}}</td>
-                        <td>{{c.name}}</td>
-                        <td>{{c.address}}</td>
-                        <td>{{c.phone}}</td>
-                        <td>{{c.drvLicNo}}</td>
-                        <td>{{c.drvLicExpDt}}</td>
-                        <td>{{c.drvExperiance}}</td>
-                        <td>{{c.cabNo}}</td>
-                        <td>{{c.cabOwner}}</td>
-                        <td>{{c.cabMake}}</td>
-
-                        <td>
-                            <button ng-click="EditData(c) " class="btn btn-primary btn-lg "><span class="glyphicon glyphicon-pencil"></span></button>
-                        </td>
-                        <td>
-                            <button ng-click="DeleteData(c) " class="btn btn-primary btn-lg "><span class="glyphicon glyphicon-trash"></span></button>
-                        </td>
-                    </tr>
-                </tbody>
-
-            </table>
+                </table>
+            </div>
         </div>
     </div>
 </div>

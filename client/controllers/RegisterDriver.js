@@ -16,8 +16,10 @@ angular.module('myApp')
             promiseT.then(function (data) {
                 $scope.allTariffs = data;
             });
-        };
+        }
+
         initData();
+
         $scope.RegisterUser = function () {
             $scope.data.role = 'driver';
 
@@ -26,4 +28,28 @@ angular.module('myApp')
                 initData();
             });
         }
+        //EditData(c)
+        $scope.EditData = function (c) {
+            // angular.copy(c, $scope.data);
+            $scope.data = angular.copy(c);
+        }
+        // DeleteData(c)
+        $scope.DeleteData = function (model) {
+            var promise = crudService.deleteData(model, '/users');
+            promise.then(function (data) {
+                initData();
+            });
+        }
+
+        $scope.UpdateData = function (model) {
+            var promise = crudService.updateData(model, '/users');
+            promise.then(function (data) {
+                initData();
+            })
+        }
+
+        $scope.ClearData = function () {
+            $scope.data = {};
+        }
+
     });
