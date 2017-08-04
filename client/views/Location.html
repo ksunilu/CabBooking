@@ -1,23 +1,43 @@
 <div class="container-fluid jumbotron">
 	<div class="row">
-		<!--<div class="col-sm-6 white-well" style="height: 440px;">
-			<form ng-init="initData()" class="form-horizontal" role="form">
-				<div class="form-group  plain">
-					<div class="col-sm-10 plain">
-						<input type="text" class="form-control plain" id="txtFrom" ng-model="rec.bookSource">
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-8">
-						<a id="routeClick" class="btn btn-block confirm-btn" ng-click="updateLocation()">Update Location</a>
-					</div>
-				</div>
-		</form>
-		<span id="dvDistance"> </span>
-		<span id="dvPanel" style="width:90%; height: 300px;"></span>
-	    </div>-->
+		<div class="col-sm-6 white-well" style="height: 440px;">
+			<form ng-show="cab.bookUser" class="form-horizontal well" role="form">
+				<table class="table ">
+					<caption>
+						<h3>
+							Booking Details
+						</h3>
+					</caption>
+					<tr>
+						<td>
+							<strong>Customer</strong>
+						</td>
+						<td>
+							<input id="txt1" class="form-control plain" type="text" ng-model="cab.bookUser.name" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<strong>Phone</strong>
+						</td>
+						<td>
+							<input class="form-control plain" type="text" ng-model="cab.bookUser.phone" />
+						</td>
+					</tr>
+					<!-- <tr>
+							<td>
+								<strong>   Base Tariff</strong>
+							</td>
+							<td>
 
-		<div class="col-sm-offset-2 col-sm-8 well">
+								<input class="form-control plain" type="text" ng-model="Data.baseTariff" />
+							</td>
+						</tr> -->
+				</table>
+			</form>
+		</div>
+
+		<div class="col-sm-6 well">
 			<div ng-init="init();">
 				<div id="map" style="width: 100%; height: 400px;"></div>
 			</div>

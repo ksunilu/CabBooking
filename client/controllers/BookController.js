@@ -182,6 +182,8 @@ angular.module('myApp')
                 console.log('Booking Data Saved');
                 console.log(data);
                 angular.element('#myModal').modal('hide');
+                //emit book
+                socket.emit('cab booked', data);
             });
         }
 
@@ -250,7 +252,10 @@ angular.module('myApp')
                         $scope.rec.bookSource = document.getElementById('txtFrom').value;
                         $scope.show.origins = results[1].geometry.location;
                     } else {
-                        alert('No results found');
+                        alert('Address N/A');
+                        document.getElementById('txtFrom').value = 'Address N/A' + JSON.stringify(latlng);
+                        $scope.rec.bookSource = document.getElementById('txtFrom').value;
+                        $scope.show.origins = latlng;
                     }
                 } else {
                     alert('Geocoder failed due to: ' + status);
@@ -279,7 +284,7 @@ angular.module('myApp')
                         if (results[1]) {
                             resolve(results[1].formatted_address);
                         } else {
-                            reject(Error('No results found'));
+                            resolve('Address N/A:' + JSON.stringify(latlng));
                         }
                     } else {
                         reject(Error('Geocoder failed :' + status));

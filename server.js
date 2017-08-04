@@ -60,6 +60,13 @@ var io = require('socket.io')(server);
 var loggedUsers = [];
 
 io.sockets.on('connection', function (socket) {
+
+    socket.on('cab booked', function (data) {
+        io.emit('cab booked', data);
+        console.log('data@cab booked');
+        console.log(data);
+    });
+
     socket.on('land', function (data) {
 
         var iddata = {
@@ -99,6 +106,8 @@ io.sockets.on('connection', function (socket) {
     //     loggedUsers.push(iddata);
     //     io.emit('current users', loggedUsers);
     // });
+
+
 
     socket.on('logoff', function (data) {
         console.log('logoff', data);

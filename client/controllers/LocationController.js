@@ -6,17 +6,26 @@ angular.module('myApp')
         var map, infoWindow, marker;
 
         function initSocket(Location) {
-            debugger;
+            // debugger;
             var user = AuthenticationService.GetUser();
             user.Location = Location;
             socket.emit('land', user);
             socket.on('draw map', function (loggedUsers) {
-                debugger;
+                // debugger;
                 $rootScope.loggedUsers = loggedUsers;
                 console.log('all users@location');
                 console.log(loggedUsers);
                 // alert('draw map for driver');
                 // $rootScope.currentUser = response.data.user;
+            });
+            socket.on('cab booked', function (data) {
+                $scope.cab = data;
+                $scope.driver = AuthenticationService.GetUser();
+
+                if ($scope.cab.bookedCab.email === $scope.driver.email) alert('you have a booking');
+                alert(JSON.stringify(data));
+                console.log(data);
+
             });
         }
 
@@ -28,6 +37,8 @@ angular.module('myApp')
                 initSocket(loc);
                 $scope.Location = loc;
                 //broad cast location
+                $scope.cab = {};
+                $scope.driver = {};
             });
             return;
             //code end
@@ -93,7 +104,7 @@ angular.module('myApp')
             }
 
             function changeLocation(Location) {
-                debugger;
+                // debugger;
                 alert('location change');
                 var user = AuthenticationService.GetUser();
                 user.Location = Location;
