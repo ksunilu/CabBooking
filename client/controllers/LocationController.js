@@ -23,7 +23,7 @@ angular.module('myApp')
                 $scope.cab = angular.copy(data);
                 $scope.driver = AuthenticationService.GetUser();
 
-                if ($scope.cab.bookedCab.email === $scope.driver.email) alert('you have a booking');
+                if ($scope.cab.bookedCab.email === $scope.driver.email) alert('You have a booking.');
                 // alert(JSON.stringify($scope.cab));
                 console.log($scope.cab);
                 $scope.$apply();
