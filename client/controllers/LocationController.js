@@ -19,33 +19,34 @@ angular.module('myApp')
                 // $rootScope.currentUser = response.data.user;
             });
             socket.on('cab booked', function (data) {
-                $scope.cab = data;
+                $scope.showForm = 1;
+                $scope.cab = angular.copy(data);
                 $scope.driver = AuthenticationService.GetUser();
 
                 if ($scope.cab.bookedCab.email === $scope.driver.email) alert('you have a booking');
-                alert(JSON.stringify(data));
-                console.log(data);
-
+                // alert(JSON.stringify($scope.cab));
+                console.log($scope.cab);
+                $scope.$apply();
             });
         }
 
 
         $scope.init = function () {
+            $scope.cab = {};
+            $scope.driver = {};
+
             $window.navigator.geolocation.getCurrentPosition(function (position) {
                 loc = { lat: position.coords.latitude, lng: position.coords.longitude };
                 drawInitMap(loc);
                 initSocket(loc);
                 $scope.Location = loc;
                 //broad cast location
-                $scope.cab = {};
-                $scope.driver = {};
             });
             return;
             //code end
+
             //definition of local functions 
             function drawInitMap(location) {
-
-
                 map = new google.maps.Map(document.getElementById('map'), {
                     center: location,
                     zoom: 14
@@ -71,11 +72,11 @@ angular.module('myApp')
             function initTextbox(map, location, marker, infoWindow) {
                 // var directionsDisplay;
                 // var directionsService = new google.maps.DirectionsService();
+
                 var inputFrom = document.getElementById('txtFrom');
                 map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputFrom);
                 var autocomplete = new google.maps.places.Autocomplete(inputFrom);
                 autocomplete.bindTo('bounds', map);
-
                 autocomplete.addListener('place_changed', function () {
 
                     marker.setVisible(false);
@@ -102,7 +103,6 @@ angular.module('myApp')
                     $scope.Location = place.geometry.location;
                 });
             }
-
             function changeLocation(Location) {
                 // debugger;
                 alert('location change');

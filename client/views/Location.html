@@ -1,7 +1,7 @@
 <div class="container-fluid jumbotron">
 	<div class="row">
 		<div class="col-sm-6 white-well" style="height: 440px;">
-			<form ng-show="cab.bookUser" class="form-horizontal well" role="form">
+			<form ng-show="showForm" class="form-horizontal well" role="form">
 				<table class="table ">
 					<caption>
 						<h3>
@@ -30,7 +30,7 @@
 							</td>
 							<td>
 
-								<input class="form-control plain" type="text" ng-model="Data.baseTariff" />
+								<input id="txtFrom" class="form-control plain" type="text" ng-model="Data.baseTariff" />
 							</td>
 						</tr> -->
 				</table>
@@ -39,6 +39,7 @@
 
 		<div class="col-sm-6 well">
 			<div ng-init="init();">
+				<input ng-hide="1" id="txtFrom" class="form-control plain" type="text" />
 				<div id="map" style="width: 100%; height: 400px;"></div>
 			</div>
 		</div>
