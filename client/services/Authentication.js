@@ -12,6 +12,30 @@ function Service($http, $cookies, $sessionStorage, $window) {
     service.UpdateLocation = UpdateLocation;
     return service;
 
+    function getOneUser(email) {
+        return $http({
+            method: 'GET',
+            url: '/users/data/' + email,
+        }).then(function (response) {
+            return response.data;
+        }).catch(function (error) {
+            throw error;
+        });
+    }
+
+    // _this.getData = function (_id, routePath) {
+    //     routePath = routePath.replace('/', '');
+    //     return $http({
+    //         method: 'GET',
+    //         url: '/' + routePath + '/data/' + _id
+    //     }).then(function (response) {
+    //         return response.data;
+    //     }).catch(function (error) {
+    //         throw error;
+    //     });
+    // };
+
+
     /*
         service.getLocation = getLocation;
         service.myLocation = myLocation;

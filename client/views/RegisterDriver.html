@@ -69,13 +69,12 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <td>
+                            <td> &nbsp; &nbsp;
                                 <a class="btn btn-success" ng-click="RegisterUser()" style="margin-top: 20px">
                     <span class="glyphicon glyphicon-plus"></span>
-                </a>
-
+                </a> &nbsp; &nbsp; &nbsp; &nbsp;
                                 <a class="btn btn-danger" style="margin-top: 20px" ng-click="UpdateData(data)"> <span class="glyphicon glyphicon-floppy-saved"></span>  </a>
-                                <button class="btn btn-danger " style="margin-top: 20px" ng-click="ClearData()"><span class="glyphicon glyphicon-trash"></span></button>
+                                <!-- <button class="btn btn-danger " style="margin-top: 20px" ng-click="ClearData()"><span class="glyphicon glyphicon-trash"></span></button> -->
                             </td>
                         </tr>
                     </table>
@@ -99,8 +98,9 @@
                             <td>cabNo </td>
                             <!-- <td>cabOwner </td> -->
                             <td>cabMake</td>
-                            <td>Edit Tariff</td>
-                            <td>Delete Tariff</td>
+                            <td>Vehicle Type</td>
+                            <td>Edit </td>
+                            <td>Delete </td>
                             </td>
                         </tr>
                     </thead>
@@ -118,6 +118,11 @@
                             <td>{{c.cabNo}}</td>
                             <!-- <td>{{c.cabOwner}}</td> -->
                             <td>{{c.cabMake}}</td>
+                            <td>
+                                <span ng-repeat="item in allTariffs | filter: c.cabTariffID ">
+                                   {{item.tariffVehicleType}}
+                                </span>
+                            </td>
                             <td>
                                 <button ng-click="EditData(c) " class="btn btn-primary "><span class="glyphicon glyphicon-pencil"></span></button>
                             </td>

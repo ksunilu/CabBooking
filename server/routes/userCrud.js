@@ -209,6 +209,14 @@ module.exports = function (app) {
     });
   */
 
+  router.get('/:email', function (req, res) {
+    console.log("REACHED GET EMAIL ON SERVER");
+    console.log('id=' + req.params.email);
+    model.find({ email: req.params.email }, function (err, docs) {
+      res.json(docs);
+    });
+  });
+
   router.get('/', function (req, res) {
     console.log("REACHED GET DATA ON SERVER");
     model.find({}, function (err, docs) {

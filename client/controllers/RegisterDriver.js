@@ -4,7 +4,7 @@ angular.module('myApp')
         function initData() {
             console.log('Trying get all data.');
             $scope.allData = [];
-            $scope.Data = {};
+            $scope.data = {};
             $scope.allTariffs = [];
 
             var promise = crudService.getAllData('/users');
@@ -20,14 +20,28 @@ angular.module('myApp')
 
         initData();
 
+        function userExist() {
+            var email = $scope.data.email, all = $scope.allData, i;
+            for (i = 0; i < all.length; i++) {
+                if (email === all[i].email)
+                    return true;
+            }
+            return false;
+        }
         $scope.RegisterUser = function () {
             $scope.data.role = 'driver';
-
-            var promise = crudService.addData($scope.data, '/users');
-            promise.then(function (data) {
-                initData();
-            });
+            if (userExist()) {
+                alert("User Already exist's try a different email");
+                return;
+            }
+            else {
+                var promise = crudService.addData($scope.data, '/users');
+                promise.then(function (data) {
+                    initData();
+                });
+            }
         }
+
         //EditData(c)
         $scope.EditData = function (c) {
             // angular.copy(c, $scope.data);
