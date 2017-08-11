@@ -399,14 +399,10 @@ angular.module('myApp')
                     angular.element('#showBookDiv').show();
                     var dvDistance = document.getElementById('ansPara');
                     var totalFare, tariff;
-                    if ($scope.rec.bookTravelDate === undefined)
-                        $scope.rec.bookTravelDate = new Date();
+                    if ($scope.rec.bookTravelDate === undefined) $scope.rec.bookTravelDate = new Date();
 
-                    var hrmin = $scope.rec.bookTravelDate.getHours() * 100 + $scope.rec.bookTravelDate.getMinutes();
-                    if (hrmin >= $scope.rec.bookVehicleType.peakStartHR && hrmin <= $scope.rec.bookVehicleType.peakEndHR)
-                        tariff = $scope.rec.bookVehicleType.baseTariff;
-                    else
-                        tariff = $scope.rec.bookVehicleType.peakTariff;
+                    tariff = getTariff();
+
                     totalFare = parseFloat(tariff) * parseFloat(dist)
                     totalFare = totalFare.toFixed(2);
                     $scope.rec.totalFare = totalFare;
@@ -420,6 +416,21 @@ angular.module('myApp')
 
             });
         }
+
+        function getTariff() {
+            // $scope.rec.bookTravelDate
+            var peekDateStart = new Date(), peekDateEnd = new Date(), tariff;
+            peekDateStart.setHours($scope.rec.bookVehicleType.peakStartHR / 100, $scope.rec.bookVehicleType.peakStartHR % 100);
+            peekDateEnd.setHours($scope.rec.bookVehicleType.peakEndHR / 100, $scope.rec.bookVehicleType.peakEndHR % 100);
+            if (peekDateEnd < peekDateStart) peekDateEnd.setDate(peekDateEnd.getDate() + 1);
+            if ($scope.rec.bookTravelDate >= peekDateStart && $scope.rec.bookTravelDate <= peekDateEnd)
+                tariff = $scope.rec.bookVehicleType.peakTariff;
+            else
+                tariff = $scope.rec.bookVehicleType.baseTariff;
+            return tariff;
+        }
+
+
         function drawRoute() {
             directionsService.route({
                 origin: $scope.show.origins,
