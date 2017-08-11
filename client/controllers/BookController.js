@@ -171,12 +171,13 @@ angular.module('myApp')
         }
 
         $scope.SaveData = function () {
-
+            // $scope.$apply();
             console.log($scope.rec);
             angular.element('#myModal').on('hidden.bs.modal', function (e) {
-                $location.path('/');
+                // $location.path('/');
                 $scope.$apply();
             });
+
             var promise = crudService.addData($scope.rec, '/bookings');
             promise.then(function (data) {
                 console.log('Booking Data Saved');

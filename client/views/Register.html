@@ -8,12 +8,12 @@
                     <h2> User Registration Page </h2>
                 </div>
                 <div class="card-block">
-                    <input placeholder="Email Address" ng-model="data.email" type="text" class="form-control" />
-                    <input placeholder="Password" ng-model="data.password" type="password" class="form-control" />
-                    <input placeholder="Confirm Password" ng-model="data.cnfPassword" type="password" class="form-control" />
-                    <input placeholder="Name" ng-model="data.name" type="text" class="form-control" />
-                    <input placeholder="Address" type="text" ng-model="data.address" class="form-control" />
-                    <input placeholder="Mobile Number" ng-model="data.phone" type="text" class="form-control" />
+                    <input required placeholder="Email Address" ng-model="data.email" type="text" class="form-control" />
+                    <input required placeholder="Password" ng-model="data.password" type="password" class="form-control" />
+                    <input required placeholder="Confirm Password" ng-model="data.cnfPassword" type="password" class="form-control" />
+                    <input required placeholder="Name" ng-model="data.name" type="text" class="form-control" />
+                    <input required placeholder="Address" type="text" ng-model="data.address" class="form-control" />
+                    <input required placeholder="Mobile Number" ng-model="data.phone" type="text" class="form-control" />
 
                     <a href="#/login" class="btn btn-success" ng-click="RegisterUser()" style="margin-top: 20px">Submit</a>
                     <a href="#/" type="button" class="btn btn-warning" style="margin-top: 20px">Cancel</a>

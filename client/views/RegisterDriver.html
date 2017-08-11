@@ -1,36 +1,88 @@
 <div class="container-fluid jumbotron">
     <div class="row">
-        <div class="col-sm-offset-1 col-sm-3">
-            <form>
-                <input placeholder="Email Address" ng-model="data.email" type="text" class="form-control" />
-                <input placeholder="Password" ng-model="data.password" type="password" class="form-control" />
-                <input placeholder="Confirm Password" ng-model="data.cnfPassword" type="password" class="form-control" />
-                <input placeholder="Name" ng-model="data.name" type="text" class="form-control" />
-                <input placeholder="Address" type="text" ng-model="data.address" class="form-control" />
-                <input placeholder="Mobile Number" ng-model="data.phone" type="text" class="form-control" />
-                <!--cab driver  details-->
+        <div class=" col-sm-4">
+            <div class="container-fluid well">
+                <form>
+                    <table>
+                        <tr>
+                            <td> Email Address </td>
+                            <td>
+                                <input required placeholder="Email Address" ng-model="data.email" type="text" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> Password</td>
+                            <td>
+                                <input required placeholder="Password" ng-model="data.password" type="password" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> Confirm Password</td>
+                            <td>
+                                <input required placeholder="Confirm Password" ng-model="data.cnfPassword" type="password" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> Name</td>
+                            <td>
+                                <input required placeholder="Name" ng-model="data.name" type="text" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Address </td>
+                            <td>
+                                <input required placeholder="Address" type="text" ng-model="data.address" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mobile Number </td>
+                            <td>
+                                <input required placeholder="Mobile Number" ng-model="data.phone" type="text" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Cab Number </td>
+                            <td>
+                                <input required placeholder="Cab Number " ng-model="data.cabNo" type="text" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> Cab Make & Model</td>
+                            <td>
+                                <input required placeholder="Cab Make & Model " ng-model="data.cabMake" type="text" class="form-control" />
+                            </td>
+                        </tr>
 
-                <input placeholder="Driving Licence Number " ng-model="data.drvLicNo" type="text" class="form-control" />
-                <input placeholder="Driving Licence Expiring Date " ng-model="data.drvLicExpDt" type="text" class="form-control" />
-                <input placeholder="Driving Experiance " type="text" ng-model="data.drvExperiance" class="form-control" />
-                <input placeholder="Cab Number " ng-model="data.cabNo" type="text" class="form-control" />
-                <input placeholder="Cab Registered Owner " ng-model="data.cabOwner" type="text" class="form-control" />
-                <input placeholder="Cab Make & Model " ng-model="data.cabMake" type="text" class="form-control" />
-                <!--select as label for value in array-->
-                <select class="form-control" ng-model="data.cabTariffID" ng-options="  item._id as item.tariffVehicleType for item in allTariffs">
-                    <option value ="" >Select Vehicle Type</option>
-            </select>
-                <a class="btn btn-success" ng-click="RegisterUser()" style="margin-top: 20px">
+                        <!--cab driver  details-->
+                        <!-- <input required placeholder="Driving Licence Number " ng-model="data.drvLicNo" type="text" class="form-control" />
+                <input required placeholder="Driving Licence Expiring Date " ng-model="data.drvLicExpDt" type="text" class="form-control" />
+                <input required placeholder="Driving Experiance " type="text" ng-model="data.drvExperiance" class="form-control" /> -->
+                        <!-- <input required placeholder="Cab Registered Owner " ng-model="data.cabOwner" type="text" class="form-control" /> -->
+                        <!--select as label for value in array-->
+                        <tr>
+                            <td> Vehicle Type </td>
+                            <td>
+                                <select class="form-control" ng-model="data.cabTariffID" ng-options="item._id as item.tariffVehicleType for item in allTariffs">
+                                    <option value ="" >Select Vehicle Type</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <a class="btn btn-success" ng-click="RegisterUser()" style="margin-top: 20px">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
 
-                <a class="btn btn-danger" style="margin-top: 20px" ng-click="UpdateData(data)"> <span class="glyphicon glyphicon-floppy-saved"></span>  <span class="glyphicon glyphicon-pencil"></span> </a>
-                <button class="btn btn-danger " style="margin-top: 20px" ng-click="ClearData()"><span class="glyphicon glyphicon-trash"></span></button>
-
-            </form>
+                                <a class="btn btn-danger" style="margin-top: 20px" ng-click="UpdateData(data)"> <span class="glyphicon glyphicon-floppy-saved"></span>  </a>
+                                <button class="btn btn-danger " style="margin-top: 20px" ng-click="ClearData()"><span class="glyphicon glyphicon-trash"></span></button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
         </div>
-
-        <div class="col-sm-7 ">
+        <div class="col-sm-8 ">
             <div class="container-fluid well">
                 <table class="table table-condensed">
                     <thead>
@@ -39,16 +91,17 @@
                             <td>name</td>
                             <td>address</td>
                             <td>phone</td>
-                            <td>drvLicNo </td>
+                            <!-- <td>drvLicNo </td>
                             <td>drvLicExpDt </td>
-                        </tr>
+                        </td> </tr>
                         <tr class="btn-primary">
-                            <td>drvExperiance</td>
+                            <td>drvExperiance</td> -->
                             <td>cabNo </td>
-                            <td>cabOwner </td>
+                            <!-- <td>cabOwner </td> -->
                             <td>cabMake</td>
                             <td>Edit Tariff</td>
                             <td>Delete Tariff</td>
+                            </td>
                         </tr>
                     </thead>
                     <tbody ng-repeat="c in allData | filter:{ role : 'driver' }">
@@ -57,19 +110,20 @@
                             <td>{{c.name}}</td>
                             <td>{{c.address}}</td>
                             <td>{{c.phone}}</td>
-                            <td>{{c.drvLicNo}}</td>
+                            <!-- <td>{{c.drvLicNo}}</td>
                             <td>{{c.drvLicExpDt}}</td>
-                        </tr>
+                        </td> </tr>
                         <tr class=" btn-info ">
-                            <td>{{c.drvExperiance}}</td>
+                            <td>{{c.drvExperiance}}</td> -->
                             <td>{{c.cabNo}}</td>
-                            <td>{{c.cabOwner}}</td>
+                            <!-- <td>{{c.cabOwner}}</td> -->
                             <td>{{c.cabMake}}</td>
                             <td>
                                 <button ng-click="EditData(c) " class="btn btn-primary "><span class="glyphicon glyphicon-pencil"></span></button>
                             </td>
                             <td>
                                 <button ng-click="DeleteData(c) " class="btn btn-primary "><span class="glyphicon glyphicon-trash"></span></button>
+                            </td>
                             </td>
                         </tr>
                     </tbody>

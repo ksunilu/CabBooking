@@ -8,7 +8,7 @@
 						<small>FROM</small>
 					</label>
 						<div class="col-sm-10 ">
-							<input type="text" class="form-control " id="txtFrom" ng-model="rec.bookSource">
+							<input required type="text" class="form-control " id="txtFrom" ng-model="rec.bookSource">
 						</div>
 					</div>
 					<div class="form-group row  ">
@@ -16,7 +16,7 @@
 							<small>TO</small>
 						</label>
 						<div class="col-sm-10 ">
-							<input type="text" class="form-control " id="txtTo" ng-model="rec.bookDestination">
+							<input required type="text" class="form-control " id="txtTo" ng-model="rec.bookDestination">
 						</div>
 					</div>
 
@@ -46,7 +46,7 @@
 								</select>
 								</div>
 								<div class="col-sm-6 ">
-									<input type="time" class="form-control" ng-model="show.bookTravelTimeTxt" ng-blur="validateTime()">
+									<input required type="time" class="form-control" ng-model="show.bookTravelTimeTxt" ng-blur="validateTime()">
 								</div>
 							</div>
 						</div>
@@ -101,11 +101,15 @@
 							<form role="form">
 								<div class="form-group">
 									<label for="usrname"><span class="glyphicon glyphicon-user"></span> Cab Driver Name</label>
-									<input ng-model="pickedCab.name" name type="text" class="form-control" id="usrname" readonly>
+									<input required ng-model="pickedCab.name" name type="text" class="form-control" id="usrname" readonly>
 								</div>
 								<div class="form-group">
-									<label for="psw"><span class="glyphicon glyphicon-earphone"></span> Phone Number</label>
-									<input ng-model="pickedCab.phone" type="text" class="form-control" id="psw" placeholder="Enter password">
+									<label for="cabNo"><i class="fa fa-taxi"></i>  Cab Number</label>
+									<input required ng-model="pickedCab.cabNo" type="text" class="form-control" id="cabNo">
+								</div>
+								<div class="form-group">
+									<label for="phone"><span class="glyphicon glyphicon-earphone"></span> Phone Number</label>
+									<input required ng-model="pickedCab.phone" type="text" class="form-control" id="phone">
 								</div>
 							</form>
 						</div>
@@ -114,7 +118,7 @@
 							<a ng-click="SaveData()" class="btn btn-danger btn-default pull-left"><span class="glyphicon glyphicon-ok"></span>Confirm</a>
 						</div>
 					</div>
- 
+
 				</div>
 			</div>
 		</div>
